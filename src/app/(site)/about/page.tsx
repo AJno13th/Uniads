@@ -19,6 +19,7 @@ export default function AboutPage() {
         eyebrow="About UNIADS"
         title="Your trusted educational consultancy"
         description="Personalised guidance, an extensive partner network and a clear process — UNIADS empowers students with tailored solutions and continuous support to unlock academic excellence."
+        ctaMode="apply-only"
       />
 
       <section className="bg-white">

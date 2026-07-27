@@ -18,6 +18,7 @@ export default function ServicesPage() {
         eyebrow="Our services"
         title="University Application Made Easy"
         description="From free counselling to admissions, certifications, student finance and childcare grant support — UNIADS makes every stage of your university journey clearer and simpler."
+        ctaMode="apply-only"
       />
 
       <section className="bg-white">

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { LeadQualifier } from "@/components/LeadQualifier";
 import { Button } from "@/components/Button";
 import { VerifiedBadge } from "@/components/VerifiedBadge";
-import { whatsappLink } from "@/data/site";
 import { universities } from "@/data/universities";
 
 export const metadata: Metadata = {
@@ -70,15 +69,15 @@ export default function StudyWithoutQualificationsPage() {
       />
 
       <section className="section-navy text-white">
-        <div className="mx-auto grid max-w-7xl items-start gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:py-20">
-          <div className="fade-up">
+        <div className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:px-8 lg:py-16">
+          <div className="fade-up order-2 lg:order-1">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-olive">
               Applications open · Next intakes filling fast
             </p>
-            <h1 className="display mt-4 text-4xl sm:text-5xl xl:text-6xl">
+            <h1 className="display mt-4 text-[2.1rem] leading-[1.05] sm:text-5xl xl:text-6xl">
               No GCSEs? No A-Levels? No problem.
             </h1>
-            <p className="mt-5 text-lg text-white/85">
+            <p className="mt-5 text-base text-white/85 sm:text-lg">
               UNIADS makes university possible for everyone. Tell us your settlement
               status, the university and course you want, and whether you want
               full-time or part-time study — we will confirm your options.
@@ -96,17 +95,17 @@ export default function StudyWithoutQualificationsPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 hidden flex-wrap gap-3 lg:flex">
               <Button href="/apply" variant="olive">
-                Apply Now
+                Apply Now — it&apos;s free
               </Button>
-              <Button href={whatsappLink()} variant="white" external>
-                Message us on WhatsApp
+              <Button href="/book" variant="white">
+                Book a Call
               </Button>
             </div>
           </div>
 
-          <div className="fade-up-delay">
+          <div className="fade-up-delay order-1 lg:order-2">
             <LeadQualifier variant="dark" source="landing" />
           </div>
         </div>

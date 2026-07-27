@@ -328,7 +328,7 @@ export function ApplyForm() {
                   key={mode}
                   type="button"
                   onClick={() => setStudyMode(mode)}
-                  className={`rounded-md px-4 py-2.5 text-sm font-semibold transition ${
+                  className={`min-h-12 min-w-[8.5rem] rounded-md px-4 py-2.5 text-sm font-semibold transition ${
                     studyMode === mode
                       ? "bg-olive text-navy-deep"
                       : "bg-cream text-navy hover:bg-olive/30"
@@ -465,20 +465,36 @@ export function ApplyForm() {
         <p className="text-sm font-semibold text-red-600">{error}</p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === "sending" || !studyMode}
-        className="w-full rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep transition hover:bg-olive-dark disabled:opacity-60 sm:w-auto"
-      >
-        {status === "sending"
-          ? "Submitting…"
-          : "Submit application & open WhatsApp"}
-      </button>
-      {!studyMode && (
-        <p className="text-xs text-muted">
-          Select full-time or part-time to submit your application.
-        </p>
-      )}
+      <div className="hidden sm:block">
+        <button
+          type="submit"
+          disabled={status === "sending" || !studyMode}
+          className="min-h-12 rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep transition hover:bg-olive-dark disabled:opacity-60"
+        >
+          {status === "sending"
+            ? "Submitting…"
+            : "Submit application & open WhatsApp"}
+        </button>
+        {!studyMode && (
+          <p className="mt-2 text-xs text-muted">
+            Select full-time or part-time to submit your application.
+          </p>
+        )}
+      </div>
+
+      <div className="pointer-events-none sticky bottom-20 z-40 -mx-6 border-t border-line bg-white/95 px-6 py-3 backdrop-blur sm:hidden">
+        <button
+          type="submit"
+          disabled={status === "sending" || !studyMode}
+          className="pointer-events-auto min-h-12 w-full rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep disabled:opacity-60"
+        >
+          {status === "sending"
+            ? "Submitting…"
+            : studyMode
+              ? "Submit & open WhatsApp"
+              : "Select full-time or part-time"}
+        </button>
+      </div>
     </form>
   );
 }

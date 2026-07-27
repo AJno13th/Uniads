@@ -19,18 +19,14 @@ export default function CoursesPage() {
         eyebrow="Courses"
         title="Courses & partner universities"
         description="Explore the courses we are currently enrolling for and the universities and colleges UNIADS partners with. Need application help first? Visit our Services page."
+        ctaMode="apply-only"
       />
 
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-3">
-            <Button href="/services" variant="ghost">
-              ← Our services
-            </Button>
-            <Button href="/apply" variant="olive">
-              Apply now
-            </Button>
-          </div>
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <Button href="/services" variant="ghost">
+            ← Our services
+          </Button>
         </div>
       </section>
 

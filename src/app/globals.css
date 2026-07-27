@@ -13,6 +13,7 @@
   --line: #d9dee8;
   --background: #f7f8f4;
   --foreground: #1a1f2e;
+  --wa-offset: 5.5rem;
 }
 
 @theme inline {
@@ -45,7 +46,9 @@
     background: var(--background);
     color: var(--foreground);
     font-family: var(--font-outfit), "Segoe UI", sans-serif;
-    line-height: 1.6;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
@@ -53,8 +56,7 @@
   h3 {
     font-family: var(--font-oswald), Impact, sans-serif;
     letter-spacing: 0.02em;
-    line-height: 1.1;
-    text-transform: uppercase;
+    line-height: 1.12;
   }
 
   a {
@@ -62,9 +64,22 @@
     text-decoration: none;
   }
 
+  :focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--teal) 70%, white);
+    outline-offset: 2px;
+  }
+
   ::selection {
     background: color-mix(in srgb, var(--olive) 55%, white);
     color: var(--navy-deep);
+  }
+
+  /* Prevent iOS zoom on focus and keep tap targets comfortable */
+  input,
+  select,
+  textarea,
+  button {
+    font-size: 16px;
   }
 }
 
@@ -72,8 +87,12 @@
   .display {
     font-family: var(--font-oswald), Impact, sans-serif;
     letter-spacing: 0.02em;
-    line-height: 1.1;
+    line-height: 1.12;
     text-transform: uppercase;
+  }
+
+  .site-main {
+    padding-bottom: calc(var(--wa-offset) + env(safe-area-inset-bottom, 0px));
   }
 
   .hero-atmosphere {
@@ -91,28 +110,77 @@
 
   .input {
     width: 100%;
+    min-height: 3rem;
     border: 1px solid var(--line);
     background: white;
     border-radius: 0.5rem;
-    padding: 0.75rem 0.9rem;
+    padding: 0.8rem 0.95rem;
     color: var(--ink);
+    font-size: 1rem;
+    line-height: 1.4;
     outline: none;
     transition:
       border-color 0.2s,
       box-shadow 0.2s;
   }
 
+  select.input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231d2b4d' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    padding-right: 2.5rem;
+  }
+
+  textarea.input {
+    min-height: 7rem;
+  }
+
   .input:focus {
     border-color: var(--teal);
-    box-shadow: 0 0 0 3px rgba(31, 107, 107, 0.15);
+    box-shadow: 0 0 0 3px rgba(31, 107, 107, 0.18);
   }
 
   .label {
     display: block;
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--navy);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .touch-target {
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+  }
+
+  .trust-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid color-mix(in srgb, var(--navy) 12%, transparent);
+    background: rgba(255, 255, 255, 0.82);
+    color: var(--navy);
+    padding: 0.45rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100px;
+    z-index: 100;
+    border-radius: 0.5rem;
+    background: var(--navy);
+    color: white;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
   }
 
   .fade-up {

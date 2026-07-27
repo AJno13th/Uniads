@@ -29,7 +29,7 @@ export function Button({
   className?: string;
   external?: boolean;
 }) {
-  const cls = `inline-flex items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold tracking-wide transition duration-200 ${styles[variant]} ${className}`;
+  const cls = `inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-5 py-3 text-sm font-semibold tracking-wide transition duration-200 ${styles[variant]} ${className}`;
   if (external) {
     return (
       <a href={href} className={cls} target="_blank" rel="noopener noreferrer">

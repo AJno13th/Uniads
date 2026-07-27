@@ -134,7 +134,7 @@ export function BookingCalendar() {
                 key={value}
                 type="button"
                 onClick={() => setDate(value)}
-                className={`rounded-lg border px-3 py-3 text-left text-sm transition ${
+                className={`rounded-lg border px-3 py-3.5 text-left text-sm transition min-h-12 ${
                   active
                     ? "border-navy bg-navy text-white"
                     : "border-line bg-cream/50 text-navy hover:border-teal"

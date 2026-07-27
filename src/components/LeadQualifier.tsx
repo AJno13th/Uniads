@@ -52,7 +52,7 @@ export function LeadQualifier({
     ? "block text-xs font-semibold uppercase tracking-wider text-white/70 mb-1.5"
     : "label";
   const fieldClass = dark
-    ? "w-full rounded-md border border-white/25 bg-navy-deep/60 px-3 py-2.5 text-sm text-white outline-none focus:border-olive"
+    ? "w-full min-h-12 rounded-md border border-white/25 bg-navy-deep/70 px-3 py-3 text-base text-white outline-none transition focus:border-olive focus:shadow-[0_0_0_3px_rgba(194,204,96,0.25)]"
     : "input";
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -279,17 +279,17 @@ export function LeadQualifier({
       <button
         type="submit"
         disabled={status === "sending" || !studyMode}
-        className="mt-6 w-full rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep transition hover:bg-olive-dark disabled:opacity-60"
+        className="mt-6 min-h-12 w-full rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep transition hover:bg-olive-dark disabled:opacity-60"
       >
         {status === "sending"
           ? "Preparing your message…"
           : "Send my details on WhatsApp"}
       </button>
-      {!studyMode && (
-        <p className={`mt-2 text-xs ${dark ? "text-white/60" : "text-muted"}`}>
-          Select full-time or part-time to continue.
-        </p>
-      )}
+      <p className={`mt-2 text-xs ${dark ? "text-white/60" : "text-muted"}`}>
+        {studyMode
+          ? "Free · Takes about 60 seconds · Opens WhatsApp with your answers ready"
+          : "Select full-time or part-time to continue."}
+      </p>
     </form>
   );
 }

@@ -2,63 +2,109 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import { LeadQualifier } from "@/components/LeadQualifier";
+import { TrustStrip } from "@/components/TrustStrip";
 import { courseTypes, services, whatsappLink } from "@/data/site";
 import { universities, subjectAreas } from "@/data/universities";
 
 export default function HomePage() {
   return (
     <>
-      {/* Hero — copy before image, Unisef-style */}
-      <section className="hero-atmosphere overflow-hidden border-b border-line/70">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-16">
-          <div className="fade-up order-1 text-center lg:text-left">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-teal">
-              Applications open · Next intakes filling fast
-            </p>
-            <h1 className="display text-4xl text-navy sm:text-5xl xl:text-6xl">
-              Start your university journey today
-            </h1>
-            <p className="mt-4 text-lg font-semibold text-navy/90 sm:text-xl">
-              Secure your place among the next new intakes into the university
-            </p>
-            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted lg:mx-0">
-              From starting your application to sorting student finance,{" "}
-              <strong className="font-bold text-navy">UNIADS</strong> is here to
-              make your university journey smooth and stress-free.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
-              <Button href="/apply" variant="olive">
-                Apply Now
-              </Button>
-              <Button href={whatsappLink()} variant="secondary" external>
-                Message us on WhatsApp
-              </Button>
-            </div>
-            <p className="mt-6 text-sm text-muted">
-              Trusted guidance across London, Birmingham, Manchester, Leeds and
-              more UK cities
-            </p>
-          </div>
+      {/* Hero — full-bleed image plane on mobile; Unisef-style copy-first on desktop */}
+      <section className="relative overflow-hidden border-b border-line/70">
+        <div className="absolute inset-0 lg:hidden">
+          <Image
+            src="/images/hero-graduation.jpg"
+            alt=""
+            fill
+            priority
+            className="object-cover object-[center_30%]"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-navy/80 via-navy/70 to-navy/90" />
+        </div>
 
-          <div className="fade-up-delay relative order-2">
-            <div className="float-soft relative aspect-[4/5] overflow-hidden rounded-none sm:aspect-[5/6] lg:min-h-[520px]">
+        <div className="hero-atmosphere relative hidden lg:block">
+          <div className="mx-auto grid max-w-7xl items-center gap-12 px-8 py-16 lg:grid-cols-2">
+            <div className="fade-up">
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-teal">
+                Applications open · Next intakes filling fast
+              </p>
+              <p className="display text-5xl text-navy xl:text-6xl">UNIADS</p>
+              <h1 className="mt-3 text-3xl font-bold leading-tight text-navy xl:text-4xl">
+                Start your university journey today
+              </h1>
+              <p className="mt-4 text-lg font-semibold text-navy/90">
+                Secure your place among the next new intakes into the university
+              </p>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
+                From starting your application to sorting student finance,{" "}
+                <strong className="font-bold text-navy">UNIADS</strong> is here to
+                make your university journey smooth and stress-free.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button href="/apply" variant="olive">
+                  Apply Now — it&apos;s free
+                </Button>
+                <Button href={whatsappLink()} variant="secondary" external>
+                  Message us on WhatsApp
+                </Button>
+              </div>
+              <p className="mt-6 text-sm text-muted">
+                Trusted guidance across London, Birmingham, Manchester, Leeds and
+                more UK cities
+              </p>
+            </div>
+
+            <div className="fade-up-delay relative min-h-[520px]">
               <Image
                 src="/images/hero-graduation.jpg"
                 alt="Graduate holding a mortarboard outside a UK university building"
                 fill
                 priority
                 className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="50vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/50 via-transparent to-transparent" />
+            </div>
+          </div>
+        </div>
+
+        <div className="relative mx-auto flex min-h-[78vh] max-w-7xl flex-col justify-end px-4 pb-12 pt-16 text-white sm:px-6 lg:hidden">
+          <div className="fade-up">
+            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-olive">
+              Applications open · Next intakes filling fast
+            </p>
+            <p className="display text-4xl text-white">UNIADS</p>
+            <h1 className="mt-2 text-2xl font-bold leading-snug text-white">
+              Start your university journey today
+            </h1>
+            <p className="mt-3 text-base font-semibold text-white/95">
+              Secure your place among the next new intakes
+            </p>
+            <p className="mt-4 max-w-md text-sm leading-relaxed text-white/80">
+              From application to student finance, UNIADS makes your university
+              journey smooth and stress-free.
+            </p>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <Button href="/apply" variant="olive" className="w-full sm:w-auto">
+                Apply Now — it&apos;s free
+              </Button>
+              <Button
+                href="/study-without-qualifications"
+                variant="white"
+                className="w-full sm:w-auto"
+              >
+                No GCSEs? Start here
+              </Button>
             </div>
           </div>
         </div>
       </section>
 
+      <TrustStrip />
+
       {/* Uncover your potential */}
       <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <div className="max-w-3xl">
             <h2 className="display text-3xl text-navy sm:text-4xl lg:text-5xl">
               Uncover your potential
@@ -71,8 +117,8 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-12">
-            <p className="mb-3 inline-block rounded-full bg-olive px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-navy-deep">
+          <div className="mt-10">
+            <p className="mb-3 inline-block bg-olive px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-navy-deep">
               How We Help...
             </p>
             <p className="max-w-3xl text-base text-navy/80 sm:text-lg">
@@ -81,7 +127,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
             {[
               {
                 title: "Free counselling & guidance",
@@ -105,10 +151,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Qualifier — high-quality lead capture */}
+      {/* Qualifier — form first on mobile for faster conversion */}
       <section className="bg-teal-soft/50">
-        <div className="mx-auto grid max-w-7xl items-start gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
-          <div>
+        <div className="mx-auto grid max-w-7xl items-start gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10 lg:px-8 lg:py-16">
+          <div className="order-2 lg:order-1">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal">
               Check your eligibility
             </p>
@@ -140,13 +186,15 @@ export default function HomePage() {
               No qualifications? Start here
             </Button>
           </div>
-          <LeadQualifier />
+          <div className="order-1 lg:order-2">
+            <LeadQualifier />
+          </div>
         </div>
       </section>
 
       {/* Course types */}
       <section className="section-navy text-white">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
           <h2 className="display text-3xl text-white sm:text-4xl">
             Discover our courses
           </h2>
