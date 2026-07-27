@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { siteConfig, whatsappLink } from "@/data/site";
 import { settlementStatuses, studyModes } from "@/data/qualification";
 import { levelLabel, universities } from "@/data/universities";
@@ -75,9 +75,8 @@ function formatSelectedSlot(dateValue: string, time: string, dayOptions: ReturnT
 }
 
 export function BookingCalendar() {
-  // Build day list on the client only so SSR/client labels never mismatch.
-  const [dayOptions, setDayOptions] = useState<ReturnType<typeof buildDayOptions>>([]);
-  const [date, setDate] = useState("");
+  const dayOptions = useMemo(() => buildDayOptions(14), []);
+  const [date, setDate] = useState(dayOptions[0]?.value ?? "");
   const [time, setTime] = useState<string>("10:00");
   const [studyMode, setStudyMode] = useState("");
   const [universityName, setUniversityName] = useState("");
@@ -86,12 +85,6 @@ export function BookingCalendar() {
   const [error, setError] = useState("");
   const [reference, setReference] = useState<string | null>(null);
   const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    const options = buildDayOptions(14);
-    setDayOptions(options);
-    setDate((current) => current || options[0]?.value || "");
-  }, []);
 
   const selectedLabel = date
     ? formatSelectedSlot(date, time, dayOptions)
@@ -230,9 +223,6 @@ export function BookingCalendar() {
               role="group"
               aria-label="Quick date choices"
             >
-              {dayOptions.length === 0 && (
-                <p className="col-span-full text-sm text-muted">Loading dates…</p>
-              )}
               {dayOptions.map((d) => {
                 const active = d.value === date;
                 return (
