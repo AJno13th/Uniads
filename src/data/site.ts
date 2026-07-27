@@ -40,7 +40,12 @@ export const siteConfig = {
 } as const;
 
 export function whatsappLink(message: string = siteConfig.whatsappMessage) {
-  const base = siteConfig.whatsapp;
+  // Business /message/ invite links drop ?text on the wa.me redirect;
+  // api.whatsapp.com keeps the prefilled message.
+  let base = siteConfig.whatsapp;
+  if (base.includes("wa.me/message/")) {
+    base = base.replace("https://wa.me/", "https://api.whatsapp.com/");
+  }
   const joiner = base.includes("?") ? "&" : "?";
   return `${base}${joiner}text=${encodeURIComponent(message)}`;
 }
