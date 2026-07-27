@@ -6,7 +6,8 @@ export const siteConfig = {
   phone: "447983651874",
   phoneDisplay: "+44 7983 651874",
   email: "info@uniads.co.uk",
-  whatsapp: "447983651874",
+  /** WhatsApp Business chat link (from official QR / share link). */
+  whatsapp: "https://wa.me/message/L6NMHZKWMSE7J1",
   whatsappMessage: "Send Us a message to start your application",
   social: {
     facebook: "https://m.facebook.com/61577408444999/",
@@ -39,7 +40,9 @@ export const siteConfig = {
 } as const;
 
 export function whatsappLink(message: string = siteConfig.whatsappMessage) {
-  return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(message)}`;
+  const base = siteConfig.whatsapp;
+  const joiner = base.includes("?") ? "&" : "?";
+  return `${base}${joiner}text=${encodeURIComponent(message)}`;
 }
 
 export const navLinks = [
