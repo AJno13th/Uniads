@@ -162,7 +162,7 @@ export default function HomePage() {
               Tell us your status, course and study mode
             </h2>
             <p className="mt-4 text-muted">
-              Student finance eligibility depends on your settlement status and UK
+              Student finance eligibility depends on your residency status and UK
               residency, so we ask up front. Pick your answers and WhatsApp opens with
               a ready-made message — no long forms, no waiting.
             </p>

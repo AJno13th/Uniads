@@ -12,7 +12,7 @@ import { submitLead } from "@/lib/crm/client";
 
 /**
  * Compact qualifier used on high-intent pages: the student picks their
- * settlement status, university, course and study mode, and WhatsApp opens
+ * residency status, university, course and study mode, and WhatsApp opens
  * with a preset message containing all of it.
  */
 export function LeadQualifier({
