@@ -101,8 +101,17 @@ export async function POST(request: Request) {
     callTime: clean(payload.callTime, 10),
   };
 
-  const store = await getLeadStore();
-  const lead = await store.create(input);
+  // Persist to CRM when possible. If storage fails (common on serverless
+  // without DATABASE_URL), still return a WhatsApp handoff so booking works.
+  let lead;
+  try {
+    const store = await getLeadStore();
+    lead = await store.create(input);
+  } catch (error) {
+    console.error("[api/leads] store.create failed", error);
+    const { hydrateNewLead } = await import("@/lib/crm/shared");
+    lead = hydrateNewLead(input);
+  }
 
   return NextResponse.json({
     ok: true,

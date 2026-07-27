@@ -12,8 +12,18 @@ import {
 import { stageLabels } from "./types";
 
 function dataFilePath() {
-  const relative = process.env.CRM_DATA_FILE ?? ".data/leads.json";
-  return join(/* turbopackIgnore: true */ process.cwd(), relative);
+  // Vercel’s filesystem is read-only except /tmp. Prefer an explicit
+  // CRM_DATA_FILE, then /tmp on serverless, otherwise project-local .data.
+  if (process.env.CRM_DATA_FILE) {
+    const configured = process.env.CRM_DATA_FILE;
+    return configured.startsWith("/")
+      ? configured
+      : join(/* turbopackIgnore: true */ process.cwd(), configured);
+  }
+  if (process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+    return "/tmp/uniads-leads.json";
+  }
+  return join(/* turbopackIgnore: true */ process.cwd(), ".data/leads.json");
 }
 
 /**
