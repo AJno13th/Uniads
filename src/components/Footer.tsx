@@ -6,8 +6,8 @@ import { VerifiedBadge } from "@/components/VerifiedBadge";
 export function Footer() {
   return (
     <footer className="mt-auto bg-navy-deep text-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-4 lg:px-8">
-        <div className="space-y-4 lg:col-span-1">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-5 lg:px-8">
+        <div className="space-y-4 md:col-span-2 lg:col-span-1">
           <Image
             src="/images/uniads-logo-mark.svg"
             alt="UNIADS Educational Consulting"
@@ -70,6 +70,19 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="mb-4 text-sm font-semibold tracking-[0.15em] text-olive">
+            Courses
+          </h3>
+          <ul className="space-y-2 text-sm text-white/80">
+            <li>
+              <Link href="/courses" className="hover:text-olive">
+                All pathways
+              </Link>
+            </li>
             {courseTypes.map((c) => (
               <li key={c.slug}>
                 <Link href={c.href} className="hover:text-olive">

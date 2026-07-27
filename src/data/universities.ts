@@ -1,3 +1,60 @@
+export type CourseLevel =
+  | "foundation"
+  | "undergraduate"
+  | "postgraduate"
+  | "certhe"
+  | "hnd";
+
+export type CourseCategory = "foundation" | "undergraduate" | "masters" | "other";
+
+export const courseCategoryMeta: Record<
+  CourseCategory,
+  { label: string; href: string; blurb: string }
+> = {
+  foundation: {
+    label: "Foundation Year",
+    href: "/courses/foundation",
+    blurb: "Foundation years attached to full degree pathways",
+  },
+  undergraduate: {
+    label: "Undergraduate",
+    href: "/courses/undergraduate",
+    blurb: "Bachelor’s degrees and top-up courses",
+  },
+  masters: {
+    label: "Master’s",
+    href: "/courses/masters",
+    blurb: "Master’s and postgraduate programmes",
+  },
+  other: {
+    label: "Other Pathways",
+    href: "/courses/other",
+    blurb: "HND and CertHE vocational pathways",
+  },
+};
+
+export function courseCategory(level: CourseLevel): CourseCategory {
+  if (level === "foundation") return "foundation";
+  if (level === "undergraduate") return "undergraduate";
+  if (level === "postgraduate") return "masters";
+  return "other";
+}
+
+export function levelLabel(level: CourseLevel) {
+  switch (level) {
+    case "foundation":
+      return "Foundation Year";
+    case "undergraduate":
+      return "Undergraduate";
+    case "postgraduate":
+      return "Master’s";
+    case "certhe":
+      return "CertHE";
+    case "hnd":
+      return "HND";
+  }
+}
+
 export type University = {
   slug: string;
   name: string;
@@ -11,7 +68,7 @@ export type University = {
   notes?: string[];
   courses: {
     name: string;
-    level: "foundation" | "undergraduate" | "postgraduate" | "certhe" | "hnd";
+    level: CourseLevel;
     status?: "available" | "not-running" | "new" | "contact";
   }[];
 };
@@ -336,42 +393,65 @@ export function getUniversity(slug: string) {
   return universities.find((u) => u.slug === slug);
 }
 
-export function coursesByLevel(level: University["courses"][number]["level"]) {
+export type ListedCourse = University["courses"][number] & {
+  university: University;
+  category: CourseCategory;
+};
+
+function listActiveCourses(
+  predicate: (course: University["courses"][number]) => boolean
+): ListedCourse[] {
   return universities.flatMap((uni) =>
     uni.courses
-      .filter((c) => c.level === level && c.status !== "not-running")
-      .map((c) => ({ ...c, university: uni }))
+      .filter((c) => c.status !== "not-running" && predicate(c))
+      .map((c) => ({ ...c, university: uni, category: courseCategory(c.level) }))
   );
+}
+
+export function coursesByCategory(category: CourseCategory) {
+  return listActiveCourses((c) => courseCategory(c.level) === category);
 }
 
 export function foundationCourses() {
-  return universities.flatMap((uni) =>
-    uni.courses
-      .filter(
-        (c) =>
-          (c.level === "foundation" || c.level === "certhe") &&
-          c.status !== "not-running"
-      )
-      .map((c) => ({ ...c, university: uni }))
-  );
+  return coursesByCategory("foundation");
 }
 
 export function undergraduateCourses() {
-  return universities.flatMap((uni) =>
-    uni.courses
-      .filter(
-        (c) =>
-          (c.level === "undergraduate" || c.level === "hnd" || c.level === "foundation") &&
-          c.status !== "not-running"
-      )
-      .map((c) => ({ ...c, university: uni }))
-  );
+  return coursesByCategory("undergraduate");
 }
 
-export function postgraduateCourses() {
-  return universities.flatMap((uni) =>
-    uni.courses
-      .filter((c) => c.level === "postgraduate" && c.status !== "not-running")
-      .map((c) => ({ ...c, university: uni }))
-  );
+export function mastersCourses() {
+  return coursesByCategory("masters");
 }
+
+/** @deprecated Use mastersCourses() */
+export function postgraduateCourses() {
+  return mastersCourses();
+}
+
+export function otherCourses() {
+  return coursesByCategory("other");
+}
+
+export function coursesGroupedByCategory(courses: ListedCourse[]) {
+  const groups: Record<CourseCategory, ListedCourse[]> = {
+    foundation: [],
+    undergraduate: [],
+    masters: [],
+    other: [],
+  };
+  for (const course of courses) {
+    groups[course.category].push(course);
+  }
+  return groups;
+}
+
+export function courseCounts() {
+  return {
+    foundation: foundationCourses().length,
+    undergraduate: undergraduateCourses().length,
+    masters: mastersCourses().length,
+    other: otherCourses().length,
+  };
+}
+

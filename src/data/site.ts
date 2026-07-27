@@ -106,15 +106,23 @@ export const courseTypes = [
     title: "Undergraduate Courses",
     shortTitle: "Undergraduate",
     description:
-      "Bachelor’s degrees and HND pathways across business, health, computing, design, law and more — with flexible full-time, part-time, evening and weekend options.",
+      "Bachelor’s degrees and top-up pathways across business, health, computing, design, law and more — with flexible full-time, part-time, evening and weekend options.",
     href: "/courses/undergraduate",
   },
   {
-    slug: "postgraduate",
-    title: "Postgraduate Courses",
-    shortTitle: "Postgraduate",
+    slug: "masters",
+    title: "Master’s / Postgraduate Courses",
+    shortTitle: "Master’s",
     description:
-      "Master’s and advanced programmes for career progression. Speak with UNIADS for tailored postgraduate matching with our partner universities.",
-    href: "/courses/postgraduate",
+      "Master’s and advanced programmes for career progression. Speak with UNIADS for tailored matching with our partner universities.",
+    href: "/courses/masters",
+  },
+  {
+    slug: "other",
+    title: "Other Pathways (HND & CertHE)",
+    shortTitle: "Other Pathways",
+    description:
+      "HND and CertHE programmes for students who want a shorter or more vocational route into higher education and work.",
+    href: "/courses/other",
   },
 ] as const;

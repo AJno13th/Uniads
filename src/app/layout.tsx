@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | UNIADS Educational Consulting",
   },
   description:
-    "UNIADS helps students apply to top UK universities, secure student finance and childcare grants, and enrol on foundation, undergraduate and postgraduate courses — free counselling and guidance.",
+    "UNIADS helps students apply to top UK universities, secure student finance and childcare grants, and enrol on foundation, undergraduate, master’s and other pathway courses — free counselling and guidance.",
   keywords: [
     "UNIADS",
     "Uniads Educational Consulting",

@@ -3,10 +3,25 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/Button";
-import { getUniversity, universities } from "@/data/universities";
+import { CourseCategoryTabs } from "@/components/CourseList";
+import {
+  courseCategory,
+  courseCategoryMeta,
+  getUniversity,
+  levelLabel,
+  universities,
+  type CourseCategory,
+} from "@/data/universities";
 import { whatsappLink } from "@/data/site";
 
 type Props = { params: Promise<{ slug: string }> };
+
+const categoryOrder: CourseCategory[] = [
+  "foundation",
+  "undergraduate",
+  "masters",
+  "other",
+];
 
 export function generateStaticParams() {
   return universities.map((u) => ({ slug: u.slug }));
@@ -29,6 +44,18 @@ export default async function UniversityPage({ params }: Props) {
   if (!uni) notFound();
 
   const activeCourses = uni.courses.filter((c) => c.status !== "not-running");
+  const grouped: Record<CourseCategory, typeof activeCourses> = {
+    foundation: [],
+    undergraduate: [],
+    masters: [],
+    other: [],
+  };
+  for (const course of activeCourses) {
+    grouped[courseCategory(course.level)].push(course);
+  }
+  const availableCategories = categoryOrder.filter(
+    (category) => grouped[category].length > 0,
+  );
 
   return (
     <>
@@ -40,7 +67,7 @@ export default async function UniversityPage({ params }: Props) {
 
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mb-8 flex flex-wrap gap-3">
+          <div className="mb-6 flex flex-wrap gap-3">
             <Button href="/courses" variant="ghost">
               ← All courses
             </Button>
@@ -50,6 +77,10 @@ export default async function UniversityPage({ params }: Props) {
             <Button href="/apply" variant="olive">
               Apply for {uni.shortName}
             </Button>
+          </div>
+
+          <div className="mb-8">
+            <CourseCategoryTabs active="all" />
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
@@ -81,50 +112,90 @@ export default async function UniversityPage({ params }: Props) {
                   ))}
                 </ul>
               </div>
+              <div className="border border-line p-5">
+                <h3 className="font-bold text-navy">Pathways here</h3>
+                <ul className="mt-3 space-y-2 text-sm text-muted">
+                  {availableCategories.map((category) => (
+                    <li key={category} className="flex justify-between gap-3">
+                      <Link
+                        href={courseCategoryMeta[category].href}
+                        className="font-medium text-teal hover:underline"
+                      >
+                        {courseCategoryMeta[category].label}
+                      </Link>
+                      <span>{grouped[category].length}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            <div className="lg:col-span-2">
-              <h2 className="display text-3xl text-navy">
-                Courses currently available
-              </h2>
-              <ul className="mt-6 space-y-3">
-                {activeCourses.map((c) => (
-                  <li
-                    key={c.name}
-                    className="flex flex-col gap-1 border-b border-line py-3 sm:flex-row sm:items-center sm:justify-between"
-                  >
-                    <span className="font-medium text-navy">{c.name}</span>
-                    <span className="text-xs uppercase tracking-wider text-muted">
-                      {c.level}
-                      {c.status === "new" ? " · New" : ""}
-                      {c.status === "contact" ? " · Contact UNIADS" : ""}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            <div className="space-y-10 lg:col-span-2">
+              <div>
+                <h2 className="display text-3xl text-navy">
+                  Courses by pathway
+                </h2>
+                <p className="mt-2 text-sm text-muted">
+                  Foundation, Undergraduate, Master’s and Other pathways are listed
+                  separately for this partner.
+                </p>
+              </div>
 
-              <h3 className="mt-10 font-bold text-navy">Requirements</h3>
-              <ul className="mt-3 space-y-2 text-sm text-muted">
-                {uni.requirements.map((r) => (
-                  <li key={r} className="flex gap-2">
-                    <span className="text-olive">✓</span>
-                    {r}
-                  </li>
-                ))}
-              </ul>
+              {availableCategories.map((category) => (
+                <div key={category}>
+                  <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
+                    <h3 className="display text-2xl text-navy">
+                      {courseCategoryMeta[category].label}
+                    </h3>
+                    <Link
+                      href={courseCategoryMeta[category].href}
+                      className="text-sm font-bold text-teal hover:underline"
+                    >
+                      Browse all {courseCategoryMeta[category].label.toLowerCase()} →
+                    </Link>
+                  </div>
+                  <ul className="space-y-0 border border-line">
+                    {grouped[category].map((c) => (
+                      <li
+                        key={`${category}-${c.name}`}
+                        className="flex flex-col gap-1 border-b border-line px-4 py-3 last:border-b-0 sm:flex-row sm:items-center sm:justify-between"
+                      >
+                        <span className="font-medium text-navy">{c.name}</span>
+                        <span className="text-xs uppercase tracking-wider text-muted">
+                          {levelLabel(c.level)}
+                          {c.status === "new" ? " · New" : ""}
+                          {c.status === "contact" ? " · Contact UNIADS" : ""}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              <div>
+                <h3 className="font-bold text-navy">Requirements</h3>
+                <ul className="mt-3 space-y-2 text-sm text-muted">
+                  {uni.requirements.map((r) => (
+                    <li key={r} className="flex gap-2">
+                      <span className="text-olive">✓</span>
+                      {r}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
               {uni.notes && uni.notes.length > 0 && (
-                <>
-                  <h3 className="mt-8 font-bold text-navy">Notes</h3>
+                <div>
+                  <h3 className="font-bold text-navy">Notes</h3>
                   <ul className="mt-3 space-y-2 text-sm text-muted">
                     {uni.notes.map((n) => (
                       <li key={n}>• {n}</li>
                     ))}
                   </ul>
-                </>
+                </div>
               )}
 
-              <div className="mt-10 flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3">
                 <Button href="/apply" variant="olive">
                   Apply now
                 </Button>
@@ -136,7 +207,7 @@ export default async function UniversityPage({ params }: Props) {
                 </Button>
               </div>
 
-              <p className="mt-6 text-sm text-muted">
+              <p className="text-sm text-muted">
                 Looking for another pathway?{" "}
                 <Link href="/courses" className="font-semibold text-teal">
                   Browse all courses

@@ -7,7 +7,7 @@ import { services, courseTypes } from "@/data/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "UNIADS services: university applications made easy, English and Maths certification, foundation/undergraduate/postgraduate pathways, student finance and childcare grant support.",
+    "UNIADS services: university applications made easy, English and Maths certification, foundation, undergraduate, master’s and other pathways, student finance and childcare grant support.",
   alternates: { canonical: "/services" },
 };
 
@@ -52,7 +52,7 @@ export default function ServicesPage() {
             Each course type links to current enrolment options and partner
             universities. You can also browse everything on our Courses page.
           </p>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
             {courseTypes.map((c) => (
               <Link
                 key={c.slug}
