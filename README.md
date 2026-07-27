@@ -102,5 +102,6 @@ files when available, and swap `hero-graduation.jpg` for UNIADS' own photography
 
 ## Contact
 
-- Phone / WhatsApp: +44 7983 651874
+- Phone: +44 7368 218457
+- WhatsApp: https://wa.me/message/L6NMHZKWMSE7J1
 - Email: info@uniads.co.uk

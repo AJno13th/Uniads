@@ -3,8 +3,8 @@ export const siteConfig = {
   legalName: "Uniads Educational Consulting",
   domain: "https://www.uniads.co.uk",
   tagline: "Educational Consulting",
-  phone: "447983651874",
-  phoneDisplay: "+44 7983 651874",
+  phone: "447368218457",
+  phoneDisplay: "+44 7368 218457",
   email: "info@uniads.co.uk",
   /** WhatsApp Business chat link (from official QR / share link). */
   whatsapp: "https://wa.me/message/L6NMHZKWMSE7J1",
@@ -42,7 +42,7 @@ export const siteConfig = {
 export function whatsappLink(message: string = siteConfig.whatsappMessage) {
   // Business /message/ invite links drop ?text on the wa.me redirect;
   // api.whatsapp.com keeps the prefilled message.
-  let base = siteConfig.whatsapp;
+  let base: string = siteConfig.whatsapp;
   if (base.includes("wa.me/message/")) {
     base = base.replace("https://wa.me/", "https://api.whatsapp.com/");
   }
