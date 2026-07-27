@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/apply",
     "/book",
+    "/study-without-qualifications",
     "/privacy-policy",
     ...services.map((s) => s.href),
     ...courseTypes.map((c) => c.href),

@@ -14,6 +14,16 @@ export const siteConfig = {
       "https://www.instagram.com/uniads.uk?igsh=dGgybmRzaDdkYno2&utm_source=qr",
     tiktok: "https://www.tiktok.com/@uasuk?_t=ZN-8y6oYuMR93m&_r=1",
   },
+  credential: {
+    badgeName: "UK Knowledge Trained Counsellor",
+    issuer: "British Council Agent and Counsellor Training Hub",
+    holder: "Anthony Joshua",
+    issuedOn: "28 June 2025",
+    expiresOn: "25 June 2027",
+    authCode: "QELEZNSLVXSSRWBL",
+    verifyUrl:
+      "https://enetbadges.com/MyBadges/Details?authCode=QELEZNSLVXSSRWBL",
+  },
   locations: [
     "London",
     "Birmingham",

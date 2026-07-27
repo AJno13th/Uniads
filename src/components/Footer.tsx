@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks, siteConfig, services, courseTypes } from "@/data/site";
+import { VerifiedBadge } from "@/components/VerifiedBadge";
 
 export function Footer() {
   return (
@@ -19,18 +20,7 @@ export function Footer() {
             student finance and childcare grant support across top UK partner
             institutions.
           </p>
-          <div className="rounded-lg bg-white/95 p-3">
-            <Image
-              src="/images/british-council-logo.svg"
-              alt="British Council"
-              width={220}
-              height={64}
-              className="h-10 w-auto"
-            />
-            <p className="mt-2 text-xs font-medium text-navy">
-              UK Certified Counsellor · UK Agent Quality Framework
-            </p>
-          </div>
+          <VerifiedBadge variant="dark" />
         </div>
 
         <div>
@@ -53,6 +43,11 @@ export function Footer() {
             <li>
               <Link href="/book" className="hover:text-olive">
                 Book a Phone Call
+              </Link>
+            </li>
+            <li>
+              <Link href="/study-without-qualifications" className="hover:text-olive">
+                Study Without Qualifications
               </Link>
             </li>
             <li>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/Button";
+import { LeadQualifier } from "@/components/LeadQualifier";
 import { courseTypes, services, whatsappLink } from "@/data/site";
 import { universities, subjectAreas } from "@/data/universities";
 
@@ -42,8 +43,8 @@ export default function HomePage() {
           <div className="fade-up-delay relative order-2">
             <div className="float-soft relative aspect-[4/5] overflow-hidden rounded-none sm:aspect-[5/6] lg:min-h-[520px]">
               <Image
-                src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1400&q=80"
-                alt="Students beginning their UK university journey with UNIADS guidance"
+                src="/images/hero-graduation.jpg"
+                alt="Graduate holding a mortarboard outside a UK university building"
                 fill
                 priority
                 className="object-cover object-center"
@@ -101,6 +102,45 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Qualifier — high-quality lead capture */}
+      <section className="bg-teal-soft/50">
+        <div className="mx-auto grid max-w-7xl items-start gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal">
+              Check your eligibility
+            </p>
+            <h2 className="display mt-3 text-3xl text-navy sm:text-4xl">
+              Tell us your status, course and study mode
+            </h2>
+            <p className="mt-4 text-muted">
+              Student finance eligibility depends on your settlement status and UK
+              residency, so we ask up front. Pick your answers and WhatsApp opens with
+              a ready-made message — no long forms, no waiting.
+            </p>
+            <ul className="mt-6 space-y-2 text-sm text-navy">
+              {[
+                "21+ can start with no formal qualifications",
+                "18–21 need a Level 3 qualification",
+                "Classes just 2 days a week — weekday, evening or weekend",
+              ].map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span className="text-olive">✓</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Button
+              href="/study-without-qualifications"
+              variant="ghost"
+              className="mt-6"
+            >
+              No qualifications? Start here
+            </Button>
+          </div>
+          <LeadQualifier />
         </div>
       </section>
 

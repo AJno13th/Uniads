@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/Button";
+import { VerifiedBadge } from "@/components/VerifiedBadge";
 import { siteConfig, whatsappLink } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -62,19 +63,7 @@ export default function AboutPage() {
               height={240}
               className="h-auto w-full max-w-md"
             />
-            <div className="rounded-lg bg-cream p-5">
-              <Image
-                src="/images/british-council-logo.svg"
-                alt="British Council"
-                width={240}
-                height={70}
-                className="h-10 w-auto"
-              />
-              <p className="mt-3 text-sm text-muted">
-                Proudly associated with the British Council UK Agent Quality
-                Framework as a UK Certified Counsellor.
-              </p>
-            </div>
+            <VerifiedBadge />
           </div>
         </div>
       </section>

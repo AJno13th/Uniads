@@ -1,7 +1,10 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
-import { siteConfig, whatsappLink } from "@/data/site";
+import { siteConfig } from "@/data/site";
+import { settlementStatuses, studyModes } from "@/data/qualification";
+import { universities } from "@/data/universities";
+import { submitLead } from "@/lib/crm/client";
 
 const timeSlots = [
   "09:00",
@@ -37,39 +40,67 @@ function formatDay(d: Date) {
 }
 
 function isoDate(d: Date) {
-  return d.toISOString().slice(0, 10);
+  const offsetMs = d.getTimezoneOffset() * 60 * 1000;
+  return new Date(d.getTime() - offsetMs).toISOString().slice(0, 10);
 }
 
 export function BookingCalendar() {
   const days = useMemo(() => nextDays(14), []);
   const [date, setDate] = useState(isoDate(days[0]));
   const [time, setTime] = useState("10:00");
-  const [done, setDone] = useState(false);
+  const [studyMode, setStudyMode] = useState("");
+  const [universityName, setUniversityName] = useState("");
+  const [course, setCourse] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
+  const [error, setError] = useState("");
+  const [reference, setReference] = useState<string | null>(null);
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const message = [
-      "UNIADS phone consultation booking request",
-      `Name: ${form.get("fullName")}`,
-      `Phone: ${form.get("phone")}`,
-      `Email: ${form.get("email")}`,
-      `Preferred date: ${date}`,
-      `Preferred time: ${time} (UK time)`,
-      `Topic: ${form.get("topic")}`,
-      `Notes: ${form.get("notes")}`,
-    ].join("\n");
-    setDone(true);
-    window.open(whatsappLink(message), "_blank", "noopener,noreferrer");
+  const courseOptions = useMemo(() => {
+    const uni = universities.find((u) => u.name === universityName);
+    if (!uni) return [];
+    return uni.courses.filter((c) => c.status !== "not-running").map((c) => c.name);
+  }, [universityName]);
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    setStatus("sending");
+    setError("");
+
+    try {
+      const response = await submitLead({
+        source: "booking",
+        fullName: String(form.get("fullName") ?? ""),
+        phone: String(form.get("phone") ?? ""),
+        email: String(form.get("email") ?? ""),
+        settlementStatus: String(form.get("settlementStatus") ?? ""),
+        university: universityName,
+        course,
+        studyMode,
+        callDate: date,
+        callTime: time,
+        notes: String(form.get("notes") ?? ""),
+        services: [String(form.get("topic") ?? "")].filter(Boolean),
+        company: String(form.get("company") ?? ""),
+      });
+      setReference(response.reference);
+      if (response.whatsappUrl) {
+        window.open(response.whatsappUrl, "_blank", "noopener,noreferrer");
+      }
+    } catch (submitError) {
+      setStatus("error");
+      setError((submitError as Error).message);
+    }
   }
 
-  if (done) {
+  if (reference) {
     return (
       <div className="rounded-xl border border-olive/40 bg-white p-8 text-center">
         <h3 className="display text-3xl text-navy">Call requested</h3>
         <p className="mt-3 text-muted">
-          Thanks — we will confirm your phone consultation shortly. For a faster
-          response, keep WhatsApp open or call{" "}
+          Reference <strong className="text-navy">{reference}</strong>. We will confirm
+          your phone consultation for <strong>{date}</strong> at <strong>{time}</strong>.
+          For a faster response, call{" "}
           <a className="font-semibold text-teal" href={`tel:+${siteConfig.phone}`}>
             {siteConfig.phoneDisplay}
           </a>
@@ -89,8 +120,8 @@ export function BookingCalendar() {
           Book a phone consultation
         </h2>
         <p className="mt-2 text-sm text-muted">
-          Choose a date and time that works for you. A UNIADS advisor will call
-          you to discuss courses, applications and funding.
+          Choose a date and time that works for you. A UNIADS advisor will call you to
+          discuss courses, applications and funding.
         </p>
 
         <p className="label mt-6">Select a date</p>
@@ -154,15 +185,100 @@ export function BookingCalendar() {
           <input id="email" name="email" type="email" required className="input" />
         </div>
         <div>
+          <label className="label" htmlFor="settlementStatus">
+            Settlement status *
+          </label>
+          <select
+            id="settlementStatus"
+            name="settlementStatus"
+            required
+            className="input"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select your status
+            </option>
+            {settlementStatuses.map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="label" htmlFor="booking-university">
+            University of interest
+          </label>
+          <select
+            id="booking-university"
+            className="input"
+            value={universityName}
+            onChange={(e) => {
+              setUniversityName(e.target.value);
+              setCourse("");
+            }}
+          >
+            <option value="">No preference — advise me</option>
+            {universities.map((u) => (
+              <option key={u.slug} value={u.name}>
+                {u.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        {courseOptions.length > 0 && (
+          <div>
+            <label className="label" htmlFor="booking-course">
+              Course of interest
+            </label>
+            <select
+              id="booking-course"
+              className="input"
+              value={course}
+              onChange={(e) => setCourse(e.target.value)}
+            >
+              <option value="">Select a course</option>
+              {courseOptions.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+              <option value="Not sure — please advise">Not sure — please advise</option>
+            </select>
+          </div>
+        )}
+        <div>
+          <span className="label">Full-time or part-time?</span>
+          <div className="flex flex-wrap gap-2">
+            {studyModes.map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => setStudyMode(mode)}
+                className={`rounded-md px-4 py-2 text-sm font-semibold transition ${
+                  studyMode === mode
+                    ? "bg-olive text-navy-deep"
+                    : "bg-cream text-navy hover:bg-olive/30"
+                }`}
+              >
+                {mode}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div>
           <label className="label" htmlFor="topic">
             What would you like to discuss?
           </label>
-          <select id="topic" name="topic" className="input" defaultValue="University application">
+          <select
+            id="topic"
+            name="topic"
+            className="input"
+            defaultValue="University application"
+          >
             <option>University application</option>
             <option>Course advice</option>
             <option>Student finance</option>
             <option>Childcare grant</option>
-            <option>English & Maths certification</option>
+            <option>English &amp; Maths certification</option>
             <option>Job sourcing support</option>
             <option>General enquiry</option>
           </select>
@@ -173,14 +289,28 @@ export function BookingCalendar() {
           </label>
           <textarea id="notes" name="notes" rows={3} className="input" />
         </div>
+
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden
+        />
+
         <p className="text-xs text-muted">
           Selected: <strong>{date}</strong> at <strong>{time}</strong>
         </p>
+        {status === "error" && (
+          <p className="text-sm font-semibold text-red-600">{error}</p>
+        )}
         <button
           type="submit"
-          className="w-full rounded-md bg-navy px-5 py-3.5 text-sm font-bold text-white transition hover:bg-navy-deep"
+          disabled={status === "sending"}
+          className="w-full rounded-md bg-navy px-5 py-3.5 text-sm font-bold text-white transition hover:bg-navy-deep disabled:opacity-60"
         >
-          Confirm phone call booking
+          {status === "sending" ? "Booking…" : "Confirm phone call booking"}
         </button>
       </div>
     </form>
