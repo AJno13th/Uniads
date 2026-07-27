@@ -6,8 +6,8 @@ export const siteConfig = {
   phone: "447368218457",
   phoneDisplay: "+44 7368 218457",
   email: "info@uniads.co.uk",
-  /** WhatsApp Business chat link (from official QR / share link). */
-  whatsapp: "https://wa.me/message/L6NMHZKWMSE7J1",
+  /** Digits only — used for wa.me links so form messages can prefill. */
+  whatsapp: "447368218457",
   whatsappMessage: "Send Us a message to start your application",
   social: {
     facebook: "https://m.facebook.com/61577408444999/",
@@ -40,14 +40,9 @@ export const siteConfig = {
 } as const;
 
 export function whatsappLink(message: string = siteConfig.whatsappMessage) {
-  // Business /message/ invite links drop ?text on the wa.me redirect;
-  // api.whatsapp.com keeps the prefilled message.
-  let base: string = siteConfig.whatsapp;
-  if (base.includes("wa.me/message/")) {
-    base = base.replace("https://wa.me/", "https://api.whatsapp.com/");
-  }
-  const joiner = base.includes("?") ? "&" : "?";
-  return `${base}${joiner}text=${encodeURIComponent(message)}`;
+  // Phone-based wa.me links keep ?text= so booking/apply form answers prefill.
+  // Business invite QR links (/message/...) drop the text on redirect.
+  return `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(message)}`;
 }
 
 export const navLinks = [
