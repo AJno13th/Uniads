@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 120" role="img" aria-label="UNIADS">
+  <rect width="140" height="120" fill="#1D2B4D"/>
+  <rect x="140" width="140" height="120" fill="#1F6B6B"/>
+  <circle cx="250" cy="-10" r="55" fill="#C2CC60"/>
+  <g fill="#ffffff">
+    <g transform="translate(116, 12)">
+      <polygon points="24,14 48,24 24,34 0,24" fill="#ffffff"/>
+      <rect x="18" y="24" width="12" height="8" fill="#ffffff"/>
+      <path d="M48 24 L52 36" stroke="#ffffff" stroke-width="2" fill="none"/>
+      <circle cx="52" cy="38" r="2.5" fill="#ffffff"/>
+    </g>
+    <text x="140" y="72" text-anchor="middle" font-family="Arial Black, Helvetica, sans-serif" font-size="36" font-weight="800" letter-spacing="3">UNIADS</text>
+    <text x="140" y="94" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="9" letter-spacing="2.8">EDUCATIONAL CONSULTING</text>
+  </g>
+</svg>
