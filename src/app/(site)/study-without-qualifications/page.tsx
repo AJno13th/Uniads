@@ -41,8 +41,8 @@ const faqs = [
     a: "Our counselling, application support and student finance guidance are free to you. Tuition is normally covered by a tuition fee loan if you are eligible.",
   },
   {
-    q: "What settlement status do I need for student finance?",
-    a: "Student finance usually requires settled status — for example British or Irish citizenship, EU Settled Status, Indefinite Leave to Remain, or refugee/humanitarian protection — plus a UK residency history. Pre-settled status and some other statuses can qualify in certain circumstances, which is why we ask on the form and confirm your eligibility before you apply.",
+    q: "What residency status do I need for student finance?",
+    a: "Student finance usually needs a home residency status — for example British or Irish Citizen, ILR, EU Settled Status, Refugee / Asylum Granted, Humanitarian Protection or the Ukraine Scheme — plus a UK residency history. EU Pre-Settled Status and dependants of settled people can qualify in certain cases, which is why we ask on the form and confirm eligibility before you apply.",
   },
   {
     q: "Can I get a maintenance loan as well as tuition fees?",

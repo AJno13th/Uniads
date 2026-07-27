@@ -166,13 +166,13 @@ export function ApplyForm() {
           2 · Eligibility
         </h3>
         <p className="-mt-2 text-xs text-muted">
-          Your immigration and residency status determines which funding you can
-          access, so this helps us advise you accurately from the first call.
+          Your residency status determines which funding you can access, so this
+          helps us advise you accurately from the first call.
         </p>
         <div className="grid gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className="label" htmlFor="settlementStatus">
-              Settlement / immigration status *
+              Residency status in the UK *
             </label>
             <select
               id="settlementStatus"
@@ -182,7 +182,7 @@ export function ApplyForm() {
               defaultValue=""
             >
               <option value="" disabled>
-                Select your status
+                Select your residency status
               </option>
               {settlementStatuses.map((s) => (
                 <option key={s}>{s}</option>

@@ -25,7 +25,7 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
   if (!lead) notFound();
 
   const fields: [string, string | null][] = [
-    ["Settlement status", lead.settlementStatus],
+    ["Residency status", lead.settlementStatus],
     ["Time in the UK", lead.ukResidency],
     ["Age", lead.ageBracket],
     ["Highest qualification", lead.highestQualification],

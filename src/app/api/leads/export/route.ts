@@ -26,7 +26,7 @@ export async function GET() {
     "Name",
     "Email",
     "Phone",
-    "Settlement status",
+    "Residency status",
     "Time in UK",
     "Age",
     "Highest qualification",

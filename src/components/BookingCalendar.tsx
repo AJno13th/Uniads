@@ -260,7 +260,7 @@ export function BookingCalendar() {
           </div>
           <div>
             <label className="label" htmlFor="settlementStatus">
-              Settlement status *
+              Residency status in the UK *
             </label>
             <select
               id="settlementStatus"
@@ -270,7 +270,7 @@ export function BookingCalendar() {
               defaultValue=""
             >
               <option value="" disabled>
-                Select your status
+                Select your residency status
               </option>
               {settlementStatuses.map((s) => (
                 <option key={s}>{s}</option>

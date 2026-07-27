@@ -1,18 +1,18 @@
+/**
+ * Residency / immigration statuses aligned with TikTok ad eligibility funnels
+ * (student-finance home routes). Keep labels short so mobile users recognise them.
+ */
 export const settlementStatuses = [
-  "British citizen",
-  "Irish citizen",
-  "EU Settled Status (EUSS)",
-  "EU Pre-Settled Status (EUSS)",
-  "Indefinite Leave to Remain (ILR)",
-  "Indefinite Leave to Enter (ILE)",
-  "Limited Leave to Remain (LLR)",
-  "Refugee status",
+  "British Citizen",
+  "Irish Citizen",
+  "ILR (Indefinite Leave to Remain)",
+  "EU Settled Status",
+  "EU Pre-Settled Status",
+  "Refugee / Asylum Granted",
   "Humanitarian Protection",
-  "Discretionary Leave to Remain",
-  "Spouse / partner visa",
-  "Dependant visa",
-  "Student visa",
-  "Other / Not sure",
+  "Ukraine Scheme",
+  "Dependent of any of the above",
+  "None of the above / Not sure",
 ] as const;
 
 export const residencyOptions = [
@@ -89,20 +89,18 @@ export const preferredCities = [
  * drive how a lead is prioritised for the advisor team.
  */
 const strongStatuses = new Set<string>([
-  "British citizen",
-  "Irish citizen",
-  "EU Settled Status (EUSS)",
-  "Indefinite Leave to Remain (ILR)",
-  "Indefinite Leave to Enter (ILE)",
-  "Refugee status",
+  "British Citizen",
+  "Irish Citizen",
+  "ILR (Indefinite Leave to Remain)",
+  "EU Settled Status",
+  "Refugee / Asylum Granted",
   "Humanitarian Protection",
+  "Ukraine Scheme",
 ]);
 
 const mediumStatuses = new Set<string>([
-  "EU Pre-Settled Status (EUSS)",
-  "Discretionary Leave to Remain",
-  "Limited Leave to Remain (LLR)",
-  "Spouse / partner visa",
+  "EU Pre-Settled Status",
+  "Dependent of any of the above",
 ]);
 
 export type ScoreBand = "hot" | "warm" | "cold";
@@ -126,7 +124,7 @@ export function scoreLead(input: ScoreInput): { score: number; band: ScoreBand }
   const status = input.settlementStatus ?? "";
   if (strongStatuses.has(status)) score += 35;
   else if (mediumStatuses.has(status)) score += 20;
-  else if (status && status !== "Other / Not sure") score += 5;
+  else if (status && status !== "None of the above / Not sure") score += 5;
 
   const residency = input.ukResidency ?? "";
   if (residency === "Born in the UK" || residency === "5+ years") score += 20;
