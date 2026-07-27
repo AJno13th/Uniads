@@ -23,7 +23,10 @@ export function ApplyForm() {
   const [studyMode, setStudyMode] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
-  const [result, setResult] = useState<{ reference: string | null } | null>(null);
+  const [result, setResult] = useState<{
+    reference: string | null;
+    whatsappUrl?: string;
+  } | null>(null);
 
   const selectedUniversity = useMemo(
     () => universities.find((u) => u.name === universityName),
@@ -77,10 +80,11 @@ export function ApplyForm() {
         notes: String(form.get("notes") ?? ""),
         company: String(form.get("company") ?? ""),
       });
-      setResult({ reference: response.reference });
-      if (response.whatsappUrl) {
-        window.open(response.whatsappUrl, "_blank", "noopener,noreferrer");
-      }
+      setResult({
+        reference: response.reference,
+        whatsappUrl: response.whatsappUrl,
+      });
+      setStatus("idle");
     } catch (submitError) {
       setStatus("error");
       setError((submitError as Error).message);
@@ -93,16 +97,27 @@ export function ApplyForm() {
         <h3 className="display text-3xl text-navy">Application received</h3>
         <p className="mt-3 text-muted">
           Your reference is <strong className="text-navy">{result.reference}</strong>.
-          WhatsApp should have opened with your answers pre-filled — press send and an
-          advisor will confirm your eligibility and next steps.
+          Continue on WhatsApp with your answers pre-filled — press send and an advisor
+          will confirm your eligibility and next steps.
         </p>
-        <p className="mt-3 text-sm text-muted">
-          Prefer email? Reach us at{" "}
-          <a className="font-semibold text-teal" href={`mailto:${siteConfig.email}`}>
-            {siteConfig.email}
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          {result.whatsappUrl && (
+            <a
+              href={result.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#25D366] px-5 py-3 text-sm font-bold text-white transition hover:brightness-95"
+            >
+              Continue on WhatsApp
+            </a>
+          )}
+          <a
+            className="inline-flex min-h-12 items-center justify-center rounded-md border border-line bg-white px-5 py-3 text-sm font-bold text-navy transition hover:border-navy"
+            href={`mailto:${siteConfig.email}`}
+          >
+            Email {siteConfig.email}
           </a>
-          .
-        </p>
+        </div>
       </div>
     );
   }
@@ -482,19 +497,6 @@ export function ApplyForm() {
         )}
       </div>
 
-      <div className="pointer-events-none sticky bottom-20 z-40 -mx-6 border-t border-line bg-white/95 px-6 py-3 backdrop-blur sm:hidden">
-        <button
-          type="submit"
-          disabled={status === "sending" || !studyMode}
-          className="pointer-events-auto min-h-12 w-full rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep disabled:opacity-60"
-        >
-          {status === "sending"
-            ? "Submitting…"
-            : studyMode
-              ? "Submit & open WhatsApp"
-              : "Select full-time or part-time"}
-        </button>
-      </div>
     </form>
   );
 }

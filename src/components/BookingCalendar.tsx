@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { siteConfig, whatsappLink } from "@/data/site";
 import { settlementStatuses, studyModes } from "@/data/qualification";
 import { levelLabel, universities } from "@/data/universities";
@@ -74,9 +74,24 @@ function formatSelectedSlot(dateValue: string, time: string, dayOptions: ReturnT
   return `${dayPart} at ${time}`;
 }
 
+const EMPTY_DAYS: ReturnType<typeof buildDayOptions> = [];
+
+function subscribeNoop() {
+  return () => undefined;
+}
+
 export function BookingCalendar() {
-  const dayOptions = useMemo(() => buildDayOptions(14), []);
-  const [date, setDate] = useState(dayOptions[0]?.value ?? "");
+  // Client-only day list avoids SSR/CSR timezone hydration mismatches (#418).
+  const daysCache = useRef<ReturnType<typeof buildDayOptions> | null>(null);
+  const dayOptions = useSyncExternalStore(
+    subscribeNoop,
+    () => {
+      if (!daysCache.current) daysCache.current = buildDayOptions(14);
+      return daysCache.current;
+    },
+    () => EMPTY_DAYS,
+  );
+  const [date, setDate] = useState("");
   const [time, setTime] = useState<string>("10:00");
   const [studyMode, setStudyMode] = useState("");
   const [universityName, setUniversityName] = useState("");
@@ -86,12 +101,31 @@ export function BookingCalendar() {
   const [reference, setReference] = useState<string | null>(null);
   const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
 
-  const selectedLabel = date
-    ? formatSelectedSlot(date, time, dayOptions)
+  const selectedDate = date || dayOptions[0]?.value || "";
+
+  const selectedLabel = selectedDate
+    ? formatSelectedSlot(selectedDate, time, dayOptions)
     : `Choose a date · ${time}`;
 
   const minDate = dayOptions[0]?.value;
   const maxDate = dayOptions[dayOptions.length - 1]?.value;
+
+  function setBookingDate(value: string) {
+    const parsed = parseLocalDateValue(value);
+    if (!parsed || parsed.getDay() === 0) {
+      setError("Please choose a weekday — we do not take Sunday calls.");
+      setStatus("error");
+      return;
+    }
+    if (dayOptions.length && !dayOptions.some((d) => d.value === value)) {
+      setError("Please choose one of the available dates.");
+      setStatus("error");
+      return;
+    }
+    setError("");
+    setStatus("idle");
+    setDate(value);
+  }
 
   const courseOptions = useMemo(() => {
     const uni = universities.find((u) => u.name === universityName);
@@ -106,9 +140,20 @@ export function BookingCalendar() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!date || !time) {
+    const bookingDate = date || dayOptions[0]?.value || "";
+    if (!bookingDate || !time) {
       setStatus("error");
       setError("Please select a date and time for your call.");
+      return;
+    }
+    const parsed = parseLocalDateValue(bookingDate);
+    if (
+      !parsed ||
+      parsed.getDay() === 0 ||
+      !dayOptions.some((d) => d.value === bookingDate)
+    ) {
+      setStatus("error");
+      setError("Please choose an available weekday for your call.");
       return;
     }
 
@@ -126,7 +171,7 @@ export function BookingCalendar() {
         university: universityName,
         course,
         studyMode,
-        callDate: date,
+        callDate: bookingDate,
         callTime: time,
         notes: String(form.get("notes") ?? ""),
         services: [String(form.get("topic") ?? "")].filter(Boolean),
@@ -184,6 +229,14 @@ export function BookingCalendar() {
     );
   }
 
+  if (!dayOptions.length) {
+    return (
+      <div className="rounded-xl border border-line bg-white p-5 shadow-sm sm:p-6 lg:p-8">
+        <p className="text-sm text-muted">Loading available call times…</p>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="rounded-xl border border-line bg-white p-5 shadow-sm sm:p-6 lg:p-8">
@@ -213,10 +266,10 @@ export function BookingCalendar() {
               type="date"
               required
               className="input"
-              value={date}
+              value={selectedDate}
               min={minDate}
               max={maxDate}
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e) => setBookingDate(e.target.value)}
             />
             <div
               className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3"
@@ -224,12 +277,12 @@ export function BookingCalendar() {
               aria-label="Quick date choices"
             >
               {dayOptions.map((d) => {
-                const active = d.value === date;
+                const active = d.value === selectedDate;
                 return (
                   <button
                     key={d.value}
                     type="button"
-                    onClick={() => setDate(d.value)}
+                    onClick={() => setBookingDate(d.value)}
                     aria-pressed={active}
                     className={`relative z-0 min-h-12 touch-manipulation rounded-lg border px-3 py-3.5 text-left text-sm transition ${
                       active

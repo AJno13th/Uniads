@@ -9,6 +9,7 @@ import {
   ageBrackets,
 } from "@/data/qualification";
 import { submitLead } from "@/lib/crm/client";
+import { whatsappLink } from "@/data/site";
 
 /**
  * Compact qualifier used on high-intent pages: the student picks their
@@ -31,6 +32,7 @@ export function LeadQualifier({
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
   const [reference, setReference] = useState<string | null>(null);
+  const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
 
   const courseOptions = useMemo(() => {
     const uni = universities.find((u) => u.name === universityName);
@@ -76,9 +78,13 @@ export function LeadQualifier({
         company: String(form.get("company") ?? ""),
       });
       setReference(result.reference);
-      if (result.whatsappUrl) {
-        window.open(result.whatsappUrl, "_blank", "noopener,noreferrer");
-      }
+      setWhatsappUrl(
+        result.whatsappUrl ||
+          whatsappLink(
+            `Hi UNIADS, I'd like to start my application. (Ref ${result.reference ?? ""})`,
+          ),
+      );
+      setStatus("idle");
     } catch (submitError) {
       setStatus("error");
       setError((submitError as Error).message);
@@ -90,9 +96,19 @@ export function LeadQualifier({
       <div className={`rounded-xl border p-6 ${panel}`}>
         <h3 className="display text-2xl">Message ready</h3>
         <p className={`mt-2 text-sm ${dark ? "text-white/75" : "text-muted"}`}>
-          Your reference is <strong>{reference}</strong>. WhatsApp should have opened
-          with your details pre-filled — just press send and an advisor will reply.
+          Your reference is <strong>{reference}</strong>. Continue on WhatsApp with
+          your details pre-filled — press send and an advisor will reply.
         </p>
+        {whatsappUrl && (
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-md bg-[#25D366] px-5 py-3 text-sm font-bold text-white transition hover:brightness-95 sm:w-auto"
+          >
+            Continue on WhatsApp
+          </a>
+        )}
       </div>
     );
   }

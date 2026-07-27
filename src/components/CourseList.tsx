@@ -20,8 +20,8 @@ export function CourseList({
   }
 
   return (
-    <div className="overflow-hidden border border-line">
-      <table className="w-full text-left text-sm">
+    <div className="overflow-x-auto border border-line">
+      <table className="w-full min-w-[28rem] text-left text-sm">
         <thead className="bg-navy text-white">
           <tr>
             <th className="px-4 py-3 font-semibold">Course</th>
