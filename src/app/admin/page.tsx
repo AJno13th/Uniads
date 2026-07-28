@@ -6,6 +6,8 @@ import { leadStages, stageLabels, type LeadStage } from "@/lib/crm/types";
 import { settlementStatuses, studyModes } from "@/data/qualification";
 import { universities } from "@/data/universities";
 
+export const dynamic = "force-dynamic";
+
 const bandStyles: Record<string, string> = {
   hot: "bg-red-100 text-red-800",
   warm: "bg-amber-100 text-amber-800",

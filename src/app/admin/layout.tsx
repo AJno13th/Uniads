@@ -4,6 +4,8 @@ import { getSession } from "@/lib/crm/auth";
 import { isDurableStorage, storeMode } from "@/lib/crm/store";
 import { LogoutButton } from "./LogoutButton";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "UNIADS CRM",
   robots: { index: false, follow: false },
