@@ -1,11 +1,21 @@
 import { Pool } from "pg";
-import type { Lead, LeadFilters, LeadStage, NewLeadInput } from "./types";
+import type {
+  Lead,
+  LeadFilters,
+  LeadProfilePatch,
+  LeadStage,
+  NewAttachmentInput,
+  NewLeadInput,
+} from "./types";
 import { stageLabels } from "./types";
 import {
   applyFilters,
+  applyProfilePatch,
+  buildAttachment,
   computeStats,
   hydrateNewLead,
   makeActivity,
+  normalizeLead,
   type LeadStats,
   type LeadStore,
 } from "./shared";
@@ -65,7 +75,7 @@ async function fetchAll(): Promise<Lead[]> {
   const result = await getPool().query<Row>(
     "SELECT data FROM uniads_leads ORDER BY created_at DESC"
   );
-  return result.rows.map((r) => r.data);
+  return result.rows.map((r) => normalizeLead(r.data));
 }
 
 async function save(lead: Lead) {
@@ -102,7 +112,8 @@ export const pgLeadStore: LeadStore = {
       "SELECT data FROM uniads_leads WHERE id = $1",
       [id]
     );
-    return result.rows[0]?.data ?? null;
+    const row = result.rows[0]?.data;
+    return row ? normalizeLead(row) : null;
   },
 
   async update(
@@ -133,6 +144,62 @@ export const pgLeadStore: LeadStore = {
       );
       lead.owner = patch.owner;
     }
+    lead.updatedAt = new Date().toISOString();
+    await save(lead);
+    return lead;
+  },
+
+  async updateProfile(
+    id: string,
+    patch: LeadProfilePatch,
+    author: string
+  ): Promise<Lead | null> {
+    const lead = await pgLeadStore.get(id);
+    if (!lead) return null;
+    const next = applyProfilePatch(lead, patch, author);
+    if (next === lead) return lead;
+    await save(next);
+    return next;
+  },
+
+  async addAttachment(
+    id: string,
+    input: NewAttachmentInput,
+    author: string
+  ): Promise<Lead | null> {
+    const lead = await pgLeadStore.get(id);
+    if (!lead) return null;
+    const attachment = buildAttachment(input, author);
+    lead.attachments = [...lead.attachments, attachment];
+    lead.activities.push(
+      makeActivity(
+        "attachment",
+        `Uploaded “${attachment.label}” (${attachment.fileName})`,
+        author
+      )
+    );
+    lead.updatedAt = new Date().toISOString();
+    await save(lead);
+    return lead;
+  },
+
+  async removeAttachment(
+    id: string,
+    attachmentId: string,
+    author: string
+  ): Promise<Lead | null> {
+    const lead = await pgLeadStore.get(id);
+    if (!lead) return null;
+    const existing = lead.attachments.find((a) => a.id === attachmentId);
+    if (!existing) return null;
+    lead.attachments = lead.attachments.filter((a) => a.id !== attachmentId);
+    lead.activities.push(
+      makeActivity(
+        "attachment",
+        `Removed “${existing.label}” (${existing.fileName})`,
+        author
+      )
+    );
     lead.updatedAt = new Date().toISOString();
     await save(lead);
     return lead;

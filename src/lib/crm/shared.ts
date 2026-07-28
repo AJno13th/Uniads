@@ -1,6 +1,15 @@
 import { randomUUID } from "node:crypto";
 import { scoreLead } from "@/data/qualification";
-import type { Activity, Lead, LeadFilters, LeadStage, NewLeadInput } from "./types";
+import type {
+  Activity,
+  Lead,
+  LeadAttachment,
+  LeadFilters,
+  LeadProfilePatch,
+  LeadStage,
+  NewAttachmentInput,
+  NewLeadInput,
+} from "./types";
 
 export type LeadStats = {
   total: number;
@@ -19,6 +28,21 @@ export interface LeadStore {
     patch: { stage?: LeadStage; owner?: string | null },
     author: string
   ): Promise<Lead | null>;
+  updateProfile(
+    id: string,
+    patch: LeadProfilePatch,
+    author: string
+  ): Promise<Lead | null>;
+  addAttachment(
+    id: string,
+    input: NewAttachmentInput,
+    author: string
+  ): Promise<Lead | null>;
+  removeAttachment(
+    id: string,
+    attachmentId: string,
+    author: string
+  ): Promise<Lead | null>;
   addNote(id: string, body: string, author: string): Promise<Lead | null>;
   stats(): Promise<LeadStats>;
 }
@@ -27,6 +51,16 @@ export function buildReference(createdAt: Date, seed: string) {
   const y = createdAt.getUTCFullYear().toString().slice(-2);
   const m = String(createdAt.getUTCMonth() + 1).padStart(2, "0");
   return `UA-${y}${m}-${seed.replace(/-/g, "").slice(0, 5).toUpperCase()}`;
+}
+
+/** Ensure older leads without attachments still work. */
+export function normalizeLead(lead: Lead): Lead {
+  return {
+    ...lead,
+    attachments: Array.isArray(lead.attachments) ? lead.attachments : [],
+    activities: Array.isArray(lead.activities) ? lead.activities : [],
+    services: Array.isArray(lead.services) ? lead.services : [],
+  };
 }
 
 export function hydrateNewLead(input: NewLeadInput): Lead {
@@ -44,6 +78,7 @@ export function hydrateNewLead(input: NewLeadInput): Lead {
     owner: null,
     score,
     scoreBand: band,
+    attachments: [],
     activities: [
       {
         id: randomUUID(),
@@ -62,6 +97,115 @@ export function makeActivity(
   author: string
 ): Activity {
   return { id: randomUUID(), at: new Date().toISOString(), type, body, author };
+}
+
+export function applyProfilePatch(
+  lead: Lead,
+  patch: LeadProfilePatch,
+  author: string
+): Lead {
+  const next: Lead = { ...lead };
+  const changed: string[] = [];
+
+  const setString = (
+    key: keyof LeadProfilePatch,
+    label: string,
+    max = 500
+  ) => {
+    if (patch[key] === undefined) return;
+    const raw = patch[key];
+    const value =
+      raw === null || raw === ""
+        ? null
+        : typeof raw === "string"
+          ? raw.trim().slice(0, max) || null
+          : null;
+    if ((next[key as keyof Lead] as unknown) !== value) {
+      (next as Record<string, unknown>)[key] = value;
+      changed.push(label);
+    }
+  };
+
+  if (patch.fullName !== undefined) {
+    const value = patch.fullName.trim().slice(0, 120);
+    if (value && value !== next.fullName) {
+      next.fullName = value;
+      changed.push("name");
+    }
+  }
+  if (patch.email !== undefined) {
+    const value = patch.email.trim().slice(0, 160);
+    if (value !== next.email) {
+      next.email = value;
+      changed.push("email");
+    }
+  }
+  if (patch.phone !== undefined) {
+    const value = patch.phone.trim().slice(0, 40);
+    if (value && value !== next.phone) {
+      next.phone = value;
+      changed.push("phone");
+    }
+  }
+
+  setString("settlementStatus", "residency status", 120);
+  setString("ukResidency", "time in the UK", 60);
+  setString("ageBracket", "age", 30);
+  setString("highestQualification", "highest qualification", 120);
+  setString("previousStudentFinance", "student finance history", 120);
+  setString("university", "university", 160);
+  setString("course", "course", 200);
+  setString("courseLevel", "course level", 80);
+  setString("studyMode", "study mode", 40);
+  setString("classPreference", "class preference", 80);
+  setString("preferredCity", "preferred city", 60);
+  setString("intake", "intake", 60);
+  setString("notes", "notes", 2000);
+  setString("callDate", "call date", 20);
+  setString("callTime", "call time", 10);
+
+  if (patch.services !== undefined) {
+    const services = patch.services
+      .map((s) => s.trim().slice(0, 160))
+      .filter(Boolean)
+      .slice(0, 20);
+    if (JSON.stringify(services) !== JSON.stringify(next.services)) {
+      next.services = services;
+      changed.push("support requested");
+    }
+  }
+
+  if (changed.length === 0) return lead;
+
+  const { score, band } = scoreLead(next);
+  next.score = score;
+  next.scoreBand = band;
+  next.updatedAt = new Date().toISOString();
+  next.activities = [
+    ...next.activities,
+    makeActivity(
+      "field_update",
+      `Updated ${changed.join(", ")}`,
+      author
+    ),
+  ];
+  return next;
+}
+
+export function buildAttachment(
+  input: NewAttachmentInput,
+  author: string
+): LeadAttachment {
+  return {
+    id: randomUUID(),
+    label: input.label.trim().slice(0, 120) || input.fileName,
+    fileName: input.fileName.trim().slice(0, 200),
+    mimeType: input.mimeType.slice(0, 120) || "application/octet-stream",
+    size: input.size,
+    data: input.data,
+    uploadedAt: new Date().toISOString(),
+    uploadedBy: author,
+  };
 }
 
 export function applyFilters(leads: Lead[], filters: LeadFilters = {}): Lead[] {
@@ -99,35 +243,35 @@ export function applyFilters(leads: Lead[], filters: LeadFilters = {}): Lead[] {
       return false;
     }
     if (term) {
-      const haystack = [
+      const hay = [
         lead.fullName,
         lead.email,
         lead.phone,
         lead.reference,
         lead.university,
         lead.course,
-        lead.notes,
+        lead.owner,
       ]
         .filter(Boolean)
         .join(" ")
         .toLowerCase();
-      if (!haystack.includes(term)) return false;
+      if (!hay.includes(term)) return false;
     }
     return true;
   });
 }
 
 export function computeStats(leads: Lead[]): LeadStats {
-  const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
   const byStage: Record<string, number> = {};
+  let hot = 0;
+  let last7Days = 0;
+
   for (const lead of leads) {
     byStage[lead.stage] = (byStage[lead.stage] ?? 0) + 1;
+    if (lead.scoreBand === "hot") hot += 1;
+    if (new Date(lead.createdAt).getTime() >= weekAgo) last7Days += 1;
   }
-  return {
-    total: leads.length,
-    hot: leads.filter((l) => l.scoreBand === "hot").length,
-    last7Days: leads.filter((l) => new Date(l.createdAt).getTime() >= sevenDaysAgo)
-      .length,
-    byStage,
-  };
+
+  return { total: leads.length, hot, last7Days, byStage };
 }

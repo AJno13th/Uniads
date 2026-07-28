@@ -6,6 +6,8 @@ import { stageLabels } from "@/lib/crm/types";
 import { buildPresetMessage } from "@/lib/crm/message";
 import { siteConfig, whatsappLink } from "@/data/site";
 import { LeadControls } from "./LeadControls";
+import { LeadDocuments } from "./LeadDocuments";
+import { LeadProfileEditor } from "./LeadProfileEditor";
 
 type Params = Promise<{ id: string }>;
 
@@ -30,22 +32,9 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
   }
   if (!lead) notFound();
 
-  const fields: [string, string | null][] = [
-    ["Residency status", lead.settlementStatus],
-    ["Time in the UK", lead.ukResidency],
-    ["Age", lead.ageBracket],
-    ["Highest qualification", lead.highestQualification],
-    ["Student finance history", lead.previousStudentFinance],
-    ["University", lead.university],
-    ["Course", lead.course],
-    ["Course level", lead.courseLevel],
-    ["Study mode", lead.studyMode],
-    ["Class preference", lead.classPreference],
-    ["Preferred city", lead.preferredCity],
-    ["Intake", lead.intake],
-    ["Requested call", lead.callDate ? `${lead.callDate} ${lead.callTime ?? ""}` : null],
-    ["Source", lead.source.replace("_", " ")],
-  ];
+  const attachmentMeta = lead.attachments.map(
+    ({ data: _data, ...meta }) => meta
+  );
 
   const followUp = whatsappLink(
     `Hi ${lead.fullName.split(" ")[0]}, this is UNIADS following up on your application (${lead.reference}).`
@@ -115,50 +104,33 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <section className="space-y-6">
-          <div className="rounded-xl bg-white p-6 shadow-sm">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-teal">
-              Qualification answers
-            </h2>
-            <dl className="mt-4 grid gap-3 sm:grid-cols-2">
-              {fields.map(([label, value]) => (
-                <div key={label} className="border-b border-line/70 pb-2">
-                  <dt className="text-xs uppercase tracking-wider text-muted">
-                    {label}
-                  </dt>
-                  <dd className="text-sm font-medium text-navy">{value || "—"}</dd>
-                </div>
-              ))}
-            </dl>
+          <LeadProfileEditor
+            leadId={lead.id}
+            lead={{
+              fullName: lead.fullName,
+              email: lead.email,
+              phone: lead.phone,
+              settlementStatus: lead.settlementStatus,
+              ukResidency: lead.ukResidency,
+              ageBracket: lead.ageBracket,
+              highestQualification: lead.highestQualification,
+              previousStudentFinance: lead.previousStudentFinance,
+              university: lead.university,
+              course: lead.course,
+              courseLevel: lead.courseLevel,
+              studyMode: lead.studyMode,
+              classPreference: lead.classPreference,
+              preferredCity: lead.preferredCity,
+              intake: lead.intake,
+              services: lead.services,
+              notes: lead.notes,
+              callDate: lead.callDate,
+              callTime: lead.callTime,
+              source: lead.source,
+            }}
+          />
 
-            {lead.services.length > 0 && (
-              <>
-                <h3 className="mt-6 text-xs uppercase tracking-wider text-muted">
-                  Support requested
-                </h3>
-                <ul className="mt-2 flex flex-wrap gap-2">
-                  {lead.services.map((s) => (
-                    <li
-                      key={s}
-                      className="rounded bg-cream px-2 py-1 text-xs font-semibold text-navy"
-                    >
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-
-            {lead.notes && (
-              <>
-                <h3 className="mt-6 text-xs uppercase tracking-wider text-muted">
-                  Applicant notes
-                </h3>
-                <p className="mt-2 whitespace-pre-wrap text-sm text-navy">
-                  {lead.notes}
-                </p>
-              </>
-            )}
-          </div>
+          <LeadDocuments leadId={lead.id} attachments={attachmentMeta} />
 
           <div className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="text-sm font-bold uppercase tracking-wider text-teal">

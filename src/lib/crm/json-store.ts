@@ -1,11 +1,21 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
-import type { Lead, LeadFilters, LeadStage, NewLeadInput } from "./types";
+import type {
+  Lead,
+  LeadFilters,
+  LeadProfilePatch,
+  LeadStage,
+  NewAttachmentInput,
+  NewLeadInput,
+} from "./types";
 import {
   applyFilters,
+  applyProfilePatch,
+  buildAttachment,
   computeStats,
   hydrateNewLead,
   makeActivity,
+  normalizeLead,
   type LeadStats,
   type LeadStore,
 } from "./shared";
@@ -41,7 +51,7 @@ async function readAll(): Promise<Lead[]> {
   try {
     const raw = await readFile(dataFilePath(), "utf8");
     const parsed = JSON.parse(raw) as Lead[];
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed) ? parsed.map(normalizeLead) : [];
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
     throw error;
@@ -115,6 +125,75 @@ export const jsonLeadStore: LeadStore = {
         );
         lead.owner = patch.owner;
       }
+      lead.updatedAt = new Date().toISOString();
+      leads[index] = lead;
+      await writeAll(leads);
+      return lead;
+    });
+  },
+
+  async updateProfile(
+    id: string,
+    patch: LeadProfilePatch,
+    author: string
+  ): Promise<Lead | null> {
+    return enqueue(async () => {
+      const leads = await readAll();
+      const index = leads.findIndex((l) => l.id === id);
+      if (index === -1) return null;
+      const next = applyProfilePatch(leads[index], patch, author);
+      leads[index] = next;
+      await writeAll(leads);
+      return next;
+    });
+  },
+
+  async addAttachment(
+    id: string,
+    input: NewAttachmentInput,
+    author: string
+  ): Promise<Lead | null> {
+    return enqueue(async () => {
+      const leads = await readAll();
+      const index = leads.findIndex((l) => l.id === id);
+      if (index === -1) return null;
+      const lead = leads[index];
+      const attachment = buildAttachment(input, author);
+      lead.attachments = [...lead.attachments, attachment];
+      lead.activities.push(
+        makeActivity(
+          "attachment",
+          `Uploaded “${attachment.label}” (${attachment.fileName})`,
+          author
+        )
+      );
+      lead.updatedAt = new Date().toISOString();
+      leads[index] = lead;
+      await writeAll(leads);
+      return lead;
+    });
+  },
+
+  async removeAttachment(
+    id: string,
+    attachmentId: string,
+    author: string
+  ): Promise<Lead | null> {
+    return enqueue(async () => {
+      const leads = await readAll();
+      const index = leads.findIndex((l) => l.id === id);
+      if (index === -1) return null;
+      const lead = leads[index];
+      const existing = lead.attachments.find((a) => a.id === attachmentId);
+      if (!existing) return null;
+      lead.attachments = lead.attachments.filter((a) => a.id !== attachmentId);
+      lead.activities.push(
+        makeActivity(
+          "attachment",
+          `Removed “${existing.label}” (${existing.fileName})`,
+          author
+        )
+      );
       lead.updatedAt = new Date().toISOString();
       leads[index] = lead;
       await writeAll(leads);
