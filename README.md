@@ -33,13 +33,20 @@ Open [http://localhost:3000](http://localhost:3000). The CRM lives at
 | `LEAD_NOTIFY_EMAIL` | No | Inbox for lead alert emails (defaults to `info@uniads.co.uk`) |
 | `RESEND_API_KEY` | No | If set, lead alerts are sent via Resend instead of FormSubmit |
 | `RESEND_FROM_EMAIL` | No | Resend from address |
-| `LEAD_NOTIFY_WEBHOOK_URL` | No | Optional webhook that receives new lead JSON |
+| `GOOGLE_SITE_VERIFICATION` | No | Google Search Console HTML-tag verification code |
 
-Without `DATABASE_URL` on Vercel the CRM writes to `/tmp`, which is **not shared** across
-serverless instances — the admin portal stays empty even when the website booking
-“succeeds”. Create a free Neon database, paste the connection string as
-`DATABASE_URL` in Vercel, and redeploy. The `uniads_leads` table is created
-automatically on first use.
+## Google Search Console (branded search)
+
+Google may still show the **old** “Uni Admission Support UK” listing until it re-crawls.
+
+1. Open [Google Search Console](https://search.google.com/search-console) and add property `https://www.uniads.co.uk`
+2. Choose **HTML tag** verification, copy the `content=` code
+3. In Vercel, set `GOOGLE_SITE_VERIFICATION` to that code and redeploy
+4. Submit sitemap: `https://www.uniads.co.uk/sitemap.xml`
+5. Use **URL Inspection** on `https://www.uniads.co.uk/` → **Request indexing**
+6. Request removal/refresh for any outdated WordPress URLs still in results (`/faqs/`, `/contact/`, etc. — these now redirect)
+
+Ranking #1 for “uniads” usually follows within days once the live site is verified and reindexed.
 
 ## Public pages
 

@@ -1,10 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Button } from "@/components/Button";
 import { LeadQualifier } from "@/components/LeadQualifier";
 import { TrustStrip } from "@/components/TrustStrip";
-import { courseTypes, services, whatsappLink } from "@/data/site";
+import { courseTypes, services, whatsappLink, siteConfig } from "@/data/site";
 import { universities, subjectAreas } from "@/data/universities";
+
+export const metadata: Metadata = {
+  title: {
+    absolute:
+      "UNIADS | Educational Consulting — UK University Applications & Student Finance",
+  },
+  description:
+    "Official site of UNIADS (Uniads Educational Consulting). Free UK university application support, student finance, childcare grants and course matching. Book a call at uniads.co.uk.",
+  alternates: { canonical: siteConfig.domain },
+  openGraph: {
+    title: "UNIADS | Educational Consulting — Study in the UK",
+    description:
+      "Official UNIADS website — university applications, student finance and course guidance across the UK.",
+    url: siteConfig.domain,
+    images: [{ url: "/images/og-uniads.jpg", width: 1200, height: 630, alt: "UNIADS" }],
+  },
+};
 
 export default function HomePage() {
   return (
@@ -29,10 +47,10 @@ export default function HomePage() {
               <p className="mb-4 text-xs font-bold uppercase tracking-[0.25em] text-teal">
                 Applications open · Next intakes filling fast
               </p>
-              <p className="display text-5xl text-navy xl:text-6xl">UNIADS</p>
-              <h1 className="mt-3 text-3xl font-bold leading-tight text-navy xl:text-4xl">
+              <h1 className="display text-5xl text-navy xl:text-6xl">UNIADS</h1>
+              <p className="mt-3 text-3xl font-bold leading-tight text-navy xl:text-4xl">
                 Start your university journey today
-              </h1>
+              </p>
               <p className="mt-4 text-lg font-semibold text-navy/90">
                 Secure your place among the next new intakes into the university
               </p>
@@ -73,10 +91,10 @@ export default function HomePage() {
             <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-olive">
               Applications open · Next intakes filling fast
             </p>
-            <p className="display text-4xl text-white">UNIADS</p>
-            <h1 className="mt-2 text-2xl font-bold leading-snug text-white">
+            <h1 className="display text-4xl text-white">UNIADS</h1>
+            <p className="mt-2 text-2xl font-bold leading-snug text-white">
               Start your university journey today
-            </h1>
+            </p>
             <p className="mt-3 text-base font-semibold text-white/95">
               Secure your place among the next new intakes
             </p>
