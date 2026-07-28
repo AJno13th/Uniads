@@ -6,10 +6,16 @@ import { VerifiedBadge } from "@/components/VerifiedBadge";
 import { siteConfig, whatsappLink } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: "About UNIADS Educational Consulting",
   description:
-    "About UNIADS Educational Consulting — UK Certified Counsellor supporting university applications, student finance and course guidance across partner institutions.",
+    "About UNIADS (Uniads Educational Consulting) — UK Certified Counsellor supporting university applications, student finance and course guidance across partner institutions.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About UNIADS | Educational Consulting",
+    description:
+      "Meet UNIADS — UK educational consultancy for university applications, student finance and course guidance.",
+    url: "/about",
+  },
 };
 
 export default function AboutPage() {
