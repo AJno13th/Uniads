@@ -102,21 +102,37 @@ export async function POST(request: Request) {
   };
 
   // Persist to CRM when possible. If storage fails (common on serverless
-  // without DATABASE_URL), still return a WhatsApp handoff so booking works.
+  // without DATABASE_URL), still return a WhatsApp handoff so booking works,
+  // and notify advisors by email so the lead is not lost.
   let lead;
+  let persisted = false;
   try {
     const store = await getLeadStore();
     lead = await store.create(input);
+    persisted = true;
   } catch (error) {
     console.error("[api/leads] store.create failed", error);
     const { hydrateNewLead } = await import("@/lib/crm/shared");
     lead = hydrateNewLead(input);
   }
 
+  // On Vercel file-mode, "persisted" only means written to ephemeral /tmp —
+  // treat non-Postgres hosts as not durably saved for advisor notifications.
+  const { isDurableStorage } = await import("@/lib/crm/store");
+  const durablySaved = persisted && isDurableStorage();
+
+  try {
+    const { notifyLeadCaptured } = await import("@/lib/crm/notify");
+    await notifyLeadCaptured(lead, input, { persisted: durablySaved });
+  } catch (error) {
+    console.error("[api/leads] notify failed", error);
+  }
+
   return NextResponse.json({
     ok: true,
     reference: lead.reference,
     scoreBand: lead.scoreBand,
+    persisted: durablySaved,
     whatsappUrl: whatsappLink(buildPresetMessage(lead.reference, input)),
   });
 }

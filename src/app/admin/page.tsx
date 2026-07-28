@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getSession } from "@/lib/crm/auth";
-import { getLeadStore } from "@/lib/crm/store";
+import { getLeadStore, isDurableStorage } from "@/lib/crm/store";
 import { leadStages, stageLabels, type LeadStage } from "@/lib/crm/types";
 import { settlementStatuses, studyModes } from "@/data/qualification";
 import { universities } from "@/data/universities";
@@ -32,6 +32,7 @@ export default async function AdminDashboard({
   const params = await searchParams;
   const store = await getLeadStore();
   const stats = await store.stats();
+  const durable = isDurableStorage();
   const leads = await store.list({
     search: params.search,
     stage: (params.stage as LeadStage) ?? "all",
@@ -196,7 +197,9 @@ export default async function AdminDashboard({
               {leads.length === 0 && (
                 <tr>
                   <td colSpan={7} className="py-10 text-center text-muted">
-                    No leads match these filters yet.
+                    {durable
+                      ? "No leads match these filters yet."
+                      : "No leads here — CRM storage is ephemeral. Add DATABASE_URL (Postgres) so bookings are saved."}
                   </td>
                 </tr>
               )}

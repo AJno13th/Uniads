@@ -27,13 +27,19 @@ Open [http://localhost:3000](http://localhost:3000). The CRM lives at
 | --- | --- | --- |
 | `CRM_ADMIN_PASSWORD` | Yes, to use the CRM | Password advisors enter at `/admin` |
 | `CRM_SESSION_SECRET` | Recommended | Signs CRM session cookies (falls back to the password) |
-| `DATABASE_URL` | Recommended in production | Postgres connection string; leads are stored in Postgres when set |
+| `DATABASE_URL` | **Required on Vercel for CRM** | Postgres connection string; without it bookings do not appear in `/admin` |
 | `DATABASE_SSL` | No | Set to `false` for a local Postgres without TLS |
 | `CRM_DATA_FILE` | No | Overrides the JSON fallback path (default `.data/leads.json`) |
+| `LEAD_NOTIFY_EMAIL` | No | Inbox for lead alert emails (defaults to `info@uniads.co.uk`) |
+| `RESEND_API_KEY` | No | If set, lead alerts are sent via Resend instead of FormSubmit |
+| `RESEND_FROM_EMAIL` | No | Resend from address |
+| `LEAD_NOTIFY_WEBHOOK_URL` | No | Optional webhook that receives new lead JSON |
 
-Without `DATABASE_URL` the CRM writes to `.data/leads.json`, which is convenient
-locally but does not survive redeploys on serverless hosts — set `DATABASE_URL`
-before going live. The `uniads_leads` table is created automatically on first use.
+Without `DATABASE_URL` on Vercel the CRM writes to `/tmp`, which is **not shared** across
+serverless instances — the admin portal stays empty even when the website booking
+“succeeds”. Create a free Neon database, paste the connection string as
+`DATABASE_URL` in Vercel, and redeploy. The `uniads_leads` table is created
+automatically on first use.
 
 ## Public pages
 

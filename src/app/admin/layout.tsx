@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getSession } from "@/lib/crm/auth";
-import { storeMode } from "@/lib/crm/store";
+import { isDurableStorage, storeMode } from "@/lib/crm/store";
 import { LogoutButton } from "./LogoutButton";
 
 export const metadata: Metadata = {
@@ -13,6 +13,8 @@ export default async function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await getSession();
+  const durable = isDurableStorage();
+  const mode = storeMode();
 
   return (
     <div className="flex min-h-full flex-col bg-[#eef1f6]">
@@ -41,8 +43,13 @@ export default async function AdminLayout({
             )}
           </div>
           <div className="flex items-center gap-3 text-xs">
-            <span className="rounded-full bg-white/10 px-3 py-1 text-white/70">
-              storage: {storeMode()}
+            <span
+              className={`rounded-full px-3 py-1 ${
+                durable ? "bg-olive/20 text-olive" : "bg-amber-400/20 text-amber-100"
+              }`}
+            >
+              storage: {mode}
+              {!durable ? " (ephemeral)" : ""}
             </span>
             {session && (
               <>
@@ -53,6 +60,22 @@ export default async function AdminLayout({
           </div>
         </div>
       </header>
+      {!durable && (
+        <div className="border-b border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950 sm:px-6">
+          <p className="mx-auto max-w-7xl font-semibold">
+            Bookings are not saving into this CRM yet
+          </p>
+          <p className="mx-auto mt-1 max-w-7xl text-amber-900/90">
+            Production is running in file storage mode. On Vercel that writes to temporary
+            disk, so leads disappear between requests. Add a Postgres{" "}
+            <code className="rounded bg-amber-100 px-1 font-mono text-xs">DATABASE_URL</code>{" "}
+            in the Vercel project Environment Variables (Neon or Vercel Postgres), redeploy,
+            then new bookings will appear here. Until then, check WhatsApp and{" "}
+            <code className="rounded bg-amber-100 px-1 font-mono text-xs">info@uniads.co.uk</code>{" "}
+            for lead alerts.
+          </p>
+        </div>
+      )}
       <div className="flex-1">{children}</div>
     </div>
   );
