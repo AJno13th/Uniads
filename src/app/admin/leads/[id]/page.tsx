@@ -192,6 +192,7 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
         <aside className="space-y-6">
           <LeadControls
             leadId={lead.id}
+            leadName={lead.fullName}
             stage={lead.stage}
             owner={lead.owner}
           />

@@ -214,6 +214,15 @@ export const pgLeadStore: LeadStore = {
     return lead;
   },
 
+  async delete(id: string): Promise<boolean> {
+    await ensureSchema();
+    const result = await getPool().query(
+      "DELETE FROM uniads_leads WHERE id = $1",
+      [id]
+    );
+    return (result.rowCount ?? 0) > 0;
+  },
+
   async stats(): Promise<LeadStats> {
     return computeStats(await fetchAll());
   },

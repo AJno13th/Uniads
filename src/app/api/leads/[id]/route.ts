@@ -120,3 +120,20 @@ export async function PATCH(request: Request, { params }: Params) {
   }
   return NextResponse.json({ ok: true, lead: stripAttachmentData(lead) });
 }
+
+export async function DELETE(_request: Request, { params }: Params) {
+  const session = await getSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
+  }
+
+  const { id } = await params;
+  const store = await getLeadStore();
+  const deleted = await store.delete(id);
+
+  if (!deleted) {
+    return NextResponse.json({ error: "Lead not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ ok: true });
+}

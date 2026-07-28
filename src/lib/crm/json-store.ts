@@ -213,6 +213,16 @@ export const jsonLeadStore: LeadStore = {
     });
   },
 
+  async delete(id: string): Promise<boolean> {
+    return enqueue(async () => {
+      const leads = await readAll();
+      const next = leads.filter((l) => l.id !== id);
+      if (next.length === leads.length) return false;
+      await writeAll(next);
+      return true;
+    });
+  },
+
   async stats(): Promise<LeadStats> {
     return computeStats(await readAll());
   },

@@ -6,10 +6,12 @@ import { leadStages, stageLabels, type LeadStage } from "@/lib/crm/types";
 
 export function LeadControls({
   leadId,
+  leadName,
   stage,
   owner,
 }: {
   leadId: string;
+  leadName: string;
   stage: LeadStage;
   owner: string | null;
 }) {
@@ -42,6 +44,25 @@ export function LeadControls({
     if (!note) return;
     await patch({ note });
     form.reset();
+  }
+
+  async function onDelete() {
+    const confirmed = window.confirm(
+      `Permanently delete ${leadName}'s client file?\n\nThis removes notes, documents and activity. This cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    setBusy(true);
+    setError("");
+    const response = await fetch(`/api/leads/${leadId}`, { method: "DELETE" });
+    if (!response.ok) {
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
+      setError(data.error ?? "Could not delete this lead.");
+      setBusy(false);
+      return;
+    }
+    router.push("/admin");
+    router.refresh();
   }
 
   return (
@@ -112,6 +133,20 @@ export function LeadControls({
           {busy ? "Saving…" : "Add note"}
         </button>
       </form>
+
+      <div className="border-t border-line/70 pt-5">
+        <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+          Danger zone
+        </p>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={onDelete}
+          className="mt-3 w-full rounded-md border border-red-300 bg-red-50 px-4 py-2.5 text-sm font-bold text-red-800 disabled:opacity-60"
+        >
+          {busy ? "Working…" : "Delete client file"}
+        </button>
+      </div>
 
       {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
     </div>

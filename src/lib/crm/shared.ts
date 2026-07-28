@@ -44,6 +44,7 @@ export interface LeadStore {
     author: string
   ): Promise<Lead | null>;
   addNote(id: string, body: string, author: string): Promise<Lead | null>;
+  delete(id: string): Promise<boolean>;
   stats(): Promise<LeadStats>;
 }
 
