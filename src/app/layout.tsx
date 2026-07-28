@@ -85,9 +85,13 @@ export const metadata: Metadata = {
     canonical: siteConfig.domain,
   },
   category: "education",
-  verification: process.env.GOOGLE_SITE_VERIFICATION
-    ? { google: process.env.GOOGLE_SITE_VERIFICATION }
-    : undefined,
+  // HTML-tag verification for Google Search Console (public by design).
+  // Override with GOOGLE_SITE_VERIFICATION in Vercel if the code changes.
+  verification: {
+    google:
+      process.env.GOOGLE_SITE_VERIFICATION?.trim() ||
+      "00V4YF2llmbRU5Eht6-OmVwkolgj2mxm5kjSHa_UefQ",
+  },
 };
 
 const organizationLd = {
