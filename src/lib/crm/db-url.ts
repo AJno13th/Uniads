@@ -12,9 +12,19 @@ export function resolveDatabaseUrl(): string | undefined {
 
   if (!raw) return undefined;
 
-  // node-pg does not support channel_binding; strip it to avoid connection errors.
-  return raw
-    .replace(/([?&])channel_binding=require&?/g, "$1")
+  let url = raw
+    // node-pg does not support channel_binding
+    .replace(/([?&])channel_binding=require&?/gi, "$1")
     .replace(/[?&]$/, "")
     .replace(/\?&/, "?");
+
+  // pg@8.22+ warns/breaks on bare sslmode=require unless libpq-compat is set.
+  if (/sslmode=require/i.test(url) && !/uselibpqcompat=/i.test(url)) {
+    url += url.includes("?") ? "&uselibpqcompat=true" : "?uselibpqcompat=true";
+  }
+
+  // Repair truncated sslmode values from some Neon template pastes
+  url = url.replace(/sslmode=requir(?!e)/i, "sslmode=require");
+
+  return url;
 }

@@ -32,20 +32,42 @@ export default async function AdminDashboard({
   if (!session) redirect("/admin/login");
 
   const params = await searchParams;
-  const store = await getLeadStore();
-  const stats = await store.stats();
   const durable = isDurableStorage();
-  const leads = await store.list({
-    search: params.search,
-    stage: (params.stage as LeadStage) ?? "all",
-    settlementStatus: params.settlementStatus,
-    university: params.university,
-    studyMode: params.studyMode,
-    band: params.band as "hot" | "warm" | "cold" | "all" | undefined,
-  });
+
+  let stats = {
+    total: 0,
+    hot: 0,
+    last7Days: 0,
+    byStage: {} as Record<string, number>,
+  };
+  let leads: Awaited<ReturnType<Awaited<ReturnType<typeof getLeadStore>>["list"]>> =
+    [];
+  let loadError: string | null = null;
+
+  try {
+    const store = await getLeadStore();
+    stats = await store.stats();
+    leads = await store.list({
+      search: params.search,
+      stage: (params.stage as LeadStage) ?? "all",
+      settlementStatus: params.settlementStatus,
+      university: params.university,
+      studyMode: params.studyMode,
+      band: params.band as "hot" | "warm" | "cold" | "all" | undefined,
+    });
+  } catch (error) {
+    console.error("[admin] failed to load leads", error);
+    loadError =
+      "Could not load leads from the database. Check DATABASE_URL / Neon connectivity, then refresh.";
+  }
 
   return (
     <div className="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6">
+      {loadError && (
+        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+          {loadError}
+        </div>
+      )}
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           { label: "Total leads", value: stats.total },

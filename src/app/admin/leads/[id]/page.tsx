@@ -20,8 +20,14 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
   if (!session) redirect("/admin/login");
 
   const { id } = await params;
-  const store = await getLeadStore();
-  const lead = await store.get(id);
+  let lead;
+  try {
+    const store = await getLeadStore();
+    lead = await store.get(id);
+  } catch (error) {
+    console.error("[admin/leads] failed to load lead", error);
+    throw error;
+  }
   if (!lead) notFound();
 
   const fields: [string, string | null][] = [

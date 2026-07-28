@@ -22,8 +22,17 @@ function getPool() {
     }
     pool = new Pool({
       connectionString,
-      ssl: process.env.DATABASE_SSL === "false" ? undefined : { rejectUnauthorized: false },
+      // Explicit TLS settings — avoids relying on ambiguous sslmode aliases.
+      ssl:
+        process.env.DATABASE_SSL === "false"
+          ? undefined
+          : { rejectUnauthorized: false },
       max: 5,
+      connectionTimeoutMillis: 10_000,
+      idleTimeoutMillis: 10_000,
+    });
+    pool.on("error", (error) => {
+      console.error("[crm/pg] idle client error", error);
     });
   }
   return pool;
