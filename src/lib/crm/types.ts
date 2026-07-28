@@ -85,6 +85,18 @@ export type Lead = {
   callDate: string | null;
   callTime: string | null;
 
+  /** Paid-media attribution (Facebook / TikTok / Google). */
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  utmContent: string | null;
+  utmTerm: string | null;
+  fbclid: string | null;
+  ttclid: string | null;
+  gclid: string | null;
+  landingPage: string | null;
+  referrer: string | null;
+
   attachments: LeadAttachment[];
   activities: Activity[];
 };

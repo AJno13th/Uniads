@@ -172,6 +172,7 @@ export default async function AdminDashboard({
               <tr>
                 <th className="py-3 pr-4">Lead</th>
                 <th className="py-3 pr-4">Score</th>
+                <th className="py-3 pr-4">Ad</th>
                 <th className="py-3 pr-4">Residency status</th>
                 <th className="py-3 pr-4">University / course</th>
                 <th className="py-3 pr-4">Mode</th>
@@ -200,6 +201,16 @@ export default async function AdminDashboard({
                     </span>
                   </td>
                   <td className="py-3 pr-4 text-xs text-navy">
+                    {lead.utmSource || lead.utmCampaign ? (
+                      <>
+                        <p className="font-semibold">{lead.utmSource ?? "—"}</p>
+                        <p className="text-muted">{lead.utmCampaign ?? ""}</p>
+                      </>
+                    ) : (
+                      <span className="text-muted">{lead.source.replace("_", " ")}</span>
+                    )}
+                  </td>
+                  <td className="py-3 pr-4 text-xs text-navy">
                     {lead.settlementStatus ?? "—"}
                     <p className="text-muted">{lead.ukResidency ?? ""}</p>
                   </td>
@@ -220,7 +231,7 @@ export default async function AdminDashboard({
               ))}
               {leads.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="py-10 text-center text-muted">
+                  <td colSpan={8} className="py-10 text-center text-muted">
                     {durable
                       ? "No leads match these filters yet."
                       : "No leads here — CRM storage is ephemeral. Add DATABASE_URL (Postgres) so bookings are saved."}

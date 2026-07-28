@@ -42,6 +42,11 @@ export async function GET() {
     "Call date",
     "Call time",
     "Source",
+    "UTM source",
+    "UTM medium",
+    "UTM campaign",
+    "UTM content",
+    "Landing page",
     "Notes",
   ];
 
@@ -72,6 +77,11 @@ export async function GET() {
       lead.callDate,
       lead.callTime,
       lead.source,
+      lead.utmSource,
+      lead.utmMedium,
+      lead.utmCampaign,
+      lead.utmContent,
+      lead.landingPage,
       lead.notes,
     ]
       .map(csvCell)

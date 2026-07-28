@@ -99,6 +99,16 @@ export async function POST(request: Request) {
     notes: clean(payload.notes, 2000),
     callDate: clean(payload.callDate, 20),
     callTime: clean(payload.callTime, 10),
+    utmSource: clean(payload.utmSource, 80),
+    utmMedium: clean(payload.utmMedium, 80),
+    utmCampaign: clean(payload.utmCampaign, 120),
+    utmContent: clean(payload.utmContent, 120),
+    utmTerm: clean(payload.utmTerm, 120),
+    fbclid: clean(payload.fbclid, 200),
+    ttclid: clean(payload.ttclid, 200),
+    gclid: clean(payload.gclid, 200),
+    landingPage: clean(payload.landingPage, 300),
+    referrer: clean(payload.referrer, 300),
   };
 
   // Persist to CRM when possible. If storage fails (common on serverless

@@ -22,6 +22,10 @@ export async function notifyLeadCaptured(
     `Persisted to CRM: ${meta.persisted ? "yes" : "NO — add DATABASE_URL"}`,
     `Phone: ${lead.phone}`,
     lead.email ? `Email: ${lead.email}` : null,
+    input.utmSource ? `UTM source: ${input.utmSource}` : null,
+    input.utmCampaign ? `UTM campaign: ${input.utmCampaign}` : null,
+    input.fbclid ? "Click ID: Facebook" : null,
+    input.ttclid ? "Click ID: TikTok" : null,
   ]
     .filter(Boolean)
     .join("\n");

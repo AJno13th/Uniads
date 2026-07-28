@@ -35,6 +35,17 @@ export function buildPresetMessage(
       ? `Requested call: ${input.callDate}${input.callTime ? ` at ${input.callTime}` : ""}`
       : null,
     input.notes ? `Notes: ${input.notes}` : null,
+    input.utmSource || input.utmCampaign
+      ? `Ad: ${[
+          input.utmSource,
+          input.utmMedium,
+          input.utmCampaign,
+          input.utmContent,
+        ]
+          .filter(Boolean)
+          .join(" / ")}`
+      : null,
+    input.landingPage ? `Landing page: ${input.landingPage}` : null,
   ].filter(Boolean);
 
   return lines.join("\n");

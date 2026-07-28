@@ -53,13 +53,23 @@ export function buildReference(createdAt: Date, seed: string) {
   return `UA-${y}${m}-${seed.replace(/-/g, "").slice(0, 5).toUpperCase()}`;
 }
 
-/** Ensure older leads without attachments still work. */
+/** Ensure older leads without attachments / attribution still work. */
 export function normalizeLead(lead: Lead): Lead {
   return {
     ...lead,
     attachments: Array.isArray(lead.attachments) ? lead.attachments : [],
     activities: Array.isArray(lead.activities) ? lead.activities : [],
     services: Array.isArray(lead.services) ? lead.services : [],
+    utmSource: lead.utmSource ?? null,
+    utmMedium: lead.utmMedium ?? null,
+    utmCampaign: lead.utmCampaign ?? null,
+    utmContent: lead.utmContent ?? null,
+    utmTerm: lead.utmTerm ?? null,
+    fbclid: lead.fbclid ?? null,
+    ttclid: lead.ttclid ?? null,
+    gclid: lead.gclid ?? null,
+    landingPage: lead.landingPage ?? null,
+    referrer: lead.referrer ?? null,
   };
 }
 
@@ -78,6 +88,16 @@ export function hydrateNewLead(input: NewLeadInput): Lead {
     owner: null,
     score,
     scoreBand: band,
+    utmSource: input.utmSource ?? null,
+    utmMedium: input.utmMedium ?? null,
+    utmCampaign: input.utmCampaign ?? null,
+    utmContent: input.utmContent ?? null,
+    utmTerm: input.utmTerm ?? null,
+    fbclid: input.fbclid ?? null,
+    ttclid: input.ttclid ?? null,
+    gclid: input.gclid ?? null,
+    landingPage: input.landingPage ?? null,
+    referrer: input.referrer ?? null,
     attachments: [],
     activities: [
       {

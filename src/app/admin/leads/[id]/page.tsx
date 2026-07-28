@@ -132,6 +132,37 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
 
           <LeadDocuments leadId={lead.id} attachments={attachmentMeta} />
 
+          {(lead.utmSource || lead.utmCampaign || lead.landingPage) && (
+            <div className="rounded-xl bg-white p-6 shadow-sm">
+              <h2 className="text-sm font-bold uppercase tracking-wider text-teal">
+                Ad attribution
+              </h2>
+              <dl className="mt-4 grid gap-3 sm:grid-cols-2">
+                {[
+                  ["UTM source", lead.utmSource],
+                  ["UTM medium", lead.utmMedium],
+                  ["UTM campaign", lead.utmCampaign],
+                  ["UTM content", lead.utmContent],
+                  ["Landing page", lead.landingPage],
+                  ["Referrer", lead.referrer],
+                  ["Facebook click", lead.fbclid ? "Yes" : null],
+                  ["TikTok click", lead.ttclid ? "Yes" : null],
+                ].map(([label, value]) =>
+                  value ? (
+                    <div key={label} className="border-b border-line/70 pb-2">
+                      <dt className="text-xs uppercase tracking-wider text-muted">
+                        {label}
+                      </dt>
+                      <dd className="break-all text-sm font-medium text-navy">
+                        {value}
+                      </dd>
+                    </div>
+                  ) : null
+                )}
+              </dl>
+            </div>
+          )}
+
           <div className="rounded-xl bg-white p-6 shadow-sm">
             <h2 className="text-sm font-bold uppercase tracking-wider text-teal">
               Preset message sent by this lead
