@@ -67,10 +67,11 @@ export default async function AdminLayout({
           </p>
           <p className="mx-auto mt-1 max-w-7xl text-amber-900/90">
             Production is running in file storage mode. On Vercel that writes to temporary
-            disk, so leads disappear between requests. Add a Postgres{" "}
-            <code className="rounded bg-amber-100 px-1 font-mono text-xs">DATABASE_URL</code>{" "}
-            in the Vercel project Environment Variables (Neon or Vercel Postgres), redeploy,
-            then new bookings will appear here. Until then, check WhatsApp and{" "}
+            disk, so leads disappear between requests. In Vercel → Settings → Environment
+            Variables, set <code className="rounded bg-amber-100 px-1 font-mono text-xs">DATABASE_URL</code>{" "}
+            (or <code className="rounded bg-amber-100 px-1 font-mono text-xs">POSTGRES_URL</code> from
+            the Neon integration) for <strong>Production</strong>, then redeploy. Until then,
+            check WhatsApp and{" "}
             <code className="rounded bg-amber-100 px-1 font-mono text-xs">info@uniads.co.uk</code>{" "}
             for lead alerts.
           </p>

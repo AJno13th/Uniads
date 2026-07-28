@@ -27,7 +27,7 @@ Open [http://localhost:3000](http://localhost:3000). The CRM lives at
 | --- | --- | --- |
 | `CRM_ADMIN_PASSWORD` | Yes, to use the CRM | Password advisors enter at `/admin` |
 | `CRM_SESSION_SECRET` | Recommended | Signs CRM session cookies (falls back to the password) |
-| `DATABASE_URL` | **Required on Vercel for CRM** | Postgres connection string; without it bookings do not appear in `/admin` |
+| `DATABASE_URL` | **Required on Vercel for CRM** | Postgres URL (Neon). Also accepts `POSTGRES_URL` from the Neon Vercel integration |
 | `DATABASE_SSL` | No | Set to `false` for a local Postgres without TLS |
 | `CRM_DATA_FILE` | No | Overrides the JSON fallback path (default `.data/leads.json`) |
 | `LEAD_NOTIFY_EMAIL` | No | Inbox for lead alert emails (defaults to `info@uniads.co.uk`) |

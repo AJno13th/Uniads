@@ -9,14 +9,19 @@ import {
   type LeadStats,
   type LeadStore,
 } from "./shared";
+import { resolveDatabaseUrl } from "./db-url";
 
 let pool: Pool | null = null;
 let initPromise: Promise<void> | null = null;
 
 function getPool() {
   if (!pool) {
+    const connectionString = resolveDatabaseUrl();
+    if (!connectionString) {
+      throw new Error("No Postgres URL configured (DATABASE_URL / POSTGRES_URL).");
+    }
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
+      connectionString,
       ssl: process.env.DATABASE_SSL === "false" ? undefined : { rejectUnauthorized: false },
       max: 5,
     });
