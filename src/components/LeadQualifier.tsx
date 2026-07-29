@@ -141,6 +141,9 @@ export function LeadQualifier({
               </option>
             ))}
           </select>
+          <p className={`mt-1.5 text-xs ${dark ? "text-white/55" : "text-muted"}`}>
+            Only the statuses listed above are eligible for this pathway.
+          </p>
         </div>
 
         <div>

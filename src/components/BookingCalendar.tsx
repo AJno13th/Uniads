@@ -385,6 +385,9 @@ export function BookingCalendar() {
                 </option>
               ))}
             </select>
+            <p className="mt-1.5 text-xs text-muted">
+              Only the statuses listed above are eligible for this pathway.
+            </p>
           </div>
           <div className="sm:col-span-2">
             <label className="label" htmlFor="booking-university">

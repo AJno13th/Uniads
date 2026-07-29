@@ -42,7 +42,7 @@ const faqs = [
   },
   {
     q: "What residency status do I need for student finance?",
-    a: "Student finance usually needs a home residency status — for example British or Irish Citizen, ILR, EU Settled Status, Refugee / Asylum Granted, Humanitarian Protection or the Ukraine Scheme — plus a UK residency history. EU Pre-Settled Status and dependants of settled people can qualify in certain cases, which is why we ask on the form and confirm eligibility before you apply.",
+    a: "For our student finance pathway you need one of these statuses: British Citizen, Irish Citizen, ILR (Indefinite Leave to Remain), EU Settled Status, Refugee / Asylum Granted, Humanitarian Protection, or the Ukraine Scheme — plus a UK residency history. We confirm the full detail with you before you apply.",
   },
   {
     q: "Can I get a maintenance loan as well as tuition fees?",

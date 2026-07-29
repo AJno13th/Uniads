@@ -250,6 +250,9 @@ export function ApplyForm() {
                 <option key={s}>{s}</option>
               ))}
             </select>
+            <p className="mt-1.5 text-xs text-muted">
+              Only the statuses listed above are eligible for this pathway.
+            </p>
           </div>
         </div>
 
