@@ -41,8 +41,8 @@ const faqs = [
     a: "Our counselling, application support and student finance guidance are free to you. Tuition is normally covered by a tuition fee loan if you are eligible.",
   },
   {
-    q: "What residency status do I need for student finance?",
-    a: "For our student finance pathway you need one of these statuses: British Citizen, Irish Citizen, ILR (Indefinite Leave to Remain), EU Settled Status, Refugee / Asylum Granted, Humanitarian Protection, or the Ukraine Scheme — plus a UK residency history. We confirm the full detail with you before you apply.",
+    q: "What passport or permit do I need?",
+    a: "For our pathway, tell us which passport or permit you have: British, EU, Refugee, or ILR (Indefinite Leave to Remain). We confirm the full detail with you before you apply — extra statuses can be noted by an advisor if needed.",
   },
   {
     q: "Can I get a maintenance loan as well as tuition fees?",

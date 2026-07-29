@@ -250,7 +250,7 @@ export function LeadProfileEditor({
           />
         </Field>
 
-        <Field label="Residency status" name="settlementStatus">
+        <Field label="Passport / permit" name="settlementStatus">
           <SelectOrCustom
             id="settlementStatus"
             name="settlementStatus"
@@ -274,7 +274,7 @@ export function LeadProfileEditor({
             defaultValue={lead.ageBracket}
           />
         </Field>
-        <Field label="Highest qualification" name="highestQualification">
+        <Field label="Previous qualification" name="highestQualification">
           <SelectOrCustom
             id="highestQualification"
             name="highestQualification"

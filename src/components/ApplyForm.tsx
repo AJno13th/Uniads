@@ -32,7 +32,7 @@ function draftWhatsApp(draft: {
     "",
     `Name: ${draft.fullName}`,
     `Phone: ${draft.phone}`,
-    `Residency status: ${draft.settlementStatus}`,
+    `Passport / permit: ${draft.settlementStatus}`,
     "I saved my details on the website — please call me to finish.",
   ];
   return whatsappLink(lines.join("\n"));
@@ -92,7 +92,7 @@ export function ApplyForm() {
     const company = String(form.get("company") ?? "");
 
     if (!fullName || !phone || !settlementStatus) {
-      setError("Please enter your name, phone number and residency status.");
+      setError("Please enter your name, phone number and passport or permit.");
       setStatus("error");
       return;
     }
@@ -217,7 +217,7 @@ export function ApplyForm() {
             Start your application
           </h2>
           <p className="mt-2 text-sm text-muted">
-            Tell us your name, phone and residency status. We’ll save this now so an
+            Tell us your name, phone and passport or permit. We’ll save this now so an
             advisor can help even if you leave the page.
           </p>
         </div>
@@ -234,7 +234,7 @@ export function ApplyForm() {
           </div>
           <div>
             <label className="label" htmlFor="settlementStatus">
-              Residency status in the UK *
+              What passport or permit do you have? *
             </label>
             <select
               id="settlementStatus"
@@ -244,15 +244,12 @@ export function ApplyForm() {
               defaultValue=""
             >
               <option value="" disabled>
-                Select your residency status
+                Select an option
               </option>
               {settlementStatuses.map((s) => (
                 <option key={s}>{s}</option>
               ))}
             </select>
-            <p className="mt-1.5 text-xs text-muted">
-              Only the statuses listed above are eligible for this pathway.
-            </p>
           </div>
         </div>
 
@@ -342,7 +339,7 @@ export function ApplyForm() {
           </div>
           <div>
             <label className="label" htmlFor="highestQualification">
-              Highest qualification
+              Do you have any previous qualification?
             </label>
             <select
               id="highestQualification"
@@ -351,7 +348,7 @@ export function ApplyForm() {
               defaultValue=""
             >
               <option value="" disabled>
-                Select
+                Select an option
               </option>
               {qualificationOptions.map((q) => (
                 <option key={q}>{q}</option>
@@ -407,7 +404,7 @@ export function ApplyForm() {
           </div>
           <div>
             <label className="label" htmlFor="course">
-              Course you want to study
+              What course do you want to study?
             </label>
             <select
               id="course"

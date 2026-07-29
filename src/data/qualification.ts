@@ -1,17 +1,13 @@
 /**
- * Residency statuses for the UNIADS eligibility funnel — the same list used in
- * TikTok creatives (British/Irish, ILR, EU Settled, Refugee, Humanitarian,
- * Ukraine Scheme). Non-eligible catch-alls are omitted so only the target
- * audience can progress on the form.
+ * Instant-form style passport / permit options (TikTok lead ads).
+ * Keep this list short for conversion; extra statuses can be typed in admin
+ * via SelectOrCustom when needed.
  */
 export const settlementStatuses = [
-  "British Citizen",
-  "Irish Citizen",
+  "British",
+  "EU",
+  "Refugee",
   "ILR (Indefinite Leave to Remain)",
-  "EU Settled Status",
-  "Refugee / Asylum Granted",
-  "Humanitarian Protection",
-  "Ukraine Scheme",
 ] as const;
 
 export const residencyOptions = [
@@ -31,16 +27,8 @@ export const ageBrackets = [
   "45+",
 ] as const;
 
-export const qualificationOptions = [
-  "No formal qualifications",
-  "GCSEs only",
-  "Level 3 / BTEC / A-Levels",
-  "Access to HE Diploma",
-  "Overseas qualification / diploma",
-  "HND / CertHE / Foundation completed",
-  "Bachelor’s degree",
-  "Master’s degree",
-] as const;
+/** Matches Instant Form: “Do you have any previous qualification?” */
+export const qualificationOptions = ["Yes", "No"] as const;
 
 export const studyModes = ["Full-time", "Part-time"] as const;
 
@@ -83,8 +71,8 @@ export const preferredCities = [
 ] as const;
 
 /**
- * Every status on the public form is an eligibility-target status, so they all
- * score as strong. Legacy CRM values outside the list still get a small bump.
+ * Every passport/permit on the public form is an eligibility-target option.
+ * Legacy CRM values outside the list still get a small bump.
  */
 const strongStatuses = new Set<string>(settlementStatuses);
 
@@ -94,7 +82,7 @@ export type ScoreInput = {
   settlementStatus?: string | null;
   ukResidency?: string | null;
   ageBracket?: string | null;
-  highestQualification?: string | null
+  highestQualification?: string | null;
   previousStudentFinance?: string | null;
   university?: string | null;
   course?: string | null;
@@ -122,6 +110,10 @@ export function scoreLead(input: ScoreInput): { score: number; band: ScoreBand }
 
   if (input.previousStudentFinance?.startsWith("No")) score += 15;
   else if (input.previousStudentFinance?.startsWith("Yes")) score += 4;
+
+  // “No” previous qualification is a strong fit for the no-qualifications pathway.
+  if (input.highestQualification === "No") score += 8;
+  else if (input.highestQualification === "Yes") score += 4;
 
   if (input.university) score += 6;
   if (input.course) score += 6;

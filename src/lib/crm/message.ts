@@ -14,7 +14,7 @@ export function buildPresetMessage(
       : "Hi UNIADS, I'd like to start my application.",
     "",
     input.fullName ? `Name: ${input.fullName}` : null,
-    input.settlementStatus ? `Residency status: ${input.settlementStatus}` : null,
+    input.settlementStatus ? `Passport / permit: ${input.settlementStatus}` : null,
     input.ukResidency ? `Time in the UK: ${input.ukResidency}` : null,
     input.ageBracket ? `Age: ${input.ageBracket}` : null,
     input.highestQualification

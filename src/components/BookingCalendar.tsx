@@ -367,7 +367,7 @@ export function BookingCalendar() {
           </div>
           <div>
             <label className="label" htmlFor="settlementStatus">
-              Residency status in the UK *
+              What passport or permit do you have? *
             </label>
             <select
               id="settlementStatus"
@@ -377,7 +377,7 @@ export function BookingCalendar() {
               defaultValue=""
             >
               <option value="" disabled>
-                Select your residency status
+                Select an option
               </option>
               {settlementStatuses.map((s) => (
                 <option key={s} value={s}>
@@ -385,9 +385,6 @@ export function BookingCalendar() {
                 </option>
               ))}
             </select>
-            <p className="mt-1.5 text-xs text-muted">
-              Only the statuses listed above are eligible for this pathway.
-            </p>
           </div>
           <div className="sm:col-span-2">
             <label className="label" htmlFor="booking-university">
