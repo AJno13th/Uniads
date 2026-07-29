@@ -4,7 +4,7 @@ import { getSession } from "@/lib/crm/auth";
 import { getLeadStore } from "@/lib/crm/store";
 import { stageLabels } from "@/lib/crm/types";
 import { buildPresetMessage } from "@/lib/crm/message";
-import { siteConfig, whatsappLink } from "@/data/site";
+import { siteConfig, whatsappToStudent } from "@/data/site";
 import { LeadControls } from "./LeadControls";
 import { LeadDocuments } from "./LeadDocuments";
 import { LeadProfileEditor } from "./LeadProfileEditor";
@@ -36,8 +36,10 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
     ({ data: _data, ...meta }) => meta
   );
 
-  const followUp = whatsappLink(
-    `Hi ${lead.fullName.split(" ")[0]}, this is UNIADS following up on your application (${lead.reference}).`
+  const firstName = lead.fullName.split(" ")[0] || lead.fullName;
+  const followUp = whatsappToStudent(
+    lead.phone,
+    `Hi ${firstName}, this is UNIADS following up on your application (${lead.reference}).`
   );
 
   return (
@@ -58,6 +60,16 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
               <a className="font-semibold text-teal" href={`tel:${lead.phone}`}>
                 {lead.phone}
               </a>
+              {followUp && (
+                <a
+                  className="font-semibold text-[#128C7E]"
+                  href={followUp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp {lead.phone}
+                </a>
+              )}
               {lead.email && (
                 <a className="font-semibold text-teal" href={`mailto:${lead.email}`}>
                   {lead.email}
@@ -75,14 +87,23 @@ export default async function LeadDetailPage({ params }: { params: Params }) {
               {stageLabels[lead.stage]}
             </span>
             <div className="mt-2 flex gap-2">
-              <a
-                href={followUp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-md bg-[#25D366] px-3 py-2 text-xs font-bold text-white"
-              >
-                WhatsApp
-              </a>
+              {followUp ? (
+                <a
+                  href={followUp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-md bg-[#25D366] px-3 py-2 text-xs font-bold text-white"
+                >
+                  WhatsApp student
+                </a>
+              ) : (
+                <span
+                  className="rounded-md bg-slate-200 px-3 py-2 text-xs font-bold text-slate-500"
+                  title="Add a valid student mobile number to enable WhatsApp"
+                >
+                  WhatsApp unavailable
+                </span>
+              )}
               <a
                 href={`tel:${lead.phone}`}
                 className="rounded-md bg-navy px-3 py-2 text-xs font-bold text-white"
