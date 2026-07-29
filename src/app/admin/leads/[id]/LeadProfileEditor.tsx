@@ -211,7 +211,7 @@ export function LeadProfileEditor({
             name="phone"
             required
             label=""
-            defaultCountry={phoneParts.country}
+            defaultCountry={phoneParts.iso}
             defaultNational={phoneParts.national}
           />
         </Field>
