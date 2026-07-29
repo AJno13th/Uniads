@@ -4,6 +4,7 @@ import { FormEvent, useMemo, useRef, useState, useSyncExternalStore } from "reac
 import { siteConfig, whatsappLink } from "@/data/site";
 import { settlementStatuses, studyModes } from "@/data/qualification";
 import { levelLabel, universities } from "@/data/universities";
+import { PhoneField } from "@/components/PhoneField";
 import { submitLead } from "@/lib/crm/client";
 
 const timeSlots = [
@@ -349,17 +350,7 @@ export function BookingCalendar() {
             <input id="fullName" name="fullName" required className="input" autoComplete="name" />
           </div>
           <div>
-            <label className="label" htmlFor="phone">
-              Phone number *
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              required
-              className="input"
-              autoComplete="tel"
-            />
+            <PhoneField name="phone" required label="Phone number" />
           </div>
           <div>
             <label className="label" htmlFor="email">

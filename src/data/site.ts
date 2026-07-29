@@ -45,25 +45,25 @@ export function whatsappLink(message: string = siteConfig.whatsappMessage) {
 }
 
 /**
- * Normalise a UK / international phone into digits for wa.me.
- * Examples: "07368 218457" → "447368218457", "+44 7368…" → "447368…"
+ * Normalise a phone into digits for wa.me (no +).
+ * Accepts E.164 (+447…), UK local (07…), or bare international digits.
  */
 export function toWhatsAppDigits(phone: string): string | null {
   const trimmed = phone.trim();
   if (!trimmed) return null;
 
   let digits = trimmed.replace(/[^\d+]/g, "");
+  if (digits.startsWith("00")) digits = digits.slice(2);
   if (digits.startsWith("+")) digits = digits.slice(1);
   digits = digits.replace(/\D/g, "");
 
   if (!digits) return null;
 
   // UK local mobile/landline → add country code 44
-  if (digits.startsWith("0") && digits.length >= 10) {
+  if (digits.startsWith("0") && digits.length >= 10 && digits.length <= 11) {
     digits = `44${digits.slice(1)}`;
   }
 
-  // Already international without +
   if (digits.length < 10 || digits.length > 15) return null;
   return digits;
 }

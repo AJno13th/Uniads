@@ -10,6 +10,7 @@ import {
 } from "@/data/qualification";
 import { submitLead } from "@/lib/crm/client";
 import { whatsappLink } from "@/data/site";
+import { PhoneField } from "@/components/PhoneField";
 
 /**
  * Compact qualifier used on high-intent pages: the student picks their
@@ -259,15 +260,13 @@ export function LeadQualifier({
         </div>
 
         <div>
-          <label className={labelClass} htmlFor="qual-phone">
-            Phone / WhatsApp *
-          </label>
-          <input
-            id="qual-phone"
+          <PhoneField
             name="phone"
-            type="tel"
             required
-            className={fieldClass}
+            id="qual-phone"
+            labelClassName={labelClass}
+            inputClassName={fieldClass}
+            selectClassName={fieldClass}
           />
         </div>
 

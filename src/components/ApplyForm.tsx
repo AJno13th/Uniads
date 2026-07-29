@@ -15,6 +15,7 @@ import {
   preferredCities,
 } from "@/data/qualification";
 import { continueLead, submitLead } from "@/lib/crm/client";
+import { PhoneField } from "@/components/PhoneField";
 
 type Step = 1 | 2;
 
@@ -229,17 +230,7 @@ export function ApplyForm() {
             <input id="fullName" name="fullName" required className="input" autoComplete="name" />
           </div>
           <div>
-            <label className="label" htmlFor="phone">
-              Phone / WhatsApp *
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              required
-              className="input"
-              autoComplete="tel"
-            />
+            <PhoneField name="phone" required />
           </div>
           <div>
             <label className="label" htmlFor="settlementStatus">

@@ -14,6 +14,8 @@ import {
   studyModes,
 } from "@/data/qualification";
 import type { Lead } from "@/lib/crm/types";
+import { PhoneField } from "@/components/PhoneField";
+import { splitInternationalPhone } from "@/data/phone-countries";
 
 type ProfileLead = Pick<
   Lead,
@@ -115,6 +117,7 @@ export function LeadProfileEditor({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
+  const phoneParts = splitInternationalPhone(lead.phone);
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -203,13 +206,13 @@ export function LeadProfileEditor({
             required
           />
         </Field>
-        <Field label="Phone" name="phone">
-          <input
-            id="phone"
+        <Field label="Phone / WhatsApp" name="phone">
+          <PhoneField
             name="phone"
-            className="input"
-            defaultValue={lead.phone}
             required
+            label=""
+            defaultCountry={phoneParts.country}
+            defaultNational={phoneParts.national}
           />
         </Field>
         <Field label="Email" name="email">

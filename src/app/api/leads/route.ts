@@ -70,6 +70,14 @@ export async function POST(request: Request) {
       { status: 422 }
     );
   }
+  // Prefer E.164 (+447…) from the country-code picker; reject tiny stubs.
+  const phoneDigits = phone.replace(/\D/g, "");
+  if (phoneDigits.length < 10 || phoneDigits.length > 15) {
+    return NextResponse.json(
+      { error: "Please enter a valid phone number with country code." },
+      { status: 422 }
+    );
+  }
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
     return NextResponse.json({ error: "Please provide a valid email." }, { status: 422 });
   }
