@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
-import { services, courseTypes, siteConfig } from "@/data/site";
+import { services, courseTypes, siteConfig, whatsappLink } from "@/data/site";
 import { universities, subjectAreas } from "@/data/universities";
 import {
   settlementStatuses,
@@ -15,7 +15,6 @@ import {
   preferredCities,
 } from "@/data/qualification";
 import { continueLead, submitLead } from "@/lib/crm/client";
-import { whatsappLink } from "@/data/site";
 
 type Step = 1 | 2;
 
