@@ -14,15 +14,46 @@ import {
   intakeOptions,
   preferredCities,
 } from "@/data/qualification";
-import { submitLead } from "@/lib/crm/client";
+import { continueLead, submitLead } from "@/lib/crm/client";
+import { whatsappLink } from "@/data/site";
+
+type Step = 1 | 2;
+
+function draftWhatsApp(draft: {
+  reference: string | null;
+  fullName: string;
+  phone: string;
+  settlementStatus: string;
+}) {
+  const lines = [
+    draft.reference
+      ? `Hi UNIADS, I'd like to start my application. (Ref ${draft.reference})`
+      : "Hi UNIADS, I'd like to start my application.",
+    "",
+    `Name: ${draft.fullName}`,
+    `Phone: ${draft.phone}`,
+    `Residency status: ${draft.settlementStatus}`,
+    "I saved my details on the website — please call me to finish.",
+  ];
+  return whatsappLink(lines.join("\n"));
+}
 
 export function ApplyForm() {
+  const [step, setStep] = useState<Step>(1);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [universityName, setUniversityName] = useState("");
   const [course, setCourse] = useState("");
   const [studyMode, setStudyMode] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [error, setError] = useState("");
+  const [draft, setDraft] = useState<{
+    leadId: string;
+    continueToken: string;
+    reference: string | null;
+    fullName: string;
+    phone: string;
+    settlementStatus: string;
+  } | null>(null);
   const [result, setResult] = useState<{
     reference: string | null;
     whatsappUrl?: string;
@@ -52,36 +83,86 @@ export function ApplyForm() {
     );
   }
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onStageOne(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
+    const fullName = String(form.get("fullName") ?? "").trim();
+    const phone = String(form.get("phone") ?? "").trim();
+    const settlementStatus = String(form.get("settlementStatus") ?? "").trim();
+    const company = String(form.get("company") ?? "");
+
+    if (!fullName || !phone || !settlementStatus) {
+      setError("Please enter your name, phone number and residency status.");
+      setStatus("error");
+      return;
+    }
+
     setStatus("sending");
     setError("");
 
     try {
       const response = await submitLead({
         source: "apply",
-        fullName: String(form.get("fullName") ?? ""),
-        phone: String(form.get("phone") ?? ""),
+        partial: true,
+        fullName,
+        phone,
+        settlementStatus,
+        company,
+      });
+
+      if (!response.leadId || !response.continueToken) {
+        // Still captured — jump to success with WhatsApp if we can't continue
+        setResult({
+          reference: response.reference,
+          whatsappUrl: response.whatsappUrl,
+        });
+        setStatus("idle");
+        return;
+      }
+
+      setDraft({
+        leadId: response.leadId,
+        continueToken: response.continueToken,
+        reference: response.reference,
+        fullName,
+        phone,
+        settlementStatus,
+      });
+      setStep(2);
+      setStatus("idle");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (submitError) {
+      setStatus("error");
+      setError((submitError as Error).message);
+    }
+  }
+
+  async function onStageTwo(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!draft) return;
+    const form = new FormData(event.currentTarget);
+    setStatus("sending");
+    setError("");
+
+    try {
+      const response = await continueLead(draft.leadId, draft.continueToken, {
         email: String(form.get("email") ?? ""),
-        settlementStatus: String(form.get("settlementStatus") ?? ""),
         ukResidency: String(form.get("ukResidency") ?? ""),
         ageBracket: String(form.get("ageBracket") ?? ""),
         highestQualification: String(form.get("highestQualification") ?? ""),
         previousStudentFinance: String(form.get("previousStudentFinance") ?? ""),
-        university: universityName,
-        course,
+        university: universityName || null,
+        course: course || null,
         courseLevel: String(form.get("courseLevel") ?? ""),
-        studyMode,
+        studyMode: studyMode || null,
         classPreference: String(form.get("classPreference") ?? ""),
         preferredCity: String(form.get("preferredCity") ?? ""),
         intake: String(form.get("intake") ?? ""),
         services: selectedServices,
-        notes: String(form.get("notes") ?? ""),
-        company: String(form.get("company") ?? ""),
+        notes: String(form.get("notes") ?? "").trim() || undefined,
       });
       setResult({
-        reference: response.reference,
+        reference: response.reference ?? draft.reference,
         whatsappUrl: response.whatsappUrl,
       });
       setStatus("idle");
@@ -122,70 +203,46 @@ export function ApplyForm() {
     );
   }
 
-  return (
-    <form
-      onSubmit={onSubmit}
-      className="space-y-9 rounded-xl border border-line bg-white p-6 shadow-sm sm:p-8"
-    >
-      <div>
-        <h2 className="display text-2xl text-navy sm:text-3xl">
-          Start your application
-        </h2>
-        <p className="mt-2 text-sm text-muted">
-          Answer the questions below so we can confirm your eligibility for a place
-          and for student finance before we call you.
-        </p>
-      </div>
+  if (step === 1) {
+    return (
+      <form
+        onSubmit={onStageOne}
+        className="space-y-7 rounded-xl border border-line bg-white p-6 shadow-sm sm:p-8"
+      >
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
+            Step 1 of 2 · 30 seconds
+          </p>
+          <h2 className="display mt-2 text-2xl text-navy sm:text-3xl">
+            Start your application
+          </h2>
+          <p className="mt-2 text-sm text-muted">
+            Tell us your name, phone and residency status. We’ll save this now so an
+            advisor can help even if you leave the page.
+          </p>
+        </div>
 
-      <section className="space-y-5">
-        <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
-          1 · Your details
-        </h3>
         <div className="grid gap-5 sm:grid-cols-2">
-          <div>
+          <div className="sm:col-span-2">
             <label className="label" htmlFor="fullName">
               Full name *
             </label>
-            <input id="fullName" name="fullName" required className="input" />
+            <input id="fullName" name="fullName" required className="input" autoComplete="name" />
           </div>
           <div>
             <label className="label" htmlFor="phone">
               Phone / WhatsApp *
             </label>
-            <input id="phone" name="phone" type="tel" required className="input" />
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              required
+              className="input"
+              autoComplete="tel"
+            />
           </div>
           <div>
-            <label className="label" htmlFor="email">
-              Email *
-            </label>
-            <input id="email" name="email" type="email" required className="input" />
-          </div>
-          <div>
-            <label className="label" htmlFor="ageBracket">
-              Your age
-            </label>
-            <select id="ageBracket" name="ageBracket" className="input" defaultValue="">
-              <option value="" disabled>
-                Select your age range
-              </option>
-              {ageBrackets.map((a) => (
-                <option key={a}>{a}</option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </section>
-
-      <section className="space-y-5">
-        <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
-          2 · Eligibility
-        </h3>
-        <p className="-mt-2 text-xs text-muted">
-          Your residency status determines which funding you can access, so this
-          helps us advise you accurately from the first call.
-        </p>
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div className="sm:col-span-2">
             <label className="label" htmlFor="settlementStatus">
               Residency status in the UK *
             </label>
@@ -201,6 +258,79 @@ export function ApplyForm() {
               </option>
               {settlementStatuses.map((s) => (
                 <option key={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden
+        />
+
+        {status === "error" && (
+          <p className="text-sm font-semibold text-red-600">{error}</p>
+        )}
+
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="flex min-h-12 w-full items-center justify-center rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep transition hover:bg-olive-dark disabled:opacity-60 sm:w-auto"
+        >
+          {status === "sending" ? "Saving…" : "Next — save & continue"}
+        </button>
+      </form>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={onStageTwo}
+      className="space-y-9 rounded-xl border border-line bg-white p-6 shadow-sm sm:p-8"
+    >
+      <div>
+        <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
+          Step 2 of 2 · Almost done
+        </p>
+        <h2 className="display mt-2 text-2xl text-navy sm:text-3xl">
+          A few more details
+        </h2>
+        <p className="mt-2 text-sm text-muted">
+          Saved as <strong className="text-navy">{draft?.reference}</strong> for{" "}
+          {draft?.fullName}. Add what you can — you can skip anything you’re unsure
+          about.
+        </p>
+        <div className="mt-3 rounded-lg border border-olive/40 bg-cream/70 px-3 py-2 text-xs text-navy">
+          Your contact details are already with UNIADS. An advisor can call you even
+          if you close this page now.
+        </div>
+      </div>
+
+      <section className="space-y-5">
+        <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
+          Contact & eligibility
+        </h3>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <div>
+            <label className="label" htmlFor="email">
+              Email
+            </label>
+            <input id="email" name="email" type="email" className="input" autoComplete="email" />
+          </div>
+          <div>
+            <label className="label" htmlFor="ageBracket">
+              Your age
+            </label>
+            <select id="ageBracket" name="ageBracket" className="input" defaultValue="">
+              <option value="" disabled>
+                Select your age range
+              </option>
+              {ageBrackets.map((a) => (
+                <option key={a}>{a}</option>
               ))}
             </select>
           </div>
@@ -258,16 +388,15 @@ export function ApplyForm() {
 
       <section className="space-y-5">
         <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
-          3 · Course choice
+          Course choice
         </h3>
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <label className="label" htmlFor="university">
-              University you want to attend *
+              University you want to attend
             </label>
             <select
               id="university"
-              required
               className="input"
               value={universityName}
               onChange={(e) => {
@@ -285,11 +414,10 @@ export function ApplyForm() {
           </div>
           <div>
             <label className="label" htmlFor="course">
-              Course you want to study *
+              Course you want to study
             </label>
             <select
               id="course"
-              required
               className="input"
               value={course}
               onChange={(e) => setCourse(e.target.value)}
@@ -336,7 +464,7 @@ export function ApplyForm() {
             </select>
           </div>
           <div className="sm:col-span-2">
-            <span className="label">Full-time or part-time? *</span>
+            <span className="label">Full-time or part-time?</span>
             <div className="flex flex-wrap gap-2">
               {studyModes.map((mode) => (
                 <button
@@ -420,7 +548,7 @@ export function ApplyForm() {
 
       <section className="space-y-5">
         <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-teal">
-          4 · Support you need
+          Support you need
         </h3>
         <div className="grid gap-3 sm:grid-cols-2">
           {services.map((s) => (
@@ -465,38 +593,36 @@ export function ApplyForm() {
             placeholder="Work experience, documents you already have, funding questions…"
           />
         </div>
-
-        <input
-          type="text"
-          name="company"
-          tabIndex={-1}
-          autoComplete="off"
-          className="hidden"
-          aria-hidden
-        />
       </section>
 
       {status === "error" && (
         <p className="text-sm font-semibold text-red-600">{error}</p>
       )}
 
-      <div className="hidden sm:block">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <button
           type="submit"
-          disabled={status === "sending" || !studyMode}
-          className="min-h-12 rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep transition hover:bg-olive-dark disabled:opacity-60"
+          disabled={status === "sending"}
+          className="flex min-h-12 w-full items-center justify-center rounded-md bg-olive px-5 py-3.5 text-sm font-bold text-navy-deep transition hover:bg-olive-dark disabled:opacity-60 sm:w-auto"
         >
           {status === "sending"
             ? "Submitting…"
-            : "Submit application & open WhatsApp"}
+            : "Finish application & open WhatsApp"}
         </button>
-        {!studyMode && (
-          <p className="mt-2 text-xs text-muted">
-            Select full-time or part-time to submit your application.
-          </p>
-        )}
+        <button
+          type="button"
+          disabled={status === "sending"}
+          onClick={() =>
+            setResult({
+              reference: draft?.reference ?? null,
+              whatsappUrl: draft ? draftWhatsApp(draft) : undefined,
+            })
+          }
+          className="min-h-12 w-full rounded-md border border-navy/20 px-5 py-3 text-sm font-semibold text-navy sm:w-auto"
+        >
+          I’m done for now — advisor will call
+        </button>
       </div>
-
     </form>
   );
 }

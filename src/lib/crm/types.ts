@@ -97,6 +97,12 @@ export type Lead = {
   landingPage: string | null;
   referrer: string | null;
 
+  /**
+   * Secret token returned only to the applicant so they can continue a
+   * partial application without being logged into admin.
+   */
+  continueToken: string;
+
   attachments: LeadAttachment[];
   activities: Activity[];
 };
@@ -136,6 +142,7 @@ export type NewLeadInput = Omit<
   | "scoreBand"
   | "activities"
   | "attachments"
+  | "continueToken"
 > & {
   stage?: LeadStage;
 };

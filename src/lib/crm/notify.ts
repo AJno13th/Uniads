@@ -9,13 +9,17 @@ import { buildPresetMessage } from "./message";
 export async function notifyLeadCaptured(
   lead: Lead,
   input: NewLeadInput,
-  meta: { persisted: boolean },
+  meta: { persisted: boolean; partial?: boolean },
 ) {
+  const kind = meta.partial ? "partial" : input.source;
   const subject = meta.persisted
-    ? `New UNIADS ${input.source} lead ${lead.reference}`
-    : `New UNIADS ${input.source} lead ${lead.reference} (not saved to CRM)`;
+    ? `New UNIADS ${kind} lead ${lead.reference}`
+    : `New UNIADS ${kind} lead ${lead.reference} (not saved to CRM)`;
 
   const body = [
+    meta.partial
+      ? "PARTIAL APPLICATION — contact them to finish details."
+      : null,
     buildPresetMessage(lead.reference, input),
     "",
     `Score: ${lead.scoreBand} (${lead.score})`,

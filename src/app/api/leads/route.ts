@@ -96,7 +96,11 @@ export async function POST(request: Request) {
     preferredCity: clean(payload.preferredCity, 60),
     intake: clean(payload.intake, 60),
     services: cleanList(payload.services),
-    notes: clean(payload.notes, 2000),
+    notes:
+      clean(payload.notes, 2000) ??
+      (payload.partial === true
+        ? "Partial application — waiting for more details"
+        : null),
     callDate: clean(payload.callDate, 20),
     callTime: clean(payload.callTime, 10),
     utmSource: clean(payload.utmSource, 80),
@@ -133,7 +137,10 @@ export async function POST(request: Request) {
 
   try {
     const { notifyLeadCaptured } = await import("@/lib/crm/notify");
-    await notifyLeadCaptured(lead, input, { persisted: durablySaved });
+    await notifyLeadCaptured(lead, input, {
+      persisted: durablySaved,
+      partial: payload.partial === true,
+    });
   } catch (error) {
     console.error("[api/leads] notify failed", error);
   }
@@ -143,6 +150,8 @@ export async function POST(request: Request) {
     reference: lead.reference,
     scoreBand: lead.scoreBand,
     persisted: durablySaved,
+    leadId: lead.id,
+    continueToken: lead.continueToken,
     whatsappUrl: whatsappLink(buildPresetMessage(lead.reference, input)),
   });
 }

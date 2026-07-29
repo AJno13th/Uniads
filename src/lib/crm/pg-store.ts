@@ -205,6 +205,29 @@ export const pgLeadStore: LeadStore = {
     return lead;
   },
 
+  async continue(
+    id: string,
+    continueToken: string,
+    patch: LeadProfilePatch,
+    author = "applicant"
+  ): Promise<Lead | null> {
+    const lead = await pgLeadStore.get(id);
+    if (!lead) return null;
+    if (!lead.continueToken || lead.continueToken !== continueToken) return null;
+    const next = applyProfilePatch(lead, patch, author);
+    if (next === lead) {
+      // Still stamp an activity so advisors see they finished stage 2
+      lead.activities.push(
+        makeActivity("field_update", "Applicant continued application form", author)
+      );
+      lead.updatedAt = new Date().toISOString();
+      await save(lead);
+      return lead;
+    }
+    await save(next);
+    return next;
+  },
+
   async addNote(id: string, body: string, author: string): Promise<Lead | null> {
     const lead = await pgLeadStore.get(id);
     if (!lead) return null;

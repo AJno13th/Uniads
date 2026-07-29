@@ -201,6 +201,34 @@ export const jsonLeadStore: LeadStore = {
     });
   },
 
+  async continue(
+    id: string,
+    continueToken: string,
+    patch: LeadProfilePatch,
+    author = "applicant"
+  ): Promise<Lead | null> {
+    return enqueue(async () => {
+      const leads = await readAll();
+      const index = leads.findIndex((l) => l.id === id);
+      if (index === -1) return null;
+      const lead = leads[index];
+      if (!lead.continueToken || lead.continueToken !== continueToken) return null;
+      const next = applyProfilePatch(lead, patch, author);
+      if (next === lead) {
+        lead.activities.push(
+          makeActivity("field_update", "Applicant continued application form", author)
+        );
+        lead.updatedAt = new Date().toISOString();
+        leads[index] = lead;
+        await writeAll(leads);
+        return lead;
+      }
+      leads[index] = next;
+      await writeAll(leads);
+      return next;
+    });
+  },
+
   async addNote(id: string, body: string, author: string): Promise<Lead | null> {
     return enqueue(async () => {
       const leads = await readAll();

@@ -43,6 +43,12 @@ export interface LeadStore {
     attachmentId: string,
     author: string
   ): Promise<Lead | null>;
+  continue(
+    id: string,
+    continueToken: string,
+    patch: LeadProfilePatch,
+    author?: string
+  ): Promise<Lead | null>;
   addNote(id: string, body: string, author: string): Promise<Lead | null>;
   delete(id: string): Promise<boolean>;
   stats(): Promise<LeadStats>;
@@ -71,6 +77,7 @@ export function normalizeLead(lead: Lead): Lead {
     gclid: lead.gclid ?? null,
     landingPage: lead.landingPage ?? null,
     referrer: lead.referrer ?? null,
+    continueToken: typeof lead.continueToken === "string" ? lead.continueToken : "",
   };
 }
 
@@ -99,6 +106,7 @@ export function hydrateNewLead(input: NewLeadInput): Lead {
     gclid: input.gclid ?? null,
     landingPage: input.landingPage ?? null,
     referrer: input.referrer ?? null,
+    continueToken: randomUUID(),
     attachments: [],
     activities: [
       {
