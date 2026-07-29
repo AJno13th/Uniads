@@ -78,8 +78,8 @@ export default function StudyWithoutQualificationsPage() {
               No GCSEs? No A-Levels? No problem.
             </h1>
             <p className="mt-5 text-base text-white/85 sm:text-lg">
-              UNIADS makes university possible for everyone. Tell us your settlement
-              status, the university and course you want, and whether you want
+              UNIADS makes university possible for everyone. Tell us your passport or
+              permit, the university and course you want, and whether you want
               full-time or part-time study — we will confirm your options.
             </p>
             <ul className="mt-7 space-y-3 text-sm">
