@@ -183,12 +183,6 @@ export function PhoneField({
       <input type="hidden" name={name} value={composed} />
       <input type="hidden" name={`${name}Country`} value={selected.code} />
       <input type="hidden" name={`${name}Iso`} value={selected.iso} />
-      <p className="mt-1.5 text-xs text-muted">
-        Country code required. Saved as{" "}
-        <span className="font-semibold text-navy">
-          {composed || `+${selected.code}…`}
-        </span>
-      </p>
     </div>
   );
 }
