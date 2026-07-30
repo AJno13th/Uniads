@@ -7,6 +7,7 @@ import {
   studyModes,
   residencyOptions,
   ageBrackets,
+  qualificationOptions,
 } from "@/data/qualification";
 import { submitLead } from "@/lib/crm/client";
 import { whatsappLink } from "@/data/site";
@@ -14,7 +15,7 @@ import { PhoneField } from "@/components/PhoneField";
 
 /**
  * Compact qualifier used on high-intent pages: the student picks their
- * residency status, university, course and study mode, and WhatsApp opens
+ * passport/permit, university, course and study mode, and WhatsApp opens
  * with a preset message containing all of it.
  */
 export function LeadQualifier({
@@ -27,6 +28,7 @@ export function LeadQualifier({
   const [settlementStatus, setSettlementStatus] = useState("");
   const [ukResidency, setUkResidency] = useState("");
   const [ageBracket, setAgeBracket] = useState("");
+  const [highestQualification, setHighestQualification] = useState("");
   const [universityName, setUniversityName] = useState("");
   const [course, setCourse] = useState("");
   const [studyMode, setStudyMode] = useState("");
@@ -73,6 +75,7 @@ export function LeadQualifier({
         settlementStatus,
         ukResidency,
         ageBracket,
+        highestQualification,
         university: universityName,
         course,
         studyMode,
@@ -125,7 +128,7 @@ export function LeadQualifier({
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label className={labelClass} htmlFor="qual-settlement">
-            Residency status in the UK *
+            What passport or permit do you have? *
           </label>
           <select
             id="qual-settlement"
@@ -134,7 +137,7 @@ export function LeadQualifier({
             value={settlementStatus}
             onChange={(e) => setSettlementStatus(e.target.value)}
           >
-            <option value="">Select your residency status</option>
+            <option value="">Select an option</option>
             {settlementStatuses.map((s) => (
               <option key={s} value={s}>
                 {s}
@@ -206,7 +209,7 @@ export function LeadQualifier({
 
         <div>
           <label className={labelClass} htmlFor="qual-course">
-            Course you want to study *
+            What course do you want to study? *
           </label>
           <select
             id="qual-course"
@@ -216,7 +219,7 @@ export function LeadQualifier({
             onChange={(e) => setCourse(e.target.value)}
           >
             <option value="">
-              {universityName ? "Select a course" : "Select a university first"}
+              {universityName ? "Select an option" : "Select a university first"}
             </option>
             {courseOptions.map((c) => (
               <option key={c} value={c}>
@@ -225,6 +228,31 @@ export function LeadQualifier({
             ))}
             <option value="Not sure — please advise">Not sure — please advise</option>
           </select>
+        </div>
+
+        <div className="sm:col-span-2">
+          <span className={labelClass}>Do you have any previous qualification?</span>
+          <div className="flex flex-wrap gap-2">
+            {qualificationOptions.map((option) => {
+              const active = highestQualification === option;
+              return (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => setHighestQualification(option)}
+                  className={`rounded-md px-4 py-2.5 text-sm font-semibold transition ${
+                    active
+                      ? "bg-olive text-navy-deep"
+                      : dark
+                        ? "bg-white/10 text-white hover:bg-white/20"
+                        : "bg-cream text-navy hover:bg-olive/30"
+                  }`}
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="sm:col-span-2">

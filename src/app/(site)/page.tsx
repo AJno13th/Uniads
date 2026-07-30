@@ -177,12 +177,12 @@ export default function HomePage() {
               Check your eligibility
             </p>
             <h2 className="display mt-3 text-3xl text-navy sm:text-4xl">
-              Tell us your status, course and study mode
+              Tell us your passport, course and study mode
             </h2>
             <p className="mt-4 text-muted">
-              Student finance eligibility depends on your residency status and UK
-              residency, so we ask up front. Pick your answers and WhatsApp opens with
-              a ready-made message — no long forms, no waiting.
+              Eligibility starts with your passport or permit — British, EU, Refugee or
+              ILR. Pick your answers and WhatsApp opens with a ready-made message — no
+              long forms, no waiting.
             </p>
             <ul className="mt-6 space-y-2 text-sm text-navy">
               {[

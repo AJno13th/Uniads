@@ -125,7 +125,7 @@ export default async function AdminDashboard({
             defaultValue={params.settlementStatus ?? "all"}
             className="input"
           >
-            <option value="all">Any residency status</option>
+            <option value="all">Any passport / permit</option>
             {settlementStatuses.map((s) => (
               <option key={s} value={s}>
                 {s}
@@ -173,7 +173,7 @@ export default async function AdminDashboard({
                 <th className="py-3 pr-4">Lead</th>
                 <th className="py-3 pr-4">Score</th>
                 <th className="py-3 pr-4">Ad</th>
-                <th className="py-3 pr-4">Residency status</th>
+                <th className="py-3 pr-4">Passport / permit</th>
                 <th className="py-3 pr-4">University / course</th>
                 <th className="py-3 pr-4">Mode</th>
                 <th className="py-3 pr-4">Stage</th>

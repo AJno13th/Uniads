@@ -5,7 +5,7 @@ import { ApplyForm } from "@/components/ApplyForm";
 export const metadata: Metadata = {
   title: "Apply Now",
   description:
-    "Apply to study in the UK with UNIADS. Specify the services and courses you need using our guided application form — dropdowns and checkboxes included.",
+    "Apply with UNIADS in under a minute. Tell us your passport or permit, course and qualifications — we’ll take it from there.",
   alternates: { canonical: "/apply" },
 };
 
@@ -14,12 +14,12 @@ export default function ApplyPage() {
     <>
       <PageHero
         eyebrow="Apply"
-        title="Apply now with UNIADS"
-        description="Use the form below to tell us precisely what you need — university applications, certifications, finance, childcare grants, course level and more. We’ll take it from there."
+        title="Apply now"
+        description="British, EU, Refugee or ILR? Pick your course and we’ll help you enrol — free."
         showCtas={false}
       />
       <section className="bg-cream/50">
-        <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
           <ApplyForm />
         </div>
       </section>

@@ -367,7 +367,7 @@ export function BookingCalendar() {
           </div>
           <div>
             <label className="label" htmlFor="settlementStatus">
-              Residency status in the UK *
+              What passport or permit do you have? *
             </label>
             <select
               id="settlementStatus"
@@ -377,7 +377,7 @@ export function BookingCalendar() {
               defaultValue=""
             >
               <option value="" disabled>
-                Select your residency status
+                Select an option
               </option>
               {settlementStatuses.map((s) => (
                 <option key={s} value={s}>

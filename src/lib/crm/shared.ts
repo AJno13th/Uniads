@@ -177,7 +177,7 @@ export function applyProfilePatch(
     }
   }
 
-  setString("settlementStatus", "residency status", 120);
+  setString("settlementStatus", "passport / permit", 120);
   setString("ukResidency", "time in the UK", 60);
   setString("ageBracket", "age", 30);
   setString("highestQualification", "highest qualification", 120);
