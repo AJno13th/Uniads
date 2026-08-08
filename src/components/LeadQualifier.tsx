@@ -125,7 +125,7 @@ export function LeadQualifier({
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label className={labelClass} htmlFor="qual-settlement">
-            Residency status in the UK *
+            What passport or permit do you have? *
           </label>
           <select
             id="qual-settlement"
@@ -134,7 +134,7 @@ export function LeadQualifier({
             value={settlementStatus}
             onChange={(e) => setSettlementStatus(e.target.value)}
           >
-            <option value="">Select your residency status</option>
+            <option value="">Select an option</option>
             {settlementStatuses.map((s) => (
               <option key={s} value={s}>
                 {s}

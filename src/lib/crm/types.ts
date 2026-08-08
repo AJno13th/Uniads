@@ -26,7 +26,12 @@ export const stageLabels: Record<LeadStage, string> = {
   lost: "Lost",
 };
 
-export type LeadSource = "apply" | "booking" | "quick_qualifier" | "landing";
+export type LeadSource =
+  | "apply"
+  | "booking"
+  | "quick_qualifier"
+  | "landing"
+  | "instagram";
 
 export type Activity = {
   id: string;
