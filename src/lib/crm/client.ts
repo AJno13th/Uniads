@@ -3,7 +3,7 @@
 import { getAttribution, trackLeadConversion } from "@/lib/attribution";
 
 export type LeadPayload = {
-  source: "apply" | "booking" | "quick_qualifier" | "landing";
+  source: "apply" | "booking" | "quick_qualifier" | "landing" | "instagram";
   fullName: string;
   email?: string;
   phone: string;

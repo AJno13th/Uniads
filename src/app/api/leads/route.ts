@@ -34,7 +34,13 @@ function cleanList(value: unknown): string[] {
     .slice(0, 20);
 }
 
-const validSources: LeadSource[] = ["apply", "booking", "quick_qualifier", "landing"];
+const validSources: LeadSource[] = [
+  "apply",
+  "booking",
+  "quick_qualifier",
+  "landing",
+  "instagram",
+];
 
 export async function POST(request: Request) {
   let payload: Record<string, unknown>;

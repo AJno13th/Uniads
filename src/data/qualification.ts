@@ -1,18 +1,12 @@
 /**
- * Residency / immigration statuses aligned with TikTok ad eligibility funnels
- * (student-finance home routes). Keep labels short so mobile users recognise them.
+ * Instant Form passport / permit options for Instagram + TikTok lead ads.
+ * Extra statuses can be typed in admin via SelectOrCustom.
  */
 export const settlementStatuses = [
-  "British Citizen",
-  "Irish Citizen",
+  "British",
+  "EU",
+  "Refugee",
   "ILR (Indefinite Leave to Remain)",
-  "EU Settled Status",
-  "EU Pre-Settled Status",
-  "Refugee / Asylum Granted",
-  "Humanitarian Protection",
-  "Ukraine Scheme",
-  "Dependent of any of the above",
-  "None of the above / Not sure",
 ] as const;
 
 export const residencyOptions = [
@@ -32,16 +26,8 @@ export const ageBrackets = [
   "45+",
 ] as const;
 
-export const qualificationOptions = [
-  "No formal qualifications",
-  "GCSEs only",
-  "Level 3 / BTEC / A-Levels",
-  "Access to HE Diploma",
-  "Overseas qualification / diploma",
-  "HND / CertHE / Foundation completed",
-  "Bachelor’s degree",
-  "Master’s degree",
-] as const;
+/** Instant Form: “Do you have any previous qualification?” */
+export const qualificationOptions = ["Yes", "No"] as const;
 
 export const studyModes = ["Full-time", "Part-time"] as const;
 
@@ -83,25 +69,8 @@ export const preferredCities = [
   "No preference",
 ] as const;
 
-/**
- * Student finance eligibility in England generally requires settled or
- * pre-settled/protected status plus a UK residency history, so these signals
- * drive how a lead is prioritised for the advisor team.
- */
-const strongStatuses = new Set<string>([
-  "British Citizen",
-  "Irish Citizen",
-  "ILR (Indefinite Leave to Remain)",
-  "EU Settled Status",
-  "Refugee / Asylum Granted",
-  "Humanitarian Protection",
-  "Ukraine Scheme",
-]);
-
-const mediumStatuses = new Set<string>([
-  "EU Pre-Settled Status",
-  "Dependent of any of the above",
-]);
+/** Instant Form statuses score as strong; legacy CRM values still get a bump. */
+const strongStatuses = new Set<string>(settlementStatuses);
 
 export type ScoreBand = "hot" | "warm" | "cold";
 
@@ -109,7 +78,7 @@ export type ScoreInput = {
   settlementStatus?: string | null;
   ukResidency?: string | null;
   ageBracket?: string | null;
-  highestQualification?: string | null
+  highestQualification?: string | null;
   previousStudentFinance?: string | null;
   university?: string | null;
   course?: string | null;
@@ -123,8 +92,7 @@ export function scoreLead(input: ScoreInput): { score: number; band: ScoreBand }
 
   const status = input.settlementStatus ?? "";
   if (strongStatuses.has(status)) score += 35;
-  else if (mediumStatuses.has(status)) score += 20;
-  else if (status && status !== "None of the above / Not sure") score += 5;
+  else if (status) score += 5;
 
   const residency = input.ukResidency ?? "";
   if (residency === "Born in the UK" || residency === "5+ years") score += 20;
@@ -138,6 +106,9 @@ export function scoreLead(input: ScoreInput): { score: number; band: ScoreBand }
 
   if (input.previousStudentFinance?.startsWith("No")) score += 15;
   else if (input.previousStudentFinance?.startsWith("Yes")) score += 4;
+
+  if (input.highestQualification === "No") score += 8;
+  else if (input.highestQualification === "Yes") score += 4;
 
   if (input.university) score += 6;
   if (input.course) score += 6;
