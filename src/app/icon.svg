@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="32" height="64" fill="#1D2B4D"/>
-  <rect x="32" width="32" height="64" fill="#1F6B6B"/>
-  <circle cx="56" cy="8" r="14" fill="#C2CC60"/>
-  <text x="32" y="40" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="16" font-weight="800" fill="#fff">U</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" fill="#0C1218"/>
+  <rect x="22" y="10" width="20" height="44" rx="10" fill="#0F6E6A"/>
+  <rect x="22" y="32" width="20" height="22" rx="4" fill="#E85D04"/>
+  <ellipse cx="32" cy="10" rx="10" ry="4" fill="#1A9A94"/>
 </svg>

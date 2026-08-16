@@ -8,22 +8,16 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="mx-auto max-w-lg px-4 py-16 text-center">
-      <h1 className="display text-3xl text-navy">This page hit a snag</h1>
-      <p className="mt-3 text-sm text-muted">
-        Please try again. If it keeps happening, WhatsApp us on the floating button
-        or email info@uniads.co.uk.
-      </p>
-      {error.digest ? (
-        <p className="mt-2 text-xs text-muted">Ref: {error.digest}</p>
-      ) : null}
+    <main className="flex min-h-[50vh] flex-col items-center justify-center gap-4 px-4 text-center">
+      <h1 className="font-display text-3xl">Something broke</h1>
+      <p className="max-w-md text-sm text-muted">{error.message}</p>
       <button
         type="button"
         onClick={reset}
-        className="mt-6 rounded-md bg-navy px-5 py-2.5 text-sm font-bold text-white"
+        className="bg-ink px-4 py-2 text-fog"
       >
         Try again
       </button>
-    </div>
+    </main>
   );
 }
