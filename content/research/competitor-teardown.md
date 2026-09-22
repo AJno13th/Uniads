@@ -196,11 +196,11 @@ important planning fact in this document:
 
 | Account | Followers | Total likes | Videos |
 | --- | --- | --- | --- |
-| `@uasuk` (linked from the UNIADS site) | 4 | 2 | 2 |
+| `@uasuk` (retired) | 4 | 2 | 2 |
 | `@Uniadsuk` | 0 | 0 | 0 |
 
-Two near-empty accounts. The site links `@uasuk`; the brand name matches
-`@Uniadsuk`. **Consolidate on one before publishing anything.**
+Two near-empty accounts. Now consolidated on **`@Uniadsuk`**, which is what
+`src/data/site.ts` links; `@uasuk` is retired.
 
 Adjacent public competitors, scraped directly (same niche: UK funded degrees, no
 A-Levels, 2 days a week):

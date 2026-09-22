@@ -88,7 +88,7 @@ what you do tomorrow.
 
 | Date | Observation | Change made |
 | --- | --- | --- |
-| — | Baseline before publishing: `@uasuk` 4 followers / 2 videos; `@Uniadsuk` 0 / 0 | Cold start assumed throughout. Consolidate on one handle before day 1. |
+| — | Baseline before publishing: `@uasuk` 4 followers / 2 videos; `@Uniadsuk` 0 / 0 | Cold start assumed throughout. Settled on `@Uniadsuk`; `@uasuk` retired. |
 
 ### Open questions to answer with data
 

@@ -81,5 +81,5 @@ avoid invented claims. That shapes the whole design:
 
 Two things to settle:
 
-- **Pick one TikTok handle.** `@uasuk` (4 followers, 2 videos) is linked from the site; `@Uniadsuk` (0, 0) matches the brand name. Choose one, update `src/data/site.ts`, and publish only there.
+- **Handles are settled:** TikTok `@Uniadsuk`, Instagram `@Uniads.uk`, both live in `src/data/site.ts`. The old `@uasuk` account is retired — publish nothing to it.
 - **Book session 1.** Days 1–3 are written and two of the nine posts need no footage, but the video slots depend on it.

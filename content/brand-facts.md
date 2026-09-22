@@ -20,13 +20,15 @@ Last verified 22 September 2026.
 | Phone / WhatsApp | +44 7368 218457 | `src/data/site.ts` |
 | Email | info@uniads.co.uk | `src/data/site.ts` |
 | Facebook | facebook.com/61577408444999 | `src/data/site.ts` |
-| Instagram | @uniads.uk | `src/data/site.ts` |
-| TikTok | @uasuk | `src/data/site.ts` |
+| Instagram | @Uniads.uk | `src/data/site.ts` |
+| TikTok | @Uniadsuk | `src/data/site.ts` |
 
-**Open issue:** the site links TikTok `@uasuk` (4 followers, 2 videos) but a
-second account `@Uniadsuk` also exists (0 followers, 0 videos). Pick one, update
-`src/data/site.ts`, and publish only to that one. Content cannot be scheduled
-against an undecided handle.
+**Settled:** TikTok is `@Uniadsuk`. The site previously linked `@uasuk` (4
+followers, 2 videos); that account is retired and nothing should be published to
+it. Post only to `@Uniadsuk`.
+
+If `@uasuk` is left live, put a single post on it pointing at `@Uniadsuk` so the
+handful of existing followers and any old links don't dead-end.
 
 ## 2. The credential — UNIADS' strongest differentiator
 
