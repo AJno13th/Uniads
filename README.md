@@ -33,7 +33,25 @@ Open [http://localhost:3000](http://localhost:3000). The CRM lives at
 | `LEAD_NOTIFY_EMAIL` | No | Inbox for lead alert emails (defaults to `info@uniads.co.uk`) |
 | `RESEND_API_KEY` | No | If set, lead alerts are sent via Resend instead of FormSubmit |
 | `RESEND_FROM_EMAIL` | No | Resend from address |
+| `NEXT_PUBLIC_TIKTOK_PIXEL_ID` | **Yes, to run TikTok ads** | TikTok Pixel ID. Loads the pixel and fires `SubmitForm` on every lead |
+| `NEXT_PUBLIC_META_PIXEL_ID` | **Yes, to run Meta ads** | Meta Pixel ID. Loads the pixel and fires `Lead` on every lead |
 | `GOOGLE_SITE_VERIFICATION` | No | Google Search Console HTML-tag verification code |
+
+### Ad pixels
+
+Both pixel variables are `NEXT_PUBLIC_*`, so they are inlined at build time —
+set them in Vercel and **redeploy**. Adding the variable without a redeploy does
+not activate the pixel.
+
+Once set, [`AdPixels`](src/components/AdPixels.tsx) loads the pixel and fires a
+page view, and [`client.ts`](src/lib/crm/client.ts) fires a conversion on every
+successful lead submission. Click IDs (`ttclid`, `fbclid`, `gclid`) and UTMs are
+captured into the CRM by [`attribution.ts`](src/lib/attribution.ts) and shown on
+the lead record.
+
+Without these set, ad platforms receive no conversion signal and cannot optimise.
+See [content/ads/tiktok-launch.md](content/ads/tiktok-launch.md) for the TikTok
+campaign setup.
 
 ## Google Search Console (branded search)
 
