@@ -35,6 +35,7 @@ Open [http://localhost:3000](http://localhost:3000). The CRM lives at
 | `RESEND_FROM_EMAIL` | No | Resend from address |
 | `NEXT_PUBLIC_TIKTOK_PIXEL_ID` | **Yes, to run TikTok ads** | TikTok Pixel ID. Loads the pixel and fires `SubmitForm` on every lead |
 | `NEXT_PUBLIC_META_PIXEL_ID` | **Yes, to run Meta ads** | Meta Pixel ID. Loads the pixel and fires `Lead` on every lead |
+| `LEAD_INGEST_TOKEN` | Only for ad lead-form forwarding | Shared secret letting server-to-server posts to `/api/leads` bypass the browser rate limit |
 | `GOOGLE_SITE_VERIFICATION` | No | Google Search Console HTML-tag verification code |
 
 ### Ad pixels

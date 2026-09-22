@@ -39,7 +39,8 @@ files and the exact captions. Then log the result in
 | [daily/](daily/) | One file per day, three posts, with the checklist worked through |
 | [assets/README.md](assets/README.md) | Post-ready graphics and video, with copy-paste captions |
 | [assets/generate_assets.py](assets/generate_assets.py) | Regenerates every graphic and video from the fact sheet |
-| [ads/tiktok-launch.md](ads/tiktok-launch.md) | Paid TikTok setup — campaign, targeting, Instant Form, tracking |
+| [ads/tiktok-launch.md](ads/tiktok-launch.md) | Paid TikTok setup — campaign, targeting, budget, tracking, kill rules |
+| [ads/tiktok-lead-form.md](ads/tiktok-lead-form.md) | Instant Form build sheet and the CRM integration |
 
 ## How it fits together
 
