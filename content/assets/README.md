@@ -1,162 +1,125 @@
 # Post-ready assets
 
-Generated graphics and videos, with the captions to go with them. Everything here
-is copy-paste ready — the captions below are the final text, not a brief.
+Benefit-led set for the immediate intake. Everything here is finished and ready to
+upload.
 
-Regenerate at any time with:
+**Captions live with each day**, in [../daily/](../daily/) — start at
+[2026-09-22.md](../daily/2026-09-22.md) and work forward. One file per day, three
+posts each, copy-paste ready.
+
+Regenerate any asset with:
 
 ```bash
 pip install pillow
 python3 content/assets/generate_assets.py
 ```
 
-Every figure is defined once, in `generate_assets.py`, and taken from
-[../brand-facts.md](../brand-facts.md). **Regenerate rather than editing an
-exported PNG** — a hand-edited figure is a compliance problem waiting to happen.
+Every figure is defined once in `generate_assets.py` and traced to
+[../brand-facts.md](../brand-facts.md). Change it there and re-run — **never edit an
+exported PNG**, because an edited number can't be traced back to its source.
 
-Fonts (Oswald and Outfit, matching `src/app/globals.css`) download automatically
-to `.fonts/` on first run and are not committed.
-
----
-
-## Post today — Day 1, the January 2027 rule change
-
-Full plan and compliance checks: [../daily/2026-09-22.md](../daily/2026-09-22.md)
-
-### TikTok — 19:30
-
-**File:** `out/day1-tiktok-lle.mp4` — 1080x1920, 16s, 175KB
-
-A text-card video, so it needs no filming and works with sound off. The bottom
-fifth of the frame is deliberately empty because TikTok's own UI covers it.
-
-**Before posting:** add a trending sound at low volume in the TikTok app. It has no
-audio of its own, and a silent video gets suppressed. Pick the sound on the day —
-that is the one thing that genuinely cannot be prepared in advance.
-
-**Caption** (copy from here):
-
-```
-If your course starts January 2027 you're on the new system, not the old one. Worth knowing before you apply anywhere.
-
-Source: gov.uk
-```
-
-**Hashtags:**
-
-```
-#StudentFinance #StudentFinanceEngland #UniUK #MatureStudentUK #BackToEducation #UniAdvice
-```
-
-### Instagram — 20:00
-
-**Files:** `out/day1-ig-carousel-1.png` … `-6.png` — 1080x1350, in order
-
-Upload all six as a carousel. Slide 1 is the hook, slide 6 is the CTA.
-
-**Caption:**
-
-```
-Nobody sent out a memo about this one.
-
-If you're looking at a January 2027 start, you'll be applying under the new Lifelong Learning Entitlement rather than the system you may have read about. The biggest change: there's a lifetime cap on tuition fee loans, and previous study comes off it.
-
-That last part matters most if you've studied before. Get your own entitlement checked before you commit to a course — we'll do it with you.
-
-Save this for when you're ready.
-
-All figures from gov.uk
-```
-
-**Hashtags:**
-
-```
-#StudentFinance #StudentFinanceEngland #LifelongLearningEntitlement #MatureStudentUK #UniUK #ReturnToStudy #BackToUni #UKStudents
-```
-
-### Facebook — 19:30
-
-**File:** `out/day1-fb-square.png` — 1200x1200
-
-Optional. The Facebook post works better as text plus the GOV.UK link, because a
-gov.uk link preview carries more credibility than a branded graphic. Use the image
-only if you want something visual in the feed — if you post the image, drop the
-link into the first comment instead so the preview doesn't compete with it.
-
-**Copy:** use the Facebook block in
-[../daily/2026-09-22.md](../daily/2026-09-22.md) verbatim. It is long on purpose —
-Facebook is the one platform here where explanation beats the hook.
-
-**No hashtags on Facebook.**
+Brand fonts (Oswald, Outfit, per `src/app/globals.css`) download to `.fonts/` on
+first run and aren't committed.
 
 ---
 
-## Also ready — Day 3, the age set
+## Videos — 1080x1920, vertical, 14–16s
 
-For [../daily/2026-09-24.md](../daily/2026-09-24.md). Needs no filming, so it can
-be brought forward if session 1 slips.
+All are text-card videos, so nothing needs filming and they work with sound off.
+The bottom fifth is left clear because TikTok and Reels overlay UI there.
 
-**Files, in order:** `out/day3-fb-age-0-intro.png`, `-30`, `-35`, `-40`, `-45`,
-`-5-cta` — 1200x1200 each
+**Every one of them needs a trending sound added in-app before posting.** They have
+no audio of their own and a silent video gets suppressed. Pick the sound on the day.
 
-Post as a Facebook image set, or as an Instagram carousel at 1080x1350 by changing
-the size in the script.
-
-**Copy:** the Facebook block in [../daily/2026-09-24.md](../daily/2026-09-24.md).
-
-These carry no `Source: gov.uk` footer, which is correct — they contain only
-arithmetic about the viewer's own age. There is deliberately no earnings claim
-anywhere in the set; adding one would need a cited ONS or National Careers Service
-figure under CAP 20.9.
-
----
-
-## What still needs filming
-
-The talking-head versions are stronger than text cards, because the whole
-positioning rests on a named, credentialled human. These are specified in
-[../filming/shoot-blocks.md](../filming/shoot-blocks.md) and need session 1:
-
-| Day | Slot | Block |
+| File | Hook | Used |
 | --- | --- | --- |
-| 1 | TikTok | SB-13 script 1 — the version with you on camera |
-| 2 | all three | SB-01, cut-downs A / B / C |
-| 3 | TikTok, Instagram | SB-02 age 35 and age 30 |
+| `vid-noquals.mp4` | No GCSEs, no A-Levels, start this month | Day 1, Day 7 |
+| `vid-money.mp4` | Over £16,000 a year to study | Day 2, Day 5 |
+| `vid-2days.mp4` | Two days a week, you pick the days | Day 3 |
+| `vid-courses.mp4` | What do you want to be? | Day 4 |
+| `vid-upgrade.mp4` | How long have you been meaning to? | Day 6 |
 
-The text-card video is a bridge so you can start today. Swap to the filmed
-versions as soon as they exist, and keep the text-card format for funding-figure
-posts where on-screen numbers do the work anyway.
+## Instagram carousels — 1080x1350
+
+Upload the numbered files in order. Slide 1 is the hook, the last slide is the CTA.
+
+| Set | Slides | Hook | Used |
+| --- | --- | --- | --- |
+| `car-start-1…6.png` | 6 | No qualifications + start now | Day 1, Day 7 |
+| `car-money-1…6.png` | 6 | The full funding breakdown | Day 2 |
+| `car-courses-1…6.png` | 6 | Course list and cities | Day 4 |
+| `car-kids-1…5.png` | 5 | Studying with children | Day 5 |
+
+## Facebook squares — 1200x1200
+
+| File | Hook | Used |
+| --- | --- | --- |
+| `sq-noquals.png` | No qualifications, start this month | Day 1, Day 7 |
+| `sq-money.png` | Over £16,000 a year | Day 2 |
+| `sq-2days.png` | Two days a week | Day 3 |
+| `sq-kids.png` | £199.62 a week towards childcare | Day 5 |
+| `sq-courses.png` | What do you want to be? | Day 4 |
+
+---
+
+## The one thing to keep in the copy
+
+"**Up to**" and "**if you're eligible**", once per asset carrying a funding figure.
+
+They cost nothing in a caption and they are what makes the £16,000+ headline usable
+rather than a problem. The basis is set out in
+[../brand-facts.md](../brand-facts.md) §6c: £14,135 maintenance loan plus £2,024
+Parents' Learning Allowance is £16,159, and with the Childcare Grant a parent
+reaches £23,234. So the number is conservative — as a *package*. It is only a
+problem if it's attached to the maintenance loan alone, which is where a competitor
+went wrong.
+
+Everything else about compliance stays out of the creative and lives in
+[../guardrails.md](../guardrails.md).
+
+---
+
+## Still to film
+
+The talking-head versions outperform text cards, because the positioning rests on a
+named, credentialled human — and no competitor names one. Specified in
+[../filming/shoot-blocks.md](../filming/shoot-blocks.md), needs session 1:
+
+| Block | Replaces |
+| --- | --- |
+| SB-01 No GCSEs / No A-Levels | `vid-noquals.mp4` |
+| SB-03 Keep your job | `vid-2days.mp4` |
+| SB-07 Student parents | `vid-money.mp4` on day 5 |
+| SB-10 Unsaid fears | `vid-upgrade.mp4` |
+
+Swap them in as they're cut. Keep the text-card format for funding posts, where
+on-screen figures do the work anyway.
+
+**Skip SB-13 for now.** It covers the January 2027 funding change, which is
+irrelevant to someone starting this month and kills the hook. It stays in the pack
+for when the January intake is being sold — no competitor covers it, so it's still
+a strong angle for that audience.
 
 ---
 
 ## Design system
 
-Taken from `src/app/globals.css` so the assets match the site.
+From `src/app/globals.css`, so assets match the site.
 
 | Token | Hex | Use |
 | --- | --- | --- |
 | Navy | `#1d2b4d` | Primary background |
 | Navy deep | `#121c36` | CTA slides |
-| Teal | `#1f6b6b` | Third accent background |
-| Olive | `#c2cc60` | Key figures, wordmark, CTA blocks |
+| Teal | `#1f6b6b` | Third accent |
+| Olive | `#c2cc60` | Figures, wordmark, CTA blocks, ticks |
 | Cream | `#f7f8f4` | Light slides |
-| Ink | `#1a1f2e` | Text on light |
 
-Oswald Bold for headlines and figures, Outfit for body and eyebrows. Content is
-vertically centred between the wordmark rule and the footer. Light and dark slides
-alternate through a carousel so it has rhythm when swiped.
+Oswald Bold for headlines and figures, Outfit for body and tick lists. Content is
+vertically centred; light and dark slides alternate through a carousel so it has
+rhythm when swiped.
 
-## Sizes
+## Adding an asset
 
-| Output | Dimensions | Where |
-| --- | --- | --- |
-| Vertical video | 1080x1920, 30fps, H.264 | TikTok, Reels, Stories |
-| Portrait carousel | 1080x1350 | Instagram |
-| Square | 1200x1200 | Facebook, LinkedIn |
-
-## Adding a new asset
-
-1. Add a spec dict to `generate_assets.py` — `bg`, `eyebrow`, `headline`, `bignum`, `body`, `cta`, `footnote`
+1. Add a spec dict in `generate_assets.py` — `bg`, `eyebrow`, `headline`, `bignum`, `body`, `bullets`, `cta`
 2. Take any figure from `brand-facts.md`. If it isn't there, it doesn't go on the slide.
-3. Re-run the script and check the output before posting
-4. Keep `Source: gov.uk` on anything carrying a funding figure
+3. Re-run and look at the output before posting.

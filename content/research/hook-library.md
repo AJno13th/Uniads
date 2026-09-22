@@ -1,5 +1,34 @@
 # Hook library
 
+## The launch set — use these now
+
+For students who can start within days or weeks. Incentive-led: every one names a
+benefit and ends in "message us". The evidence tiers further down explain *why*
+these work; this is the running order.
+
+| # | Hook | The incentive | Asset |
+| --- | --- | --- | --- |
+| 1 | **No GCSEs. No A-Levels. No problem.** | At 21+ your work experience is the qualification. No exams, no UCAS. And we do the whole application free. | `vid-noquals`, `car-start`, `sq-noquals` |
+| 2 | **Over £16,000 a year to study** | Tuition covered, living costs paid to you, grants on top if you have children. | `vid-money`, `car-money`, `sq-money` |
+| 3 | **Two days a week — and you pick the days** | Keep your job and your income. Mornings, evenings or weekends. | `vid-2days`, `sq-2days` |
+| 4 | **What do you want to be?** | Business Management, Health & Social Care, Computing, Construction Management, Cyber Security, Accounting & Finance, Psychology & Counselling, Law. All funded. | `vid-courses`, `car-courses`, `sq-courses` |
+| 5 | **There's a grant for childcare** | £199.62 a week for one child, £342.24 for two or more, plus £2,024 a year. Never repaid. Barely advertised. | `car-kids`, `sq-kids` |
+| 6 | **Change your life — four years from now** | You could have a degree, or the same job. No qualifications and no loss of income needed. | `vid-upgrade` |
+| 7 | **Last places for this intake** | Everything in one post. Only use if the deadline is real. | reuse day 1 assets |
+
+**The one rule to keep in the creative:** "up to" and "if you're eligible", once per
+asset carrying a funding figure. That is what makes £16,000+ usable — the basis is
+substantiated in [../brand-facts.md](../brand-facts.md) §6c. Everything else about
+compliance stays out of the posts and lives in
+[../guardrails.md](../guardrails.md).
+
+**Parked:** the January 2027 funding change (Tier 1.6 below). It is a genuinely
+strong angle that no competitor covers, but it is irrelevant to someone starting
+this month and it replaces an incentive with a rule. Bring it back when the January
+intake is what's being sold.
+
+---
+
 Hook patterns ranked by how much real evidence sits behind them, drawn from
 [competitor-teardown.md](competitor-teardown.md). This is the menu the daily
 content generator picks from. It is not a list of things that sound good — the
@@ -77,7 +106,11 @@ experience counts as entry evidence.
 UNIADS has psychology-with-counselling routes among its partners, so this vertical
 is pre-validated and currently uncontested by Just Educated.
 
-### 1.6 The rule change nobody has covered
+### 1.6 The rule change nobody has covered — PARKED
+**Audience scope: the January 2027 intake only.** Do not use this with students
+starting within weeks; the current system applies to them, and leading with a rule
+rather than an incentive costs enquiries.
+
 Not validated by competitor spend — validated by its **absence** from it. The
 student finance system changes for courses starting on or after 1 January 2027
 (the Lifelong Learning Entitlement), and applications opened in September 2026.

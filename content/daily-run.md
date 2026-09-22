@@ -24,12 +24,29 @@ go in a post. Not "probably fine", not "the competitor says it". Section 4 of th
 teardown shows a competitor publishing a maintenance loan figure above the legal
 maximum — plausibility is not evidence.
 
+## What the posts are for
+
+Enquiries. Not views, not followers — a WhatsApp message or a form submission.
+
+That means every post names a **benefit** and ends in an **ask**. Lead with what the
+student gets: no qualifications needed, tuition covered, over £16,000 a year to live
+on, grants for childcare, two days a week of their choosing, a named course, a
+changed life. Then tell them to message.
+
+Rules and eligibility mechanics belong in the DM and the consultation, not the
+creative. The only compliance wording that stays in a post is "**up to**" and
+"**if you're eligible**", once per asset carrying a funding figure — those two
+phrases are what let the big numbers be used at all. Everything else is internal.
+
+Start from the **launch set** at the top of
+[research/hook-library.md](research/hook-library.md).
+
 ## Procedure
 
 1. **Read the log.** Note yesterday's hook family, everything inside its 30-day
    cooldown, and this week's tier mix so far.
-2. **Pick a hook.** A different family from yesterday, nothing on cooldown, and
-   respecting the weekly mix: 3 days Tier 1, 3 days Tier 3, 1 day Tier 4.
+2. **Pick a hook** from the launch set. A different one from yesterday, nothing
+   inside its 30-day cooldown. Weight towards whichever pulled the most enquiries.
 3. **Check footage exists.** Consult the shoot-block usage table. If the block is
    exhausted, either choose a format needing no footage (carousel, text post,
    screen recording) or pick a different hook. **Never** write a post against
@@ -57,7 +74,7 @@ These are not the same post resized. The audiences differ and so should the work
 - Caption under 25 words. No emoji bullet lists, no phone numbers, no city lists — the measured anti-pattern
 - 5–6 hashtags, home-student only
 - Subtitles burned in, every number checked by hand
-- Original audio for anything with figures in it
+- End on an explicit ask: "message us", "comment the subject you'd pick", "send this to someone"
 - Cold account, so assume no audience: every post must work standalone
 
 ### Instagram
@@ -81,13 +98,13 @@ Vary the job of the post, not just the topic:
 
 | Day | Job |
 | --- | --- |
-| Monday | Practical / process — what actually happens |
-| Tuesday | Objection handling — Tier 1 |
-| Wednesday | Funding fact — exact figures, source on screen |
-| Thursday | Objection handling — Tier 1 |
-| Friday | Emotional, built to be sent — Tier 3.3 or 3.1 |
-| Saturday | Age or segment specific — student parents, career changers |
-| Sunday | Trust — the counsellor, the accuracy angle, or a consented student story |
+| Monday | Urgency — places for this intake |
+| Tuesday | The qualifications objection — you don't need them |
+| Wednesday | The money — what you'd get |
+| Thursday | Flexibility — two days a week, your choice |
+| Friday | The courses — pick a career |
+| Saturday | Student parents — childcare grants |
+| Sunday | Change your life — emotional, built to be sent |
 
 ## Hard stops
 

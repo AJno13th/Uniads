@@ -185,15 +185,64 @@ GOV.UK on the day — it changes.
 
 ---
 
+## 6c. The "£16,000+" headline — how it is substantiated
+
+The marketing headline is **"over £16,000 a year"**, and it holds up as a *total
+support package* for an eligible student. It does **not** hold up as a maintenance
+loan figure on its own — the maintenance loan maximum is £14,135.
+
+That distinction is the whole point. A competitor advertises "maintenance loans up
+to £16,000 per year", which is above the published maximum and therefore
+indefensible. Attached to the package instead, the same number is both bigger and
+safe:
+
+| Component | Maximum | Repayable? |
+| --- | --- | --- |
+| Maintenance Loan — living away from home, London | £14,135 | Yes |
+| Parents' Learning Allowance | £2,024 | **No** |
+| **Total** | **£16,159** | |
+
+And for a student parent, it goes considerably further:
+
+| Scenario | Total |
+| --- | --- |
+| London maintenance loan + PLA | £16,159 |
+| Outside London + PLA + Childcare Grant (one child, 52 weeks at £199.62) | £23,234 |
+| London + PLA + Childcare Grant (one child) | £26,539 |
+
+So "over £16,000" is a conservative claim, not a stretch. Tuition is on top of all
+of this, via a tuition fee loan of up to £9,790.
+
+**The two words that make it work.** Always "**up to**" or "**could**", and
+"**if you're eligible**" once per asset. Those cost nothing in a caption and are
+what let the big number be used at all — they are the difference between a hook
+that runs for months and an ad that gets pulled. Everything else about compliance
+stays out of the creative and lives in [guardrails.md](guardrails.md).
+
+Approved headline forms:
+
+- "You could get over £16,000 a year to study."
+- "Over £16,000 a year while you study — if you're eligible."
+- "Tuition covered. Plus up to £16,000+ to live on."
+
+Not approved: "a £16,000 maintenance loan", "we give you £16,000", "£16,000
+guaranteed".
+
+---
+
 ## 6b. Courses starting on or after 1 January 2027 — a different system
 
-**This is the most important section in this file.** Everything in section 6 applies
-to courses starting **before** 1 January 2027. Courses starting on or after that
-date fall under a new system, the **Lifelong Learning Entitlement (LLE)**, and
-applications for it opened in **September 2026** — now.
+**Scope note.** This section applies only to the **January 2027 and later** cohort.
+For the immediate intake — students starting within days or weeks — use section 6
+and 6c, which are the current system. Do not put LLE material in front of someone
+starting this month; it is irrelevant to them and it kills the hook.
 
-Which means: a January 2027 intake, the next one UNIADS would be selling, is an
-**LLE** intake. Quoting section 6 figures for a January 2027 start is inaccurate.
+Everything in section 6 applies to courses starting **before** 1 January 2027.
+Courses starting on or after that date fall under a new system, the **Lifelong
+Learning Entitlement (LLE)**, and applications for it opened in **September 2026**.
+
+Keep this for when the January intake is being sold. It is still the case that no
+competitor covers it, so it remains a strong angle — just for a different audience.
 
 Source: https://www.gov.uk/student-finance-on-or-after-1-january-2027 and
 https://www.gov.uk/government/publications/lifelong-learning-entitlement-lle-overview/lifelong-learning-entitlement-overview
