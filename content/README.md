@@ -13,8 +13,9 @@ Documentation only. No application code, so nothing here affects the live site.
 **If you are about to film:** [filming/README.md](filming/README.md), then
 [filming/shoot-schedule.md](filming/shoot-schedule.md).
 
-**If you are about to post:** the latest file in [daily/](daily/), then log the
-result in [posted-log.md](posted-log.md).
+**If you are about to post right now:** [assets/README.md](assets/README.md) — the
+files and the exact captions. Then log the result in
+[posted-log.md](posted-log.md).
 
 **If you are setting up the daily job:** [daily-run.md](daily-run.md).
 
@@ -36,6 +37,8 @@ result in [posted-log.md](posted-log.md).
 | [filming/shoot-schedule.md](filming/shoot-schedule.md) | Two sessions, running order, kit list |
 | [filming/ugc-brief.md](filming/ugc-brief.md) | Student testimonials and the consent process |
 | [daily/](daily/) | One file per day, three posts, with the checklist worked through |
+| [assets/README.md](assets/README.md) | Post-ready graphics and video, with copy-paste captions |
+| [assets/generate_assets.py](assets/generate_assets.py) | Regenerates every graphic and video from the fact sheet |
 
 ## How it fits together
 

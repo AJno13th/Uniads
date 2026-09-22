@@ -18,15 +18,15 @@ Rules the log enforces:
 
 | Date | Platform | Hook tier | Hook | Block / format | Time | Views | Likes | Shares | Saves | Comments | Leads |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-23 | TikTok | 1.6 | LLE — the change | SB-13 s1, 16s | 07:30 | | | | | | |
-| 2026-09-23 | Instagram | 1.6 | LLE — carousel | 6-slide carousel | 20:00 | | | | | | |
-| 2026-09-23 | Facebook | 1.6 | LLE — explainer | Text + gov.uk link | 19:30 | | | | | | |
-| 2026-09-24 | TikTok | 1.1 | No GCSEs / No A-Levels | SB-01 cut A, 12s | 19:30 | | | | | | |
-| 2026-09-24 | Instagram | 1.1 | No GCSEs / No A-Levels | SB-01 cut B, 16s | 20:30 | | | | | | |
-| 2026-09-24 | Facebook | 1.1 | "I haven't got the qualifications" | SB-01 cut C + copy | 19:00 | | | | | | |
-| 2026-09-25 | TikTok | 3.1 | Too late at 35 | SB-02 age-35, 12s | 19:30 | | | | | | |
-| 2026-09-25 | Instagram | 3.1 | Too late at 30 | SB-02 age-30, 12s | 20:30 | | | | | | |
-| 2026-09-25 | Facebook | 3.1 | "I'm too old for university" | 5-image set | 19:00 | | | | | | |
+| 2026-09-22 | TikTok | 1.6 | LLE — the change | SB-13 s1, 16s | 07:30 | | | | | | |
+| 2026-09-22 | Instagram | 1.6 | LLE — carousel | 6-slide carousel | 20:00 | | | | | | |
+| 2026-09-22 | Facebook | 1.6 | LLE — explainer | Text + gov.uk link | 19:30 | | | | | | |
+| 2026-09-23 | TikTok | 1.1 | No GCSEs / No A-Levels | SB-01 cut A, 12s | 19:30 | | | | | | |
+| 2026-09-23 | Instagram | 1.1 | No GCSEs / No A-Levels | SB-01 cut B, 16s | 20:30 | | | | | | |
+| 2026-09-23 | Facebook | 1.1 | "I haven't got the qualifications" | SB-01 cut C + copy | 19:00 | | | | | | |
+| 2026-09-24 | TikTok | 3.1 | Too late at 35 | SB-02 age-35, 12s | 19:30 | | | | | | |
+| 2026-09-24 | Instagram | 3.1 | Too late at 30 | SB-02 age-30, 12s | 20:30 | | | | | | |
+| 2026-09-24 | Facebook | 3.1 | "I'm too old for university" | 5-image set | 19:00 | | | | | | |
 
 ## Hooks used — cooldown tracker
 
@@ -34,10 +34,10 @@ A hook cannot be reused until 30 days after its last use.
 
 | Hook | Tier | Last used | Available again |
 | --- | --- | --- | --- |
-| LLE — the change | 1.6 | 2026-09-23 | 2026-10-23 |
-| No GCSEs / No A-Levels | 1.1 | 2026-09-24 | 2026-10-24 |
-| Age arithmetic — 35 | 3.1 | 2026-09-25 | 2026-10-25 |
-| Age arithmetic — 30 | 3.1 | 2026-09-25 | 2026-10-25 |
+| LLE — the change | 1.6 | 2026-09-22 | 2026-10-23 |
+| No GCSEs / No A-Levels | 1.1 | 2026-09-23 | 2026-10-24 |
+| Age arithmetic — 35 | 3.1 | 2026-09-24 | 2026-10-25 |
+| Age arithmetic — 30 | 3.1 | 2026-09-24 | 2026-10-25 |
 
 ## Shoot blocks — usage
 
