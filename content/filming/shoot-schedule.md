@@ -19,6 +19,7 @@ Everything here is either owned already or cheap.
 | Lavalier mic | ~£20 wired lav. The single biggest quality upgrade available. |
 | Power bank | 4K drains fast. |
 | Printed GOV.UK maintenance loan page | For SB-05 and SB-07. Read figures off the page. |
+| Printed GOV.UK Jan-2027 / LLE page | For SB-13. `gov.uk/student-finance-on-or-after-1-january-2027` |
 | Printed scripts | One page per block. Do not read from a phone — the eyeline gives it away. |
 | Index cards | SB-04: CertHE / HND / Foundation Year |
 | Paper week planner | SB-03 b-roll |
@@ -30,7 +31,7 @@ Everything here is either owned already or cheap.
 
 Three setups, both sessions. Scout and set these once.
 
-- **Setup A — plain wall.** Window to camera-left. SB-01, SB-02, SB-04, SB-05, SB-06, SB-08, SB-11.
+- **Setup A — plain wall.** Window to camera-left. SB-01, SB-02, SB-04, SB-05, SB-06, SB-08, SB-11, SB-13.
 - **Setup B — desk / office with depth.** SB-09.
 - **Setup C — soft and domestic.** Sofa or kitchen table. SB-03, SB-07, SB-10.
 
@@ -38,22 +39,25 @@ Three setups, both sessions. Scout and set these once.
 
 ## Session 1 — the commercial hooks
 
-Everything here is Tier 1 or Tier 3 evidence. 20 posts.
+Everything here is Tier 1 or Tier 3 evidence. 25 posts.
 
 | Order | Block | Setup | Shirt | Scripts | Est. |
 | --- | --- | --- | --- | --- | --- |
 | 1 | Camera, audio and light check; one 10s room tone | A | 1 | — | 15 min |
-| 2 | **SB-01** No GCSEs / No A-Levels | A | 1 | 1 script, 3 cut-downs | 20 min |
-| 3 | **SB-02** Age series | A | 2 | 5 variants x2 passes | 40 min |
-| 4 | **SB-04** CertHE / HND / foundation | A | 2 | 3 scripts | 30 min |
-| 5 | **SB-05** Real numbers | A | 3 | 2 scripts — read off the printed page | 30 min |
-| 6 | Wardrobe / location change | C | 3 | — | 10 min |
-| 7 | **SB-03** Keep your job | C | 3 | 1 script | 20 min |
-| 8 | B-roll: calendar, week planner, front door, bag | C | — | — | 20 min |
-| 9 | Screen recording: GOV.UK maintenance loan table | — | — | — | 10 min |
+| 2 | **SB-13** Rule change (LLE) | A | 1 | 4 scripts — read off the printed page | 40 min |
+| 3 | **SB-01** No GCSEs / No A-Levels | A | 1 | 1 script, 3 cut-downs | 20 min |
+| 4 | **SB-02** Age series | A | 2 | 5 variants x2 passes | 40 min |
+| 5 | **SB-04** CertHE / HND / foundation | A | 2 | 3 scripts | 30 min |
+| 6 | **SB-05** Real numbers | A | 3 | 2 scripts — read off the printed page | 30 min |
+| 7 | Wardrobe / location change | C | 3 | — | 10 min |
+| 8 | **SB-03** Keep your job | C | 3 | 1 script | 20 min |
+| 9 | B-roll: calendar, week planner, front door, bag | C | — | — | 20 min |
+| 10 | Screen recordings: GOV.UK maintenance loan table **and** the Jan-2027 LLE page | — | — | — | 15 min |
 
-Roughly 3h15 including resets. **Order matters** — SB-01 first while you're
-freshest, because it is the most-used footage in the month.
+Roughly 4h including resets. **Order matters.** SB-13 goes first because it is the
+only time-sensitive block in the pack — the LLE change is news now and will be
+common knowledge in the category within months. SB-01 second, while you are still
+fresh, because it is the most-reused footage of the month.
 
 ## Session 2 — depth and trust
 
@@ -93,10 +97,11 @@ Same day, while it's fresh:
 
 Cut in this order so publishing can begin as early as possible:
 
-1. SB-01 cut-downs A, B, C — first three days of posting
-2. SB-09 pinned video
-3. SB-02 all five ages
-4. Everything else as the daily plan calls for it
+1. SB-13 — the LLE scripts. Time-sensitive, so these ship first.
+2. SB-01 cut-downs A, B, C
+3. SB-09 pinned video
+4. SB-02 all five ages
+5. Everything else as the daily plan calls for it
 
 Each day's post specifies which block and cut-down it uses, so editing is
 on-demand rather than a single large batch.
@@ -106,6 +111,7 @@ on-demand rather than a single large batch.
 Book a third session if any of these happen:
 
 - A GOV.UK figure changes (it will in the next academic year) — SB-05 and SB-07 become wrong and must be pulled, not patched
+- LLE guidance is updated, or the £39,160 entitlement is restated at new fee rates — SB-13 must be pulled immediately, since its whole value is being the accurate one
 - A partner's entry requirements change in `src/data/universities.ts` — affects SB-01, SB-04, SB-08, SB-11
 - The counsellor credential approaches expiry, 25 June 2027 — SB-09 must be re-recorded or retired
 - A block consistently underperforms across three or more posts — rewrite the hook rather than re-cutting the same footage

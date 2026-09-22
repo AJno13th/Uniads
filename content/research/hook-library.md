@@ -77,6 +77,28 @@ experience counts as entry evidence.
 UNIADS has psychology-with-counselling routes among its partners, so this vertical
 is pre-validated and currently uncontested by Just Educated.
 
+### 1.6 The rule change nobody has covered
+Not validated by competitor spend — validated by its **absence** from it. The
+student finance system changes for courses starting on or after 1 January 2027
+(the Lifelong Learning Entitlement), and applications opened in September 2026.
+
+None of the 19 competitor ads captured mentions it. Neither competitor site
+mentions it. Both are advertising January intakes using old-system framing.
+
+This is the strongest single opportunity in the research: a genuine, sourceable,
+timely change that directly affects the exact intake being sold, where the whole
+category is currently wrong.
+
+- "Student finance changed in January. Nobody told you."
+- "If your course starts in January 2027, the rules are different. Here's how."
+- "There's now a lifetime cap on your tuition loan. £39,160."
+- "Studied before? That comes off your entitlement now."
+
+Handle with care — see [brand-facts.md](../brand-facts.md) section 6b. One fact
+per post, source on screen, and never apply it to an individual's circumstances.
+The prior-study rule in particular must route to a human, because UNIADS' own
+4-year foundation-year offer costs exactly the full entitlement.
+
 ---
 
 ## Tier 2 — Validated by measured organic reach

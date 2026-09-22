@@ -240,6 +240,13 @@ accuracy claim land.
 is the approved framing. Every figure needs "up to" and the means-tested
 qualifier.
 
+**Critical:** these figures apply to courses starting **before 1 January 2027**.
+Both scripts must therefore carry the on-screen qualifier
+`courses starting before Jan 2027`, because a January 2027 intake falls under the
+new Lifelong Learning Entitlement — see SB-13 and
+[../brand-facts.md](../brand-facts.md) section 6b. Add that frame at 0:02 and hold
+it. Without it, this block becomes inaccurate for the intake you are selling.
+
 ---
 
 ## SB-06 — Do you actually qualify for funding?
@@ -526,10 +533,87 @@ Student", no course, no photo) are a cautionary example, not a template.
 
 ---
 
+## SB-13 — The rule change nobody has covered
+
+**Evidence:** Tier 1.6, validated by its absence from competitor output. Student
+finance changes for courses starting on or after 1 January 2027 under the
+**Lifelong Learning Entitlement**, and applications opened September 2026. None of
+the 19 competitor ads captured mentions it; neither competitor site mentions it;
+both are selling January intakes with old-system framing.
+
+This is the strongest opportunity in the whole research — a real, sourceable,
+timely change affecting the exact intake being sold, where the entire category is
+currently out of date.
+
+**Feeds:** 5 posts. Film this **first** in session 1, ahead of SB-01. It has a
+shelf life; the others don't.
+
+**Setup**
+- Location: Setup A, desk, seated
+- Framing: chest up
+- Props: printed `gov.uk/student-finance-on-or-after-1-january-2027`
+- Takes: 2 per script. Read every figure off the page.
+
+**Script — the change, 16 seconds**
+
+| Time | Line |
+| --- | --- |
+| 0:00 | "Student finance changed, and almost nobody is talking about it." |
+| 0:04 | "If your course starts on or after January 2027, you're on a new system — the Lifelong Learning Entitlement." |
+| 0:10 | "Applications for it opened in September." |
+| 0:13 | "If you're being sold a January start, ask which system you're applying under." |
+
+**Script — the lifetime cap, 16 seconds**
+
+| Time | Line |
+| --- | --- |
+| 0:00 | "There's now a cap on how much tuition loan you get in your whole life." |
+| 0:04 | "Thirty-nine thousand, one hundred and sixty pounds. That's four years of full-time study." |
+| 0:10 | "Not per course. Total." |
+| 0:12 | "So the order you study things in suddenly matters a lot." |
+
+**Script — previous study, 17 seconds. The most important one.**
+
+| Time | Line |
+| --- | --- |
+| 0:00 | "If you've had student finance before, this one affects you directly." |
+| 0:04 | "Under the new system, what you already used comes off your entitlement." |
+| 0:09 | "The government's own example: finish a three-year degree, and you've got nine thousand, seven hundred and ninety left. One year, not four." |
+| 0:15 | "Ask someone to work yours out before you apply anywhere." |
+
+**Script — maintenance and in-person study, 14 seconds**
+
+| Time | Line |
+| --- | --- |
+| 0:00 | "One genuine improvement in the new system." |
+| 0:03 | "From January 2027, maintenance loans are available on all designated in-person courses." |
+| 0:09 | "You do normally need to be studying at least a hundred and twenty credits a year for the full amount." |
+
+**On-screen text frames**
+- Change: `Student finance changed` → `Courses from Jan 2027 = LLE` → `Applications opened Sept 2026` → `Ask which system you're on`
+- Cap: `£39,160` → `= 4 years full-time` → `LIFETIME. Not per course.`
+- Previous study: `Studied before?` → `It comes off your entitlement` → `3-year degree → £9,790 left` → `Get yours checked`
+- Maintenance: `Maintenance loans` → `all designated in-person courses` → `120+ credits/yr for the full amount`
+
+**B-roll:** screen recording of `gov.uk/student-finance-on-or-after-1-january-2027`,
+scrolling to the £39,160 figure. Essential — this is a surprising claim and the
+source on screen is what makes it credible rather than alarming.
+
+**Compliance note — the tightest in the pack.**
+
+- Every post from this block carries the GOV.UK URL on screen.
+- Never apply the entitlement rule to an individual. The close is always "get yours checked", never "you'll have X left".
+- **Never** tell someone with previous student finance that a 4-year foundation-year degree will be covered. Four years at £9,790 is £39,160 — precisely the full entitlement, with nothing spare. Route to a human every time.
+- Do not explain "priority additional entitlement" (the medicine / nursing / social work exception) on camera. Too conditional for short-form. Escalate.
+- Do not frame the change as good or bad. Report it and offer to check.
+
+---
+
 ## Coverage summary
 
 | Block | Posts | Hook tier | Session |
 | --- | --- | --- | --- |
+| SB-13 Rule change (LLE) | 5 | 1.6 | 1 — film first |
 | SB-01 No GCSEs / No A-Levels | 4 | 1.1 | 1 |
 | SB-02 Age series | 5 | 3.1 | 1 |
 | SB-03 Keep your job | 3 | 1.3 | 1 |
@@ -543,6 +627,9 @@ Student", no course, no photo) are a cautionary example, not a template.
 | SB-11 What actually happens | 4 | reviews | 2 |
 | SB-12 Student stories | 3+ | — | separate |
 
-**43 video posts** from two sessions — comfortably a month of daily video, with
+**48 video posts** from two sessions — comfortably a month of daily video, with
 the remainder of each day's three-platform slate made up of carousels, text posts
 and screen recordings that need no shoot.
+
+SB-13 is time-sensitive and goes first. Everything else is evergreen and can be
+re-cut for months.

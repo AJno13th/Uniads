@@ -183,6 +183,74 @@ Repayments start only after the course and only above the income threshold for
 the relevant plan. Do not state a specific threshold figure without checking
 GOV.UK on the day — it changes.
 
+---
+
+## 6b. Courses starting on or after 1 January 2027 — a different system
+
+**This is the most important section in this file.** Everything in section 6 applies
+to courses starting **before** 1 January 2027. Courses starting on or after that
+date fall under a new system, the **Lifelong Learning Entitlement (LLE)**, and
+applications for it opened in **September 2026** — now.
+
+Which means: a January 2027 intake, the next one UNIADS would be selling, is an
+**LLE** intake. Quoting section 6 figures for a January 2027 start is inaccurate.
+
+Source: https://www.gov.uk/student-finance-on-or-after-1-january-2027 and
+https://www.gov.uk/government/publications/lifelong-learning-entitlement-lle-overview/lifelong-learning-entitlement-overview
+
+| Fact | Value |
+| --- | --- |
+| Applies to | Most courses and modules at levels 4–6 and some level 7, starting on or after 1 Jan 2027 |
+| Apply from | September 2026, for courses starting January 2027 onwards |
+| Total tuition fee loan entitlement, new learner | **£39,160** — equal to 4 years of full-time study at the £9,790 maximum fee |
+| Reduced by previous study | Yes. Entitlement is reduced by tuition fee loans or grants already used, uplifted to today's fee rates |
+| Residual entitlement example (GOV.UK's own) | Someone who completed a 3-year degree worth £29,370 at 2026/27 fees has **£9,790** left |
+| Credit range for eligibility | Normally **30–180 credits** a year |
+| Maintenance support | Available on all designated **in-person** courses and modules. Reduced below 120 credits a year. |
+| Repayment threshold | Earnings over **£25,000** a year |
+| Interest | **4.1%** |
+| Age limit | Must be **under 60** on the first day of the course to apply for a Tuition Fee Loan. 60+ may apply for an additional loan towards living costs. |
+| Reapplying | Required for each course, and each year of a multi-year course |
+| Already funded before 1 Jan 2027 | Students already funded for a course they started before that date continue on the current system |
+
+Residency for full support is unchanged: home in England plus **3 years'
+continuous residence** in the UK, Channel Islands or Isle of Man.
+
+### Why this matters enormously for UNIADS specifically
+
+UNIADS' core offer is **4-year degrees with a foundation year attached**. Four
+years at £9,790 is £39,160 — **exactly the full entitlement, with nothing spare.**
+
+So for anyone who has used student finance before, a 4-year foundation-year degree
+may no longer be fully fundable. GOV.UK's own worked example: a previous 3-year
+graduate has £9,790 of entitlement left, which is one year, not four.
+
+UNIADS already asks "have you had student finance before?" in its lead qualifier
+(`src/data/qualification.ts`). Under LLE that answer stops being a scoring signal
+and becomes **the** determining factor in whether the offer works at all.
+
+**Compliance consequence — treat as a hard rule.** Never tell someone with
+previous UK student finance that a 4-year foundation-year degree will be covered.
+Route them to a human. This is on the escalation list in
+[guardrails.md](guardrails.md) section 6.
+
+GOV.UK notes a "priority additional entitlement" for certain courses such as
+medicine, nursing and social work. Do not describe how it works in a post — it is
+too conditional for short-form. Escalate.
+
+### The content opportunity
+
+Neither competitor mentions LLE anywhere on their site or in any of the 19 ads
+captured. Both advertise January intakes using old-system framing, and one quotes
+a maintenance figure above even the old maximum. UNIADS being first and accurate
+here is the clearest version of the accuracy wedge available.
+
+Safe framing: "The student finance system changed for courses starting January
+2027. Here's what's different." Then one fact per post, sourced on screen.
+
+Unsafe framing: anything implying a specific person's entitlement, or that the
+change is good or bad news for them.
+
 ## 7. Settlement statuses UNIADS asks about
 
 From `src/data/qualification.ts`:
