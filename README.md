@@ -32,8 +32,14 @@ Open [http://localhost:3000](http://localhost:3000). The CRM lives at
 | `CRM_DATA_FILE` | No | Overrides the JSON fallback path (default `.data/leads.json`) |
 | `LEAD_NOTIFY_EMAIL` | No | Inbox for lead alert emails (defaults to `info@uniads.co.uk`) |
 | `RESEND_API_KEY` | No | If set, lead alerts are sent via Resend instead of FormSubmit |
-| `RESEND_FROM_EMAIL` | No | Resend from address |
+| `RESEND_FROM_EMAIL` | No | Resend from address (use a verified domain, e.g. `UNIADS Leads <info@uniads.co.uk>`) |
 | `GOOGLE_SITE_VERIFICATION` | No | Google Search Console HTML-tag verification code |
+
+### Email mailbox (`info@uniads.co.uk`)
+
+Right now the domain only has **email forwarding** DNS — that is not a login mailbox.
+To get a real inbox you can open, follow **[`docs/EMAIL_SETUP.md`](docs/EMAIL_SETUP.md)**
+(Namecheap Private Email + optional Resend for lead alerts).
 
 ## Google Search Console (branded search)
 

@@ -24,6 +24,10 @@ export async function GET() {
     }
   }
 
+  const hasResend = Boolean(process.env.RESEND_API_KEY?.trim());
+  const notifyTo =
+    process.env.LEAD_NOTIFY_EMAIL?.trim() || "info@uniads.co.uk";
+
   const ok = !durable || dbOk === true;
   return NextResponse.json(
     {
@@ -32,6 +36,12 @@ export async function GET() {
       storage: durable ? "postgres" : "file",
       dbOk,
       dbError,
+      emailNotify: hasResend ? "resend" : "formsubmit_fallback",
+      leadNotifyToConfigured: Boolean(process.env.LEAD_NOTIFY_EMAIL?.trim()),
+      // Domain only — never expose the full address with secrets
+      leadNotifyDomain: notifyTo.includes("@")
+        ? notifyTo.split("@")[1]
+        : null,
       time: new Date().toISOString(),
     },
     { status: ok ? 200 : 503 }
