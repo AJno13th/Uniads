@@ -13,11 +13,13 @@ Documentation only. No application code, so nothing here affects the live site.
 **If you are about to film:** [filming/README.md](filming/README.md), then
 [filming/shoot-schedule.md](filming/shoot-schedule.md).
 
-**If you are about to post right now:** [assets/README.md](assets/README.md) — the
-files and the exact captions. Then log the result in
-[posted-log.md](posted-log.md).
+**If you are about to post right now:** today's file in
+[daily/](daily/) — start at [daily/CALENDAR.md](daily/CALENDAR.md). Assets and
+captions are in that file. Then log the result in [posted-log.md](posted-log.md).
 
-**If you are setting up the daily job:** [daily-run.md](daily-run.md).
+**If you are setting up the daily job:** [daily-run.md](daily-run.md). The 2026
+calendar is already written through 31 December; the missing piece last time was
+that no scheduler was ever turned on.
 
 **If you want to know what the competition is actually doing:**
 [research/competitor-teardown.md](research/competitor-teardown.md).
@@ -36,7 +38,9 @@ files and the exact captions. Then log the result in
 | [filming/shoot-blocks.md](filming/shoot-blocks.md) | 13 blocks with full scripts, shot lists, on-screen text |
 | [filming/shoot-schedule.md](filming/shoot-schedule.md) | Two sessions, running order, kit list |
 | [filming/ugc-brief.md](filming/ugc-brief.md) | Student testimonials and the consent process |
-| [daily/](daily/) | One file per day, three posts, with the checklist worked through |
+| [daily/](daily/) | One file per day, three posts — 22–28 Sep plus 9 Oct–31 Dec 2026 |
+| [daily/CALENDAR.md](daily/CALENDAR.md) | Index of the rest of 2026 |
+| [daily/generate_calendar.py](daily/generate_calendar.py) | Regenerates 9 Oct–31 Dec from the fact sheet |
 | [assets/README.md](assets/README.md) | Post-ready graphics and video, with copy-paste captions |
 | [assets/generate_assets.py](assets/generate_assets.py) | Regenerates every graphic and video from the fact sheet |
 | [ads/tiktok-launch.md](ads/tiktok-launch.md) | Paid TikTok setup — campaign, targeting, budget, tracking, kill rules |

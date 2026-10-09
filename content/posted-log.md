@@ -13,7 +13,9 @@ by enquiries and rebalance towards whatever pulls them.
 Rules the log enforces:
 
 - A different hook each day
-- No specific hook within 30 days (reusing an *asset* is fine)
+- On a daily cadence the seven launch-set hooks rotate weekly (the weekly
+  rhythm in [daily-run.md](daily-run.md)). A 30-day cooldown cannot coexist
+  with posting every day from a seven-hook menu. Reusing an *asset* is fine.
 
 ---
 
@@ -42,6 +44,12 @@ Rules the log enforces:
 | 2026-09-28 | TikTok | Last places | vid-noquals | 19:30 | | | | | | |
 | 2026-09-28 | Instagram | Last places | car-start | 20:00 | | | | | | |
 | 2026-09-28 | Facebook | Last places | sq-noquals | 19:00 | | | | | | |
+
+The engine then went quiet until 9 October 2026: no Cursor Automation, no GitHub
+Action, no cron. Launch week was written by hand and nothing was scheduled to
+continue it. Packs from **2026-10-09 through 2026-12-31** are now in
+[daily/](daily/) — see [daily/CALENDAR.md](daily/CALENDAR.md). Add rows here
+when they are actually posted, not when they are generated.
 
 
 ## Hooks used — cooldown tracker

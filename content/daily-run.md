@@ -157,11 +157,26 @@ and the block usage table. Commit on a new branch and open a pull request so the
 day can be reviewed before publishing.
 ```
 
-## How to schedule it
+## How this actually runs
 
-The content is produced by a scheduled agent run rather than application code, so
-there is nothing to deploy, no API key to hold and no cron to maintain — and each
-run sees the current state of the repo, including yesterday's results.
+It stopped after 28 September 2026 because **nothing was ever scheduled**. The
+seven launch-week files were written by hand. This page told you to create a
+Cursor Automation; that click never happened. There was no GitHub Action, no
+Vercel cron, and no Cursor Automation in the account. After the last file, the
+folder just ended.
+
+**Rest of 2026 is now in the repo.** `content/daily/generate_calendar.py` writes
+one grounded pack per day from 9 October through 31 December 2026, rotating the
+seven launch-set hooks on the weekly rhythm below. Captions vary by week; every
+figure still comes from `brand-facts.md`. Post from
+[daily/CALENDAR.md](daily/CALENDAR.md). Do not wait for a new agent run.
+
+**Morning reminder:** `.github/workflows/daily-content-reminder.yml` comments
+today's pack on a rolling GitHub issue at 08:00 UTC. Scheduled workflows only
+fire from `main`, so merge this branch before expecting the reminder.
+
+**For 2027 onwards**, either extend the generator's `START`/`END` dates and
+re-run it, or actually create the Cursor Automation this time:
 
 1. Cursor Dashboard → **Automations** → new automation on this repository
 2. Schedule: daily, early enough to allow review before the 19:00 posting slot

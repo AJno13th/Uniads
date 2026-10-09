@@ -1,0 +1,43 @@
+name: Daily content reminder
+
+# One rolling GitHub issue, commented every morning with that day's pack.
+# The packs themselves already live in content/daily/ through 31 Dec 2026.
+# Scheduled workflows only run from the default branch, so this needs to be
+# merged to main before it fires on its own.
+
+on:
+  schedule:
+    - cron: "0 8 * * *" # 08:00 UTC — morning in the UK before the 19:00 slot
+  workflow_dispatch:
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Comment today's pack on the rolling issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          DATE="$(TZ=Europe/London date +%F)"
+          FILE="content/daily/${DATE}.md"
+          ROLLING_TITLE="Daily posting pack"
+
+          NUMBER="$(gh issue list --state open --search "in:title ${ROLLING_TITLE}" --json number,title --jq '.[] | select(.title=="Daily posting pack") | .number' | head -n1 || true)"
+
+          if [ ! -f "$FILE" ]; then
+            BODY="No pack for **${DATE}**. \`content/daily/\` is written through 31 Dec 2026. After that, extend \`content/daily/generate_calendar.py\` or turn on the Cursor Automation in \`content/daily-run.md\`."
+          else
+            BODY="$(printf '**%s** — Facebook 19:00 · TikTok 19:30 · Instagram 20:00.\nAdd a trending sound on TikTok in-app — the videos are silent.\n\n---\n\n%s\n' "${DATE}" "$(cat "${FILE}")")"
+          fi
+
+          if [ -z "${NUMBER}" ]; then
+            gh issue create --title "${ROLLING_TITLE}" --body "${BODY}"
+          else
+            gh issue comment "${NUMBER}" --body "${BODY}"
+          fi
