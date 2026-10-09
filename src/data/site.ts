@@ -11,8 +11,8 @@ export const siteConfig = {
   whatsappMessage: "Send Us a message to start your application",
   social: {
     facebook: "https://www.facebook.com/61577408444999/",
-    instagram: "https://www.instagram.com/uniads.uk/",
-    tiktok: "https://www.tiktok.com/@uasuk",
+    instagram: "https://www.instagram.com/Uniads.uk/",
+    tiktok: "https://www.tiktok.com/@Uniadsuk",
   },
   credential: {
     badgeName: "UK Knowledge Trained Counsellor",

@@ -44,20 +44,30 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
+  // Server-to-server ingestion (ad-platform lead forms via Zapier/Make) arrives
+  // from one IP in bursts, so it must bypass the browser spam controls or paid
+  // leads are dropped with a 429 nobody sees.
+  const ingestToken = process.env.LEAD_INGEST_TOKEN?.trim();
+  const trusted = Boolean(
+    ingestToken && request.headers.get("x-uniads-ingest-token")?.trim() === ingestToken
+  );
+
   // Hidden field that only automated submissions tend to fill in.
-  if (clean(payload.company)) {
+  if (!trusted && clean(payload.company)) {
     return NextResponse.json({ ok: true, reference: null });
   }
 
-  const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-    request.headers.get("x-real-ip") ||
-    "unknown";
-  if (rateLimited(ip)) {
-    return NextResponse.json(
-      { error: "Too many submissions. Please try again later." },
-      { status: 429 }
-    );
+  if (!trusted) {
+    const ip =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      request.headers.get("x-real-ip") ||
+      "unknown";
+    if (rateLimited(ip)) {
+      return NextResponse.json(
+        { error: "Too many submissions. Please try again later." },
+        { status: 429 }
+      );
+    }
   }
 
   const fullName = clean(payload.fullName, 120);
